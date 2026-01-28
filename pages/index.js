@@ -1,18 +1,21 @@
+// pages/index.js
 import { Fragment } from "react";
 import Head from "next/head";
-
+import { useLanguage } from "../context/language-context";
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
-import { getFeaturedPosts } from "../lib/posts-util";
+import { getAllPosts } from "../lib/posts-util"; // Изменим на getAllPosts
 
 function HomePage(props) {
+    const { t } = useLanguage();
+    
     return (
         <Fragment>
             <Head>
-                <title>Figrac0 Blog</title>
+                <title>{t('siteTitle') || 'Figrac0 Blog'}</title>
                 <meta
                     name="description"
-                    content="I post about programming and web development."
+                    content={t('siteDescription')}
                 />
             </Head>
             <Hero />
@@ -22,11 +25,11 @@ function HomePage(props) {
 }
 
 export function getStaticProps() {
-    const featuredPosts = getFeaturedPosts();
+    const allPosts = getAllPosts(); // Получаем все посты, а не только избранные
 
     return {
         props: {
-            posts: featuredPosts,
+            posts: allPosts,
         },
     };
 }

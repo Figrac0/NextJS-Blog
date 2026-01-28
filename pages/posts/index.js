@@ -1,17 +1,20 @@
+// pages/posts/index.js
 import Head from 'next/head';
 import { Fragment } from 'react';
-
+import { useLanguage } from '../../context/language-context'; // Исправленный путь
 import AllPosts from '../../components/posts/all-posts';
 import { getAllPosts } from '../../lib/posts-util';
 
 function AllPostsPage(props) {
+  const { t } = useLanguage();
+  
   return (
     <Fragment>
       <Head>
-        <title>All Posts</title>
+        <title>{t('allRepositories')}</title>
         <meta
           name='description'
-          content='A list of all programming-related tutorials and posts!'
+          content={t('allPostsDescription')}
         />
       </Head>
       <AllPosts posts={props.posts} />

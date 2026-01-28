@@ -4,35 +4,62 @@ import { useLanguage } from "../../context/language-context";
 import Logo from "./logo";
 import LanguageSwitcher from "../ui/language-switcher";
 import classes from "./main-navigation.module.css";
+import { useState } from "react";
 
 function MainNavigation() {
     const { t } = useLanguage();
+    const [activeLink, setActiveLink] = useState("");
 
     return (
         <header className={classes.header}>
             <div className={classes.container}>
-                <Link href="/" className={classes.logoLink}>
-                    <Logo />
-                </Link>
+                <Logo />
 
                 <nav className={classes.nav}>
                     <ul className={classes.list}>
-                        <li className={classes.item}>
+                        <li
+                            className={classes.item}
+                            onMouseEnter={() => setActiveLink("home")}
+                            onMouseLeave={() => setActiveLink("")}>
                             <Link href="/" className={classes.link}>
-                                {t("home")}
+                                <span className={classes.linkText}>
+                                    {t("home")}
+                                </span>
+                                <span className={classes.linkDecoration}>
+                                    <span className={classes.linkCircle} />
+                                    <span className={classes.linkLine} />
+                                </span>
                             </Link>
                         </li>
-                        <li className={classes.item}>
+                        <li
+                            className={classes.item}
+                            onMouseEnter={() => setActiveLink("posts")}
+                            onMouseLeave={() => setActiveLink("")}>
                             <Link href="/posts" className={classes.link}>
-                                {t("posts")}
+                                <span className={classes.linkText}>
+                                    {t("posts")}
+                                </span>
+                                <span className={classes.linkDecoration}>
+                                    <span className={classes.linkCircle} />
+                                    <span className={classes.linkLine} />
+                                </span>
                             </Link>
                         </li>
-                        <li className={classes.item}>
+                        <li
+                            className={classes.item}
+                            onMouseEnter={() => setActiveLink("contact")}
+                            onMouseLeave={() => setActiveLink("")}>
                             <Link href="/contact" className={classes.link}>
-                                {t("contact")}
+                                <span className={classes.linkText}>
+                                    {t("contact")}
+                                </span>
+                                <span className={classes.linkDecoration}>
+                                    <span className={classes.linkCircle} />
+                                    <span className={classes.linkLine} />
+                                </span>
                             </Link>
                         </li>
-                        <li className={classes.item}>
+                        <li className={classes.languageItem}>
                             <LanguageSwitcher />
                         </li>
                     </ul>

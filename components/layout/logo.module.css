@@ -1,13 +1,579 @@
-.logo {
-  text-transform: uppercase;
-  font-size: var(--size-5);
-  font-weight: bold;
-  font-family: 'Oswald', sans-serif;
-  color: var(--color-grey-50);
+/* components/layout/logo.module.css */
+.logoLink {
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
 }
 
+.logoContainer {
+    position: relative;
+    padding: 0.25rem 1rem;
+    border-radius: 8px;
+    overflow: visible;
+    background: transparent;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+    transition: transform 0.2s ease;
+}
+
+.logoContainer:hover {
+    transform: translateY(-1px);
+}
+
+/* Световые эффекты */
+.lightEffects {
+    position: absolute;
+    inset: -15px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.logoContainer:hover .lightEffects {
+    opacity: 0.15;
+}
+
+.lightBeam {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(102, 126, 234, 0.2) 20%,
+        rgba(102, 126, 234, 0.4) 50%,
+        rgba(102, 126, 234, 0.2) 80%,
+        transparent 100%
+    );
+    transform-origin: center;
+    animation: beamRotate 12s linear infinite;
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg));
+    filter: blur(0.3px);
+}
+
+.lightBeam:nth-child(1) {
+    --angle: 0deg;
+}
+.lightBeam:nth-child(2) {
+    --angle: 45deg;
+}
+.lightBeam:nth-child(3) {
+    --angle: 90deg;
+}
+
+@keyframes beamRotate {
+    from {
+        transform: translate(-50%, -50%) rotate(var(--angle, 0deg));
+    }
+    to {
+        transform: translate(-50%, -50%)
+            rotate(calc(var(--angle, 0deg) + 360deg));
+    }
+}
+
+/* Контейнер букв */
+.lettersContainer {
+    display: flex;
+    position: relative;
+    z-index: 2;
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    align-items: center;
+    gap: 1px;
+}
+
+.letterWrapper {
+    display: inline-block;
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.letter {
+    font-size: 1.8rem;
+    display: inline-block;
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    will-change: transform, opacity, filter;
+    line-height: 1;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 0 1px;
+}
+
+.space {
+    width: 0.3em;
+    opacity: 0;
+}
+
+/* Индивидуальные анимации для букв */
+.neonPulse {
+    animation: neonPulseAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.liquidFlow {
+    animation: liquidFlowAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.quantumFloat {
+    animation: quantumFloatAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.hologram {
+    animation: hologramAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.pulsarStar {
+    animation: pulsarStarAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.cyberGlitch {
+    animation: cyberGlitchAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.particleDrift {
+    animation: particleDriftAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.synthWave {
+    animation: synthWaveAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.quantumSpin {
+    animation: quantumSpinAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.neonVibe {
+    animation: neonVibeAnimation 5s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+/* Определения анимаций */
+@keyframes neonPulseAnimation {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 0 3px currentColor) blur(0);
+    }
+    25% {
+        transform: translateY(-4px) scale(1.1);
+        opacity: 0.95;
+    }
+    50% {
+        transform: translateY(2px) scale(1.05);
+        filter: drop-shadow(0 0 6px currentColor) blur(1px);
+    }
+    75% {
+        transform: translateY(-2px) scale(1.08);
+        opacity: 0.98;
+    }
+}
+
+@keyframes liquidFlowAnimation {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0) scale(1);
+        opacity: 1;
+    }
+    33% {
+        transform: translateY(-6px) rotate(-3deg) scale(1.08);
+        opacity: 0.95;
+    }
+    66% {
+        transform: translateY(4px) rotate(2deg) scale(1.12);
+    }
+}
+
+@keyframes quantumFloatAnimation {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0);
+    }
+    25% {
+        transform: translate(3px, -3px) rotate(2deg);
+    }
+    50% {
+        transform: translate(-2px, 2px) rotate(-1deg);
+    }
+    75% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+}
+
+@keyframes hologramAnimation {
+    0%,
+    100% {
+        opacity: 1;
+        filter: blur(0) drop-shadow(0 0 0 currentColor);
+    }
+    50% {
+        opacity: 0.8;
+        filter: blur(2px) drop-shadow(0 0 5px currentColor);
+    }
+}
+
+@keyframes pulsarStarAnimation {
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+        filter: blur(0) drop-shadow(0 0 3px currentColor);
+    }
+    25% {
+        transform: scale(1.25) rotate(90deg);
+        opacity: 0.9;
+        filter: blur(1px) drop-shadow(0 0 6px currentColor);
+    }
+    50% {
+        transform: scale(1.15) rotate(180deg);
+        opacity: 0.95;
+        filter: blur(2px) drop-shadow(0 0 8px currentColor);
+    }
+    75% {
+        transform: scale(1.2) rotate(270deg);
+        opacity: 0.85;
+        filter: blur(1.5px) drop-shadow(0 0 7px currentColor);
+    }
+}
+
+@keyframes cyberGlitchAnimation {
+    0%,
+    90%,
+    100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    92% {
+        transform: translate(1px, -1px) scale(1.02);
+        opacity: 0.9;
+    }
+    94% {
+        transform: translate(-1px, 1px) scale(0.98);
+        opacity: 0.8;
+    }
+    96% {
+        transform: translate(2px, 0) scale(1.05);
+        opacity: 0.7;
+    }
+    98% {
+        transform: translate(-2px, -2px) scale(0.95);
+        opacity: 0.6;
+    }
+}
+
+@keyframes particleDriftAnimation {
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0);
+    }
+    25% {
+        transform: translate(2px, -2px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-3px, 1px) rotate(-1deg);
+    }
+    75% {
+        transform: translate(1px, 2px) rotate(2deg);
+    }
+}
+
+@keyframes synthWaveAnimation {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-8px) scale(1.1);
+        opacity: 0.9;
+        filter: drop-shadow(0 0 4px currentColor);
+    }
+}
+
+@keyframes quantumSpinAnimation {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+@keyframes neonVibeAnimation {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0) scale(1);
+    }
+    25% {
+        transform: translateY(-7px) rotate(-4deg) scale(1.15);
+    }
+    50% {
+        transform: translateY(5px) rotate(3deg) scale(1.2);
+    }
+    75% {
+        transform: translateY(-3px) rotate(2deg) scale(1.1);
+    }
+}
+
+/* Свечение букв */
+.letterGlow {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    border-radius: 50%;
+    opacity: 0;
+    filter: blur(12px);
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.letter:hover .letterGlow {
+    opacity: 0.15;
+}
+
+/* Особое свечение для пульсара (буква x) */
+.pulsarGlow {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200%;
+    height: 200%;
+    border-radius: 50%;
+    opacity: 0.3;
+    filter: blur(25px);
+    z-index: -1;
+    animation: pulsarGlowAnimation 1.5s ease-in-out infinite;
+}
+
+@keyframes pulsarGlowAnimation {
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    50% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Частицы при наведении */
+.hoverParticles {
+    position: absolute;
+    inset: -20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hoverParticle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    opacity: 0;
+    filter: blur(0.5px);
+    animation: hoverParticleFloat 1.2s ease-out forwards;
+}
+
+@keyframes hoverParticleFloat {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0);
+    }
+    20% {
+        opacity: 0.7;
+    }
+    80% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(
+                calc((var(--tx, 1) - 0.5) * 20px),
+                calc((var(--ty, 1) - 0.5) * 20px)
+            )
+            scale(1);
+    }
+}
+
+/* Эффект пульсара */
+.pulsarEffect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+    width: 100px;
+    height: 100px;
+}
+
+.pulsarRing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 1.5px solid rgba(250, 112, 154, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulsarExpand 1.2s ease-out infinite;
+    filter: blur(0.5px);
+}
+
+.pulsarRay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        rgba(250, 112, 154, 0) 0%,
+        rgba(250, 112, 154, 0.7) 50%,
+        rgba(250, 112, 154, 0) 100%
+    );
+    transform-origin: center;
+    animation: pulsarRayAnimation 1.5s ease-in-out infinite;
+    filter: blur(0.5px);
+}
+
+@keyframes pulsarExpand {
+    0% {
+        width: 20px;
+        height: 20px;
+        opacity: 1;
+        border-color: rgba(250, 112, 154, 0.6);
+    }
+    100% {
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+        border-color: rgba(250, 112, 154, 0);
+    }
+}
+
+@keyframes pulsarRayAnimation {
+    0%,
+    100% {
+        opacity: 0.3;
+        width: 30px;
+    }
+    50% {
+        opacity: 0.7;
+        width: 50px;
+    }
+}
+
+/* Энергетическое поле */
+.energyField {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.energyField.active {
+    opacity: 0.3;
+}
+
+.fieldRing {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: fieldExpand 0.8s ease-out infinite;
+}
+
+@keyframes fieldExpand {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+        border-color: rgba(102, 126, 234, 0);
+    }
+}
+
+/* Медиа-запросы */
 @media (min-width: 768px) {
-  .logo {
-    font-size: var(--size-8);
-  }
+    .letter {
+        font-size: 2rem;
+    }
+
+    .logoContainer {
+        padding: 0.3rem 1.2rem;
+        min-height: 48px;
+    }
+
+    .letterWrapper {
+        height: 42px;
+    }
+}
+
+@media (max-width: 480px) {
+    .letter {
+        font-size: 1.5rem;
+    }
+
+    .logoContainer {
+        padding: 0.2rem 0.8rem;
+        min-height: 40px;
+    }
+
+    .letterWrapper {
+        height: 35px;
+    }
+
+    .lettersContainer {
+        letter-spacing: 1px;
+    }
+}
+
+/* Эффект при клике */
+.logoContainer:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
 }

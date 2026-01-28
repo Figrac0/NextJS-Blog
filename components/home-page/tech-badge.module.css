@@ -1,0 +1,60 @@
+/* components/home-page/tech-badge.module.css */
+.badge {
+    padding: 0.5rem 1rem;
+    background: #f8f9ff;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #667eea;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.badge.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.badge[data-category="frontend"] {
+    background: rgba(66, 153, 225, 0.1);
+    border-color: rgba(66, 153, 225, 0.3);
+    color: #4299e1;
+}
+
+.badge[data-category="backend"] {
+    background: rgba(72, 187, 120, 0.1);
+    border-color: rgba(72, 187, 120, 0.3);
+    color: #48bb78;
+}
+
+.badge[data-category="ui-ux"] {
+    background: rgba(237, 100, 166, 0.1);
+    border-color: rgba(237, 100, 166, 0.3);
+    color: #ed64a6;
+}
+
+.badge.active[data-category="frontend"] {
+    background: #4299e1;
+    color: white;
+}
+
+.badge.active[data-category="backend"] {
+    background: #48bb78;
+    color: white;
+}
+
+.badge.active[data-category="ui-ux"] {
+    background: #ed64a6;
+    color: white;
+}

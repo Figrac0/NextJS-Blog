@@ -2,11 +2,14 @@
 .header {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    padding: 1rem 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(15px);
+    box-shadow:
+        0 4px 30px rgba(0, 0, 0, 0.08),
+        0 1px 0 rgba(0, 0, 0, 0.05);
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .container {
@@ -20,11 +23,11 @@
 
 .logoLink {
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .logoLink:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
 }
 
 .nav {
@@ -43,47 +46,225 @@
 
 .item {
     position: relative;
+    padding: 0.5rem 0;
 }
 
 .link {
     text-decoration: none;
-    color: #333;
+    color: #2d3748;
     font-weight: 600;
     font-size: 1rem;
-    padding: 0.5rem 0;
+    font-family: "Inter", sans-serif;
+    letter-spacing: 0.3px;
     position: relative;
-    transition: color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
 }
 
-.link:hover {
+.linkText {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.link:hover .linkText {
     color: #667eea;
+    transform: translateY(-2px);
+    text-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
 }
 
-.link::after {
-    content: "";
+.linkDecoration {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0;
+    right: 0;
     height: 2px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transition: width 0.3s ease;
+    overflow: hidden;
 }
 
-.link:hover::after {
+.linkLine {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #667eea 50%,
+        transparent 100%
+    );
+    transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 0 3px rgba(102, 126, 234, 0.3));
+}
+
+.link:hover .linkLine {
     width: 100%;
 }
 
+.linkCircle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #667eea;
+    box-shadow:
+        0 0 0 2px rgba(102, 126, 234, 0.1),
+        0 0 10px rgba(102, 126, 234, 0.5);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.link:hover .linkCircle {
+    transform: translateX(-50%) scale(1);
+    animation: pulseCircle 1.5s ease-in-out infinite;
+}
+
+@keyframes pulseCircle {
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 2px rgba(102, 126, 234, 0.2),
+            0 0 10px rgba(102, 126, 234, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 0 6px rgba(102, 126, 234, 0.1),
+            0 0 15px rgba(102, 126, 234, 0.8);
+    }
+}
+
+/* Эффект подложки при наведении */
+.link::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: calc(100% + 20px);
+    height: calc(100% + 10px);
+    background: linear-gradient(
+        135deg,
+        rgba(102, 126, 234, 0.05) 0%,
+        rgba(118, 75, 162, 0.03) 100%
+    );
+    border-radius: 8px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1;
+}
+
+.link:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.languageItem {
+    margin-left: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.languageItem::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.1) 50%,
+        transparent 100%
+    );
+}
+
+/* Анимация для иконки флага */
+.languageItem :global(.flag) {
+    transition: all 0.3s ease;
+}
+
+.languageItem:hover :global(.flag) {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Активный пункт меню */
+.item.active .linkText {
+    color: #667eea;
+    font-weight: 700;
+}
+
+.item.active .linkLine {
+    width: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Мобильная адаптация */
 @media (max-width: 768px) {
     .container {
         padding: 0 1rem;
     }
 
     .list {
-        gap: 1rem;
+        gap: 1.2rem;
     }
 
     .link {
         font-size: 0.9rem;
+        padding: 0.4rem 0;
     }
+
+    .languageItem {
+        margin-left: 0.5rem;
+        padding-left: 1rem;
+    }
+
+    .languageItem::before {
+        height: 16px;
+    }
+}
+
+@media (max-width: 640px) {
+    .list {
+        gap: 1rem;
+    }
+
+    .link {
+        font-size: 0.85rem;
+    }
+
+    .linkText {
+        font-size: 0.85rem;
+    }
+}
+
+/* Эффект бликов */
+.item::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(
+        circle at var(--x, 50%) var(--y, 50%),
+        rgba(102, 126, 234, 0.1) 0%,
+        transparent 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    border-radius: 12px;
+    z-index: 0;
+}
+
+.item:hover::after {
+    opacity: 1;
 }
