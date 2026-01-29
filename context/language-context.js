@@ -8,7 +8,6 @@ export const LanguageContext = createContext();
 export function LanguageProvider({ children }) {
     const [locale, setLocale] = useState(defaultLocale);
 
-    // При монтировании проверяем сохраненный язык
     useEffect(() => {
         const savedLocale = localStorage.getItem("locale");
         if (savedLocale && locales[savedLocale]) {
@@ -16,7 +15,6 @@ export function LanguageProvider({ children }) {
         }
     }, []);
 
-    // Сохраняем язык при изменении
     useEffect(() => {
         localStorage.setItem("locale", locale);
     }, [locale]);
@@ -33,13 +31,12 @@ export function LanguageProvider({ children }) {
             if (value && value[k] !== undefined) {
                 value = value[k];
             } else {
-                // Fallback to English
                 let enValue = translations.en;
                 for (const ek of keys) {
                     if (enValue && enValue[ek] !== undefined) {
                         enValue = enValue[ek];
                     } else {
-                        return key; // Return key if not found
+                        return key;
                     }
                 }
                 return enValue;
@@ -56,7 +53,6 @@ export function LanguageProvider({ children }) {
     );
 }
 
-// Хук для удобного использования
 export function useLanguage() {
     const context = useContext(LanguageContext);
     if (!context) {

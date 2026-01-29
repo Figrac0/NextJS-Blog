@@ -1,4 +1,3 @@
-// components/layout/logo.js
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,13 +6,11 @@ import classes from "./logo.module.css";
 function Logo() {
     const [letters, setLetters] = useState([]);
     const [isHovered, setIsHovered] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(false);
-    const [isPlayingAnimation, setIsPlayingAnimation] = useState(false);
     const [showPulsar, setShowPulsar] = useState(false);
+    const [isAnimating, setIsAnimating] = useState(false);
     const autoAnimationRef = useRef(null);
-    const animationRef = useRef(null);
-    const pauseTimerRef = useRef(null);
     const hoverTimeoutRef = useRef(null);
+    const returnTimeoutRef = useRef(null);
     const router = useRouter();
     const logoText = "My Next Blog";
 
@@ -33,28 +30,12 @@ function Logo() {
         "linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)",
     ];
 
-    // Современные типы анимаций с улучшенными параметрами
-    const animationTypes = [
-        { name: "neonPulse", duration: 5, intensity: 1.3 }, // M
-        { name: "liquidFlow", duration: 5, intensity: 1.4 }, // y
-        { name: "quantumFloat", duration: 5, intensity: 1.2 }, // N
-        { name: "hologram", duration: 5, intensity: 1.3 }, // e
-        { name: "pulsarStar", duration: 5, intensity: 1.8 }, // x - пульсар!
-        { name: "cyberGlitch", duration: 5, intensity: 1.4 }, // t
-        { name: "particleDrift", duration: 5, intensity: 1.2 }, // B
-        { name: "synthWave", duration: 5, intensity: 1.3 }, // l
-        { name: "quantumSpin", duration: 5, intensity: 1.6 }, // o
-        { name: "neonVibe", duration: 5, intensity: 1.4 }, // g
-        { name: "cyberPulse", duration: 5, intensity: 1.3 }, // [space]
-    ];
-
-    // Инициализация букв с уникальными анимациями
+    // Инициализация букв
     useEffect(() => {
         const letterArray = logoText.split("").map((char, index) => ({
             id: index,
             char,
             gradient: gradients[index % gradients.length],
-            animationType: animationTypes[index % animationTypes.length],
             baseX: 0,
             baseY: 0,
             x: 0,
@@ -64,15 +45,15 @@ function Logo() {
             opacity: 1,
             blur: 0,
             isSpaced: char === " ",
-            isAnimating: false,
             animationProgress: 0,
-            // Смещения для эффекта взрывной волны (относительно буквы x)
-            waveOffset: (index - 4) * 2.5, // x - это 4-я буква (индекс 4)
+            waveOffset: (index - 4) * 2.5,
         }));
         setLetters(letterArray);
 
-        // Запуск авто-анимации с паузами
-        startAutoAnimationCycle();
+        // Запуск авто-анимации через 1 секунду после загрузки
+        setTimeout(() => {
+            startAutoAnimationCycle();
+        }, 1000);
 
         return () => {
             cleanupTimers();
@@ -82,144 +63,135 @@ function Logo() {
     // Очистка всех таймеров
     const cleanupTimers = () => {
         if (autoAnimationRef.current) {
-            cancelAnimationFrame(autoAnimationRef.current);
-        }
-        if (animationRef.current) {
-            clearTimeout(animationRef.current);
-        }
-        if (pauseTimerRef.current) {
-            clearTimeout(pauseTimerRef.current);
+            clearTimeout(autoAnimationRef.current);
         }
         if (hoverTimeoutRef.current) {
             clearTimeout(hoverTimeoutRef.current);
         }
+        if (returnTimeoutRef.current) {
+            clearTimeout(returnTimeoutRef.current);
+        }
     };
 
-    // Цикл анимации с паузами
+    // Анимация отдельной буквы
+    const animateLetter = (letter, progress) => {
+        const t = progress * Math.PI * 2;
+        const letterIndex = letter.id;
+
+        switch (letterIndex) {
+            case 0: // M - neonPulse
+                return {
+                    ...letter,
+                    scale: 1 + Math.sin(t * 2) * 0.2,
+                    y: Math.sin(t * 3) * 5,
+                    opacity: 0.9 + Math.sin(t * 4) * 0.1,
+                    blur: Math.sin(t * 5) * 2,
+                };
+            case 1: // y - liquidFlow
+                return {
+                    ...letter,
+                    y: Math.sin(t * 2.5) * 8,
+                    rotation: Math.sin(t * 1.5) * 10,
+                    scale: 1 + Math.sin(t * 3) * 0.15,
+                    opacity: 0.9 + Math.sin(t * 3.5) * 0.1,
+                };
+            case 2: // N - quantumFloat
+                return {
+                    ...letter,
+                    x: Math.cos(t * 2) * 6,
+                    y: Math.sin(t * 1.8) * 4,
+                    rotation: Math.sin(t * 1.2) * 8,
+                    scale: 1 + Math.sin(t * 2.2) * 0.1,
+                };
+            case 3: // e - hologram
+                return {
+                    ...letter,
+                    opacity: 0.7 + Math.sin(t * 4) * 0.3,
+                    blur: Math.sin(t * 3) * 3,
+                    y: Math.sin(t * 2.3) * 5,
+                };
+            case 4: // x - pulsarStar
+                return {
+                    ...letter,
+                    scale: 1 + Math.sin(t * 4) * 0.2,
+                    rotation: t * 120,
+                    opacity: 0.8 + Math.sin(t * 5) * 0.2,
+                    blur: 1 + Math.sin(t * 4) * 2,
+                };
+            case 5: // t - cyberGlitch
+                return {
+                    ...letter,
+                    x: Math.sin(t * 3) * 3,
+                    y: Math.cos(t * 2.5) * 2,
+                    opacity: 0.8 + Math.sin(t * 5) * 0.2,
+                    scale: 1 + Math.sin(t * 3) * 0.1,
+                };
+            case 6: // B - particleDrift
+                return {
+                    ...letter,
+                    x: Math.cos(t * 1.4) * 5,
+                    y: Math.sin(t * 1.6) * 4,
+                    rotation: Math.sin(t) * 5,
+                };
+            case 7: // l - synthWave
+                return {
+                    ...letter,
+                    y: Math.sin(t * 3.2) * 6,
+                    scale: 1 + Math.sin(t * 2.5) * 0.12,
+                    opacity: 0.85 + Math.sin(t * 3.8) * 0.15,
+                };
+            case 8: // o - quantumSpin
+                return {
+                    ...letter,
+                    rotation: t * 180,
+                    scale: 1 + Math.sin(t * 2) * 0.15,
+                    y: Math.sin(t * 2.2) * 4,
+                };
+            case 9: // g - neonVibe
+                return {
+                    ...letter,
+                    y: Math.sin(t * 2.7) * 8,
+                    rotation: Math.sin(t * 1.8) * 15,
+                    scale: 1 + Math.sin(t * 3.1) * 0.2,
+                };
+            default:
+                return letter;
+        }
+    };
+
+    // Цикл авто-анимации
     const startAutoAnimationCycle = () => {
-        const playAnimation = () => {
-            setIsPlayingAnimation(true);
+        if (isHovered || isAnimating) return;
 
-            const startTime = Date.now();
-            const duration = 5000; // 5 секунд анимации
+        setIsAnimating(true);
+        const startTime = Date.now();
+        const duration = 5000; // 5 секунд анимации
 
-            const animate = () => {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
+        const animateFrame = () => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
 
-                setLetters((prevLetters) =>
-                    prevLetters.map((letter) => {
-                        if (letter.isSpaced) return letter;
+            setLetters((prevLetters) =>
+                prevLetters.map((letter) => {
+                    if (letter.isSpaced) return letter;
+                    return animateLetter(letter, progress);
+                }),
+            );
 
-                        const t = progress * Math.PI * 2;
-
-                        switch (letter.animationType.name) {
-                            case "neonPulse": // M
-                                return {
-                                    ...letter,
-                                    scale: 1 + Math.sin(t * 2) * 0.2,
-                                    y: Math.sin(t * 3) * 5,
-                                    opacity: 0.9 + Math.sin(t * 4) * 0.1,
-                                    blur: Math.sin(t * 5) * 2,
-                                };
-                            case "liquidFlow": // y
-                                return {
-                                    ...letter,
-                                    y: Math.sin(t * 2.5) * 8,
-                                    rotation: Math.sin(t * 1.5) * 10,
-                                    scale: 1 + Math.sin(t * 3) * 0.15,
-                                    opacity: 0.9 + Math.sin(t * 3.5) * 0.1,
-                                };
-                            case "quantumFloat": // N
-                                return {
-                                    ...letter,
-                                    x: Math.cos(t * 2) * 6,
-                                    y: Math.sin(t * 1.8) * 4,
-                                    rotation: Math.sin(t * 1.2) * 8,
-                                    scale: 1 + Math.sin(t * 2.2) * 0.1,
-                                };
-                            case "hologram": // e
-                                return {
-                                    ...letter,
-                                    opacity: 0.7 + Math.sin(t * 4) * 0.3,
-                                    blur: Math.sin(t * 3) * 3,
-                                    y: Math.sin(t * 2.3) * 5,
-                                };
-                            case "pulsarStar": // x - пульсар в авто-анимации
-                                return {
-                                    ...letter,
-                                    scale: 1 + Math.sin(t * 4) * 0.2,
-                                    rotation: t * 120,
-                                    opacity: 0.8 + Math.sin(t * 5) * 0.2,
-                                    blur: 1 + Math.sin(t * 4) * 2,
-                                };
-                            case "cyberGlitch": // t
-                                return {
-                                    ...letter,
-                                    x: Math.random() * 3 - 1.5,
-                                    y: Math.random() * 3 - 1.5,
-                                    opacity: 0.8 + Math.random() * 0.2,
-                                    scale: 1 + Math.random() * 0.1,
-                                };
-                            case "particleDrift": // B
-                                return {
-                                    ...letter,
-                                    x: Math.cos(t * 1.4) * 5,
-                                    y: Math.sin(t * 1.6) * 4,
-                                    rotation: Math.sin(t) * 5,
-                                };
-                            case "synthWave": // l
-                                return {
-                                    ...letter,
-                                    y: Math.sin(t * 3.2) * 6,
-                                    scale: 1 + Math.sin(t * 2.5) * 0.12,
-                                    opacity: 0.85 + Math.sin(t * 3.8) * 0.15,
-                                };
-                            case "quantumSpin": // o
-                                return {
-                                    ...letter,
-                                    rotation: t * 180,
-                                    scale: 1 + Math.sin(t * 2) * 0.15,
-                                    y: Math.sin(t * 2.2) * 4,
-                                };
-                            case "neonVibe": // g
-                                return {
-                                    ...letter,
-                                    y: Math.sin(t * 2.7) * 8,
-                                    rotation: Math.sin(t * 1.8) * 15,
-                                    scale: 1 + Math.sin(t * 3.1) * 0.2,
-                                };
-                            default:
-                                return letter;
-                        }
-                    }),
-                );
-
-                if (progress < 1) {
-                    autoAnimationRef.current = requestAnimationFrame(animate);
-                } else {
-                    // Завершаем анимацию
-                    resetLetters();
-                    setIsPlayingAnimation(false);
-
-                    // Пауза 20 секунд перед следующей анимацией
-                    pauseTimerRef.current = setTimeout(() => {
-                        playAnimation();
-                    }, 20000);
-                }
-            };
-
-            autoAnimationRef.current = requestAnimationFrame(animate);
+            if (progress < 1) {
+                requestAnimationFrame(animateFrame);
+            } else {
+                // Анимация завершена
+                finishAutoAnimation();
+            }
         };
 
-        // Начало первого цикла
-        pauseTimerRef.current = setTimeout(() => {
-            playAnimation();
-        }, 1000); // Начальная задержка 1 секунда
+        requestAnimationFrame(animateFrame);
     };
 
-    // Сброс букв в исходное состояние
-    const resetLetters = () => {
+    // Завершение авто-анимации
+    const finishAutoAnimation = () => {
+        // Плавно возвращаем буквы в исходное положение
         setLetters((prevLetters) =>
             prevLetters.map((letter) => ({
                 ...letter,
@@ -229,117 +201,119 @@ function Logo() {
                 scale: 1,
                 opacity: 1,
                 blur: 0,
+                transition: "all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
             })),
         );
+
+        setIsAnimating(false);
+
+        // Ждем 10 секунд и запускаем снова
+        autoAnimationRef.current = setTimeout(() => {
+            startAutoAnimationCycle();
+        }, 10000);
     };
 
     // Эффект взрывной волны при наведении
     const handleHoverStart = () => {
-        if (isAnimating || isPlayingAnimation) return;
+        // Останавливаем авто-анимацию
+        cleanupTimers();
+        setIsAnimating(false);
 
         setIsHovered(true);
         setShowPulsar(true);
 
-        // Останавливаем авто-анимацию
-        if (autoAnimationRef.current) {
-            cancelAnimationFrame(autoAnimationRef.current);
-        }
-        if (pauseTimerRef.current) {
-            clearTimeout(pauseTimerRef.current);
-        }
+        // Применяем эффект взрывной волны
+        setLetters((prevLetters) =>
+            prevLetters.map((letter) => {
+                if (letter.isSpaced) return letter;
 
-        // Эффект взрывной волны: буквы отодвигаются от x
-        const hoveredLetters = letters.map((letter) => {
-            if (letter.isSpaced || letter.id === 4) return letter; // Пропускаем пробелы и саму букву x
+                // Буква x становится пульсаром
+                if (letter.id === 4) {
+                    return {
+                        ...letter,
+                        scale: 1.8,
+                        opacity: 1,
+                        blur: 3,
+                        rotation: 0,
+                        transition:
+                            "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+                    };
+                }
 
-            // Буква x (индекс 4) становится пульсаром - увеличивается и светится
-            if (letter.id === 4) {
+                // Остальные буквы отодвигаются
+                const offset = letter.waveOffset;
                 return {
                     ...letter,
-                    scale: 1.8,
-                    opacity: 1,
-                    blur: 3,
-                    rotation: 0,
+                    x: offset,
+                    scale: 1.05,
+                    opacity: 0.9,
+                    transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
                 };
-            }
-
-            // Остальные буквы отодвигаются на 5-10px в зависимости от расстояния до x
-            const offset = letter.waveOffset;
-            return {
-                ...letter,
-                x: offset,
-                scale: 1.05,
-                opacity: 0.9,
-                transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            };
-        });
-
-        // Особый случай для буквы x - она становится пульсаром
-        const xLetter = letters[4];
-        if (xLetter) {
-            hoveredLetters[4] = {
-                ...xLetter,
-                scale: 1.8,
-                opacity: 1,
-                blur: 4,
-                rotation: 0,
-                transition: "all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            };
-        }
-
-        setLetters(hoveredLetters);
+            }),
+        );
     };
 
     // Возврат при уходе мыши
     const handleHoverEnd = () => {
-        if (isAnimating) return;
-
         setIsHovered(false);
         setShowPulsar(false);
 
-        // Плавный возврат к исходному состоянию
-        const returnedLetters = letters.map((letter) => ({
-            ...letter,
-            x: 0,
-            y: 0,
-            rotation: 0,
-            scale: 1,
-            opacity: 1,
-            blur: 0,
-            transition: "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-        }));
+        // Плавный возврат
+        setLetters((prevLetters) =>
+            prevLetters.map((letter) => ({
+                ...letter,
+                x: 0,
+                y: 0,
+                rotation: 0,
+                scale: 1,
+                opacity: 1,
+                blur: 0,
+                transition: "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+            })),
+        );
 
-        setLetters(returnedLetters);
-
-        // Возобновляем авто-анимацию через 0.6 секунды
+        // Через 1 секунду возобновляем авто-анимацию
         hoverTimeoutRef.current = setTimeout(() => {
             startAutoAnimationCycle();
-        }, 600);
+        }, 1000);
     };
 
-    // Обработка клика по логотипу
+    // Обработка клика
     const handleClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        // Навигация без перезагрузки страницы
+        // Навигация
         router.push("/", undefined, { shallow: true });
 
-        // Добавляем небольшой эффект при клике
+        // Быстрый эффект пульсара
         setIsHovered(true);
         setShowPulsar(true);
 
-        // Кратковременный эффект пульсара
+        // Кратковременный эффект
         setTimeout(() => {
             setIsHovered(false);
             setShowPulsar(false);
-            resetLetters();
+            // Возврат в исходное состояние
+            setLetters((prevLetters) =>
+                prevLetters.map((letter) => ({
+                    ...letter,
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    scale: 1,
+                    opacity: 1,
+                    blur: 0,
+                })),
+            );
         }, 300);
     };
 
-    // Очистка таймеров при размонтировании
+    // Очистка при размонтировании
     useEffect(() => {
-        return cleanupTimers;
+        return () => {
+            cleanupTimers();
+        };
     }, []);
 
     return (
@@ -372,7 +346,7 @@ function Logo() {
                             key={letter.id}
                             className={`${classes.letterWrapper} ${letter.isSpaced ? classes.spaceWrapper : ""}`}>
                             <span
-                                className={`${classes.letter} ${letter.isSpaced ? classes.space : ""} ${classes[letter.animationType.name]}`}
+                                className={`${classes.letter} ${letter.isSpaced ? classes.space : ""}`}
                                 style={{
                                     background: letter.gradient,
                                     WebkitBackgroundClip: "text",
@@ -381,26 +355,17 @@ function Logo() {
                                     filter: `drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)) blur(${letter.blur}px)`,
                                     opacity: letter.opacity,
                                     transition:
-                                        letter.transition ||
-                                        (isPlayingAnimation
-                                            ? "transform 0.4s ease, opacity 0.3s ease, filter 0.3s ease"
-                                            : "transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease, filter 0.4s ease"),
-                                    animationPlayState: isPlayingAnimation
-                                        ? "running"
-                                        : "paused",
+                                        letter.transition || "all 0.3s ease",
                                 }}>
                                 {letter.char}
 
-                                {/* Эффект свечения буквы */}
-                                {letter.id === 4 && isHovered && (
+                                {/* Эффект свечения */}
+                                {letter.id === 4 && isHovered ? (
                                     <span
                                         className={classes.pulsarGlow}
                                         style={{ background: letter.gradient }}
                                     />
-                                )}
-
-                                {/* Стандартное свечение для других букв */}
-                                {letter.id !== 4 && (
+                                ) : (
                                     <span
                                         className={classes.letterGlow}
                                         style={{ background: letter.gradient }}
@@ -430,7 +395,7 @@ function Logo() {
                     </div>
                 )}
 
-                {/* Эффект пульсара для буквы x */}
+                {/* Эффект пульсара */}
                 {showPulsar && (
                     <div className={classes.pulsarEffect}>
                         <div className={classes.pulsarRing} />

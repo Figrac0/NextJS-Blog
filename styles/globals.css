@@ -1,64 +1,174 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto&family=Source+Sans+Pro:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Современная темная цветовая схема */
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #e0e7ff;
+    --color-primary-200: #c7d2fe;
+    --color-primary-300: #a5b4fc;
+    --color-primary-400: #818cf8;
+    --color-primary-500: #667eea; /* Основной фиолетово-синий */
+    --color-primary-600: #764ba2; /* Вторичный фиолетовый */
+    --color-primary-700: #5b21b6;
+    --color-primary-800: #4c1d95;
+    --color-primary-900: #371c75;
+
+    /* Градиенты */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-dark: linear-gradient(
+        135deg,
+        #0a0a0a 0%,
+        #1a1a2e 50%,
+        #16213e 100%
+    );
+    --gradient-glass: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+
+    /* Современные нейтральные цвета */
+    --color-grey-50: #fafafa;
+    --color-grey-100: #f5f5f5;
+    --color-grey-200: #e5e5e5;
+    --color-grey-300: #d4d4d4;
+    --color-grey-400: #a3a3a3;
+    --color-grey-500: #737373;
+    --color-grey-600: #525252;
+    --color-grey-700: #404040;
+    --color-grey-800: #262626;
+    --color-grey-900: #171717;
+
+    /* Акцентные цвета */
+    --color-accent-teal: #4ecdc4;
+    --color-accent-pink: #ff6b6b;
+    --color-accent-yellow: #feca57;
+    --color-accent-cyan: #54a0ff;
+    --color-accent-green: #00d2d3;
+
+    /* Цвета состояния */
+    --color-success-100: #d1fae5;
+    --color-success-500: #10b981;
+    --color-success-600: #059669;
+
+    --color-error-100: #fee2e2;
+    --color-error-500: #ef4444;
+    --color-error-600: #dc2626;
+
+    --color-warning-100: #fef3c7;
+    --color-warning-500: #f59e0b;
+    --color-warning-600: #d97706;
+
+    /* Тени и эффекты */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl:
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.3);
+    --shadow-glow-lg: 0 0 40px rgba(102, 126, 234, 0.4);
+
+    /* Размеры */
+    --size-1: 0.25rem;
+    --size-2: 0.5rem;
+    --size-3: 0.75rem;
+    --size-4: 1rem;
+    --size-5: 1.25rem;
+    --size-6: 1.5rem;
+    --size-8: 2rem;
+    --size-10: 2.5rem;
+    --size-12: 3rem;
+    --size-16: 4rem;
+    --size-20: 5rem;
+    --size-24: 6rem;
+    --size-32: 8rem;
+    --size-40: 10rem;
+    --size-48: 12rem;
+    --size-56: 14rem;
+    --size-64: 16rem;
+
+    /* Скругления */
+    --radius-sm: 0.125rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* Анимации */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Максимальные ширины */
+    --max-width-sm: 640px;
+    --max-width-md: 768px;
+    --max-width-lg: 1024px;
+    --max-width-xl: 1280px;
+    --max-width-2xl: 1400px;
+}
+
+/* Базовые стили */
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  --color-grey-50: hsl(265, 55%, 96%);
-  --color-grey-100: hsl(265, 19%, 88%);
-  --color-grey-200: hsl(265, 7%, 70%);
-  --color-grey-300: hsl(265, 6%, 66%);
-  --color-grey-400: hsl(265, 4%, 57%);
-  --color-grey-500: hsl(265, 3%, 53%);
-  --color-grey-600: hsl(265, 4%, 42%);
-  --color-grey-700: hsl(265, 4%, 31%);
-  --color-grey-800: hsl(276, 5%, 20%);
-  --color-grey-900: hsl(280, 5%, 13%);
-
-  --color-primary-50: #c8b3ce;
-  --color-primary-100: #a07aaa;
-  --color-primary-200: #884c97;
-  --color-primary-300: #843897;
-  --color-primary-400: #732392;
-  --color-primary-500: #5a097a;
-  --color-primary-600: #480264;
-  --color-primary-700: #3d0264;
-
-  --color-success-100: #a2f0bc;
-  --color-success-500: #12bd4b;
-
-  --color-error-100: #f1acc9;
-  --color-error-500: #a10c4a;
-
-  --size-1: 0.25rem;
-  --size-2: 0.5rem;
-  --size-3: 0.75rem;
-  --size-4: 1rem;
-  --size-5: 1.25rem;
-  --size-6: 1.5rem;
-  --size-8: 2rem;
-  --size-16: 4rem;
-  --size-20: 5rem;
-  --size-40: 10rem;
-
-  margin: 0;
-  background-color: var(--color-grey-500);
-  color: #252525;
-  font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background: var(--gradient-dark);
+    color: rgba(255, 255, 255, 0.92);
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
 }
 
-h1,
-h2,
-h3 {
-  font-family: 'Oswald', 'Roboto', sans-serif;
+/* Плавные переходы для страниц */
+.page-transition-enter {
+    opacity: 0;
+    transform: translateY(10px);
 }
 
-a {
-  text-decoration: none;
+.page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 300ms,
+        transform 300ms;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
+.page-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+        opacity 300ms,
+        transform 300ms;
 }

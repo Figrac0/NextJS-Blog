@@ -1,4 +1,3 @@
-/* components/layout/logo.module.css */
 .logoLink {
     text-decoration: none;
     display: inline-block;
@@ -118,225 +117,118 @@
     opacity: 0;
 }
 
-/* Индивидуальные анимации для букв */
-.neonPulse {
-    animation: neonPulseAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.liquidFlow {
-    animation: liquidFlowAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.quantumFloat {
-    animation: quantumFloatAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.hologram {
-    animation: hologramAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.pulsarStar {
-    animation: pulsarStarAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.cyberGlitch {
-    animation: cyberGlitchAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.particleDrift {
-    animation: particleDriftAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.synthWave {
-    animation: synthWaveAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.quantumSpin {
-    animation: quantumSpinAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-.neonVibe {
-    animation: neonVibeAnimation 5s ease-in-out infinite;
-    animation-play-state: paused;
-}
-
-/* Определения анимаций */
-@keyframes neonPulseAnimation {
+/* Классы анимаций для авто-анимации */
+@keyframes neonPulse {
     0%,
     100% {
         transform: translateY(0) scale(1);
         opacity: 1;
         filter: drop-shadow(0 0 3px currentColor) blur(0);
     }
-    25% {
-        transform: translateY(-4px) scale(1.1);
-        opacity: 0.95;
-    }
     50% {
-        transform: translateY(2px) scale(1.05);
+        transform: translateY(-5px) scale(1.1);
         filter: drop-shadow(0 0 6px currentColor) blur(1px);
-    }
-    75% {
-        transform: translateY(-2px) scale(1.08);
-        opacity: 0.98;
     }
 }
 
-@keyframes liquidFlowAnimation {
+@keyframes liquidFlow {
     0%,
     100% {
         transform: translateY(0) rotate(0) scale(1);
-        opacity: 1;
     }
-    33% {
-        transform: translateY(-6px) rotate(-3deg) scale(1.08);
-        opacity: 0.95;
-    }
-    66% {
-        transform: translateY(4px) rotate(2deg) scale(1.12);
+    50% {
+        transform: translateY(-8px) rotate(-5deg) scale(1.15);
     }
 }
 
-@keyframes quantumFloatAnimation {
+@keyframes quantumFloat {
     0%,
     100% {
         transform: translate(0, 0) rotate(0);
     }
-    25% {
-        transform: translate(3px, -3px) rotate(2deg);
-    }
     50% {
-        transform: translate(-2px, 2px) rotate(-1deg);
-    }
-    75% {
-        transform: translate(1px, -1px) rotate(1deg);
+        transform: translate(5px, -5px) rotate(3deg);
     }
 }
 
-@keyframes hologramAnimation {
+@keyframes hologram {
     0%,
     100% {
         opacity: 1;
-        filter: blur(0) drop-shadow(0 0 0 currentColor);
+        filter: blur(0);
     }
     50% {
-        opacity: 0.8;
-        filter: blur(2px) drop-shadow(0 0 5px currentColor);
+        opacity: 0.7;
+        filter: blur(3px);
     }
 }
 
-@keyframes pulsarStarAnimation {
+@keyframes pulsarStar {
     0%,
     100% {
         transform: scale(1) rotate(0deg);
-        opacity: 1;
-        filter: blur(0) drop-shadow(0 0 3px currentColor);
-    }
-    25% {
-        transform: scale(1.25) rotate(90deg);
-        opacity: 0.9;
-        filter: blur(1px) drop-shadow(0 0 6px currentColor);
     }
     50% {
-        transform: scale(1.15) rotate(180deg);
-        opacity: 0.95;
+        transform: scale(1.3) rotate(180deg);
         filter: blur(2px) drop-shadow(0 0 8px currentColor);
-    }
-    75% {
-        transform: scale(1.2) rotate(270deg);
-        opacity: 0.85;
-        filter: blur(1.5px) drop-shadow(0 0 7px currentColor);
     }
 }
 
-@keyframes cyberGlitchAnimation {
+@keyframes cyberGlitch {
     0%,
-    90%,
     100% {
         transform: translate(0, 0) scale(1);
         opacity: 1;
     }
-    92% {
-        transform: translate(1px, -1px) scale(1.02);
+    25% {
+        transform: translate(2px, -2px) scale(1.05);
         opacity: 0.9;
     }
-    94% {
-        transform: translate(-1px, 1px) scale(0.98);
+    75% {
+        transform: translate(-2px, 2px) scale(0.95);
         opacity: 0.8;
-    }
-    96% {
-        transform: translate(2px, 0) scale(1.05);
-        opacity: 0.7;
-    }
-    98% {
-        transform: translate(-2px, -2px) scale(0.95);
-        opacity: 0.6;
     }
 }
 
-@keyframes particleDriftAnimation {
+@keyframes particleDrift {
     0%,
     100% {
         transform: translate(0, 0) rotate(0);
     }
-    25% {
-        transform: translate(2px, -2px) rotate(1deg);
-    }
     50% {
-        transform: translate(-3px, 1px) rotate(-1deg);
-    }
-    75% {
-        transform: translate(1px, 2px) rotate(2deg);
+        transform: translate(4px, -3px) rotate(2deg);
     }
 }
 
-@keyframes synthWaveAnimation {
+@keyframes synthWave {
     0%,
     100% {
         transform: translateY(0) scale(1);
-        opacity: 1;
     }
     50% {
-        transform: translateY(-8px) scale(1.1);
-        opacity: 0.9;
-        filter: drop-shadow(0 0 4px currentColor);
+        transform: translateY(-10px) scale(1.2);
     }
 }
 
-@keyframes quantumSpinAnimation {
+@keyframes quantumSpin {
     0% {
         transform: rotate(0deg) scale(1);
     }
     50% {
-        transform: rotate(180deg) scale(1.1);
+        transform: rotate(180deg) scale(1.2);
     }
     100% {
         transform: rotate(360deg) scale(1);
     }
 }
 
-@keyframes neonVibeAnimation {
+@keyframes neonVibe {
     0%,
     100% {
         transform: translateY(0) rotate(0) scale(1);
     }
-    25% {
-        transform: translateY(-7px) rotate(-4deg) scale(1.15);
-    }
     50% {
-        transform: translateY(5px) rotate(3deg) scale(1.2);
-    }
-    75% {
-        transform: translateY(-3px) rotate(2deg) scale(1.1);
+        transform: translateY(-10px) rotate(-8deg) scale(1.25);
     }
 }
 
@@ -420,8 +312,8 @@
     100% {
         opacity: 0;
         transform: translate(
-                calc((var(--tx, 1) - 0.5) * 20px),
-                calc((var(--ty, 1) - 0.5) * 20px)
+                calc((var(--random-x) - 0.5) * 40px),
+                calc((var(--random-y) - 0.5) * 40px)
             )
             scale(1);
     }
@@ -537,7 +429,7 @@
     }
 }
 
-/* Медиа-запросы */
+/* Медиа-запросы - ИСПРАВЛЕНО */
 @media (min-width: 768px) {
     .letter {
         font-size: 2rem;

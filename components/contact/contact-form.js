@@ -1,4 +1,3 @@
-// components/contact/contact-form.js
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useLanguage } from "../../context/language-context";
@@ -26,7 +25,7 @@ function ContactForm() {
     const [enteredEmail, setEnteredEmail] = useState("");
     const [enteredName, setEnteredName] = useState("");
     const [enteredMessage, setEnteredMessage] = useState("");
-    const [requestStatus, setRequestStatus] = useState(); // 'pending', 'success', 'error'
+    const [requestStatus, setRequestStatus] = useState();
     const [requestError, setRequestError] = useState();
     const [isSubmitting, setIsSubmitting] = useState(false);
 

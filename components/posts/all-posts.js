@@ -291,7 +291,7 @@ function AllPostsEnhanced({ posts }) {
                                     : t("psychedelicMode")
                             }>
                             <span className={classes.buttonIcon}>
-                                {psychedelicMode ? "🌈" : "✨"}
+                                {psychedelicMode ? " " : "✨"}
                             </span>
                             <span className={classes.buttonText}>
                                 {psychedelicMode
@@ -380,7 +380,7 @@ function AllPostsEnhanced({ posts }) {
                     <div className={classes.filtersContainer}>
                         <div className={classes.filterGroup}>
                             <span className={classes.filterLabel}>
-                                📁 {t("categories.all")}
+                                📁 {t("categoriesFormated.categories")}
                             </span>
                             <div className={classes.filterButtons}>
                                 {[
@@ -403,7 +403,7 @@ function AllPostsEnhanced({ posts }) {
 
                         <div className={classes.filterGroup}>
                             <span className={classes.filterLabel}>
-                                🎯 {t("filters.all")}
+                                🎯 {t("categoriesFormated.filter")}
                             </span>
                             <div className={classes.filterButtons}>
                                 {["all", "featured", "trending", "new"].map(
@@ -605,7 +605,6 @@ function AllPostsEnhanced({ posts }) {
                 </aside>
             </div>
 
-            {/* Плавающая кнопка скролла */}
             <button
                 className={classes.scrollTop}
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}

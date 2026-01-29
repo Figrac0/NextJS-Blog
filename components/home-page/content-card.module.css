@@ -1,20 +1,21 @@
-/* components/home-page/content-card.module.css */
 .card {
     position: relative;
-    background: white;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.3);
 }
 
 .typeBadge {
@@ -36,12 +37,12 @@
 }
 
 .typeBadge.tutorial {
-    background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
     color: white;
 }
 
 .typeBadge.article {
-    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    background: linear-gradient(135deg, #ff6b6b 0%, #c44569 100%);
     color: white;
 }
 
@@ -64,18 +65,18 @@
 }
 
 .statusBadge.featured {
-    background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+    background: linear-gradient(135deg, #feca57 0%, #ff9f43 100%);
     color: #333;
 }
 
 .statusBadge.trending {
-    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    background: linear-gradient(135deg, #54a0ff 0%, #2e86de 100%);
     color: white;
 }
 
 .statusBadge.new {
-    background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%);
-    color: #333;
+    background: linear-gradient(135deg, #00d2d3 0%, #01a3a4 100%);
+    color: white;
 }
 
 .imageContainer {
@@ -122,7 +123,7 @@
     gap: 1rem;
     margin-bottom: 1rem;
     font-size: 0.85rem;
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
     flex-wrap: wrap;
 }
 
@@ -150,7 +151,7 @@
 }
 
 .title a {
-    color: #333;
+    color: white;
     text-decoration: none;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
@@ -164,7 +165,7 @@
 }
 
 .excerpt {
-    color: #666;
+    color: rgba(255, 255, 255, 0.7);
     margin: 0 0 1.5rem 0;
     line-height: 1.6;
     flex: 1;
@@ -180,10 +181,17 @@
 .tech {
     padding: 0.4rem 0.8rem;
     background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.3);
     border-radius: 50px;
     font-size: 0.8rem;
     font-weight: 600;
     color: #667eea;
+    transition: all 0.3s ease;
+}
+
+.tech:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: translateY(-1px);
 }
 
 .footer {
@@ -192,7 +200,7 @@
     align-items: flex-end;
     margin-top: auto;
     padding-top: 1.5rem;
-    border-top: 2px solid #f0f2ff;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
     gap: 1rem;
     flex-wrap: wrap;
 }
@@ -215,12 +223,12 @@
 
 .statValue {
     font-weight: 700;
-    color: #333;
+    color: white;
 }
 
 .statLabel {
     font-size: 0.85rem;
-    color: #666;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .statsPlaceholder {
@@ -255,8 +263,9 @@
 }
 
 .demoButton:hover {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(102, 126, 234, 0.2);
     border-color: #667eea;
+    transform: translateY(-2px);
 }
 
 .readButton {

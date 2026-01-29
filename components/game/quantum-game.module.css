@@ -1,0 +1,1087 @@
+/* Общие стили модальных окон */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Модальное окно */
+.rulesModal,
+.hintModal,
+.resultsModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    padding: 1rem;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modalContent {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.98) 0%,
+        rgba(26, 26, 46, 0.98) 100%
+    );
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 600px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.modalTitle {
+    color: white;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.modalBody {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+}
+
+.modalFooter {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.closeModal {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1002;
+}
+
+.closeModal:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* Экран результатов */
+.resultsOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.resultsModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    padding: 1rem;
+    animation: slideUp 0.3s ease;
+}
+
+.resultsContent {
+    background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.98) 0%,
+        rgba(26, 26, 46, 0.98) 100%
+    );
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.resultsTitle {
+    color: white;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.resultsStats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.resultStat {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.resultStat:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+.resultStatIcon {
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.resultStatInfo {
+    flex: 1;
+}
+
+.resultStatValue {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+}
+
+.resultStatLabel {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.resultsActions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.playAgainButton {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    min-width: 200px;
+}
+
+.closeResultsButton {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    min-width: 150px;
+}
+
+/* Правила игры */
+.rulesList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+.rulesList li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.rulesList li:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ruleIcon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.rulesTip {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    border-radius: 10px;
+    padding: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.tipIcon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Экран старта */
+.startScreen {
+    width: 800px;
+    height: 600px;
+    max-width: 95vw;
+    max-height: 85vh;
+    margin: 2rem auto;
+    background: linear-gradient(
+        135deg,
+        rgba(10, 10, 10, 0.95) 0%,
+        rgba(26, 26, 46, 0.95) 50%,
+        rgba(22, 33, 62, 0.95) 100%
+    );
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 25px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 100px rgba(102, 126, 234, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    animation: slideIn 0.5s ease-out;
+}
+
+.startScreen.fadeOut {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+.startContent {
+    text-align: center;
+    color: white;
+    max-width: 600px;
+}
+
+.gameSubtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 1rem 0 3rem;
+    line-height: 1.6;
+}
+
+.startButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.startButton {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    min-width: 250px;
+}
+
+.rulesButton {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    min-width: 250px;
+}
+
+/* Основной контейнер игры */
+.gameContainer {
+    width: 900px;
+    height: 700px;
+    max-width: 95vw;
+    max-height: 90vh;
+    margin: 1rem auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 25px;
+    background: linear-gradient(
+        135deg,
+        rgba(10, 10, 10, 0.95) 0%,
+        rgba(26, 26, 46, 0.95) 50%,
+        rgba(22, 33, 62, 0.95) 100%
+    );
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 100px rgba(102, 126, 234, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    animation: gameAppear 0.5s ease-out;
+}
+
+@keyframes gameAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Заголовок и статистика */
+.gameHeader {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    z-index: 10;
+}
+
+.gameTitle {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+.gameStats {
+    display: flex;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    padding: 0.8rem 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.statValue {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+}
+
+.statLabel {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Основная игровая область */
+.gameMain {
+    flex: 1;
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    min-height: 0;
+    height: calc(100% - 150px);
+}
+
+/* Область кода */
+.codeArea {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    z-index: 5;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.codeTitle {
+    color: white;
+    font-size: 1.3rem;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+}
+
+.codeTitle::before {
+    content: "📄";
+    font-size: 1.2rem;
+}
+
+.codeBlock {
+    flex: 1;
+    background: #0f172a;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    overflow: auto;
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    min-height: 0;
+}
+
+.codeLine {
+    color: #cbd5e1;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 2px solid transparent;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.codeLine.highlighted {
+    border-left: 2px solid #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
+.codeKeyword {
+    color: #f472b6;
+    font-weight: bold;
+}
+
+.codeString {
+    color: #34d399;
+}
+
+.codeNumber {
+    color: #fbbf24;
+}
+
+.codeOperator {
+    color: #c084fc;
+}
+
+.codeVariable {
+    color: #60a5fa;
+}
+
+/* Область элементов справа */
+.elementsArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    z-index: 5;
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    min-width: 200px;
+}
+
+.elementsTitle {
+    color: white;
+    font-size: 1.3rem;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 0 auto;
+}
+
+.elementsTitle::before {
+    content: "🎮";
+    font-size: 1.2rem;
+}
+
+.elementsContainer {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 0.5rem;
+    min-height: 0;
+}
+
+/* Плавающие элементы кода */
+.floatingElement {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: grab;
+    user-select: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    min-height: 70px;
+}
+
+.floatingElement:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.floatingElement.dragging {
+    cursor: grabbing;
+    opacity: 0.8;
+    transform: scale(0.95);
+}
+
+/* Слоты для перетаскивания в коде */
+.codeSlot {
+    display: inline-block;
+    min-width: 60px;
+    height: 40px;
+    line-height: 36px;
+    border-radius: 8px;
+    border: 2px dashed rgba(148, 163, 184, 0.3);
+    background: rgba(15, 23, 42, 0.5);
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+}
+
+.codeSlot:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* Сообщения */
+.message {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    font-weight: 600;
+    z-index: 40;
+    animation: messageAppear 0.3s ease-out;
+    text-align: center;
+    min-width: 250px;
+    max-width: 80%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.successMessage {
+    background: linear-gradient(
+        135deg,
+        rgba(52, 211, 153, 0.9) 0%,
+        rgba(16, 185, 129, 0.9) 100%
+    );
+    color: white;
+}
+
+.errorMessage {
+    background: linear-gradient(
+        135deg,
+        rgba(248, 113, 113, 0.9) 0%,
+        rgba(239, 68, 68, 0.9) 100%
+    );
+    color: white;
+}
+
+/* Панель управления */
+.controlsPanel {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 0 0 0;
+    z-index: 10;
+}
+
+/* Кнопки */
+.controlButton {
+    padding: 0.8rem 1.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.controlButton:hover {
+    background: rgba(102, 126, 234, 0.2);
+    color: #667eea;
+    transform: translateY(-2px);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.checkButton {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.checkButton:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a3f9a 100%);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.hintButton {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border: none;
+}
+
+.hintButton:hover {
+    background: linear-gradient(135deg, #eab308 0%, #d97706 100%);
+    box-shadow: 0 5px 20px rgba(251, 191, 36, 0.4);
+    color: white;
+}
+
+.resetButton {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    color: white;
+    border: none;
+}
+
+.resetButton:hover {
+    background: linear-gradient(135deg, #2bbf8a 0%, #0da271 100%);
+    box-shadow: 0 5px 20px rgba(52, 211, 153, 0.4);
+    color: white;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .gameContainer {
+        width: 95vw;
+        height: 95vh;
+        padding: 1rem;
+    }
+
+    .gameMain {
+        flex-direction: column;
+        height: calc(100% - 180px);
+    }
+
+    .codeArea,
+    .elementsArea {
+        min-height: 200px;
+    }
+
+    .elementsContainer {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+
+    .resultsStats {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .gameContainer {
+        height: 95vh;
+        margin: 0.5rem auto;
+    }
+
+    .gameHeader {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .gameTitle {
+        font-size: 1.5rem;
+    }
+
+    .gameStats {
+        width: 100%;
+        justify-content: space-around;
+        padding: 0.6rem 1rem;
+        gap: 1rem;
+    }
+
+    .statValue {
+        font-size: 1.3rem;
+    }
+
+    .codeArea,
+    .elementsArea {
+        padding: 1rem;
+    }
+
+    .codeTitle,
+    .elementsTitle {
+        font-size: 1.1rem;
+    }
+
+    .codeBlock {
+        font-size: 0.85rem;
+        padding: 1rem;
+    }
+
+    .floatingElement {
+        min-height: 60px;
+        font-size: 1.2rem;
+    }
+
+    .codeSlot {
+        min-width: 40px;
+        height: 30px;
+        line-height: 26px;
+        font-size: 0.9rem;
+    }
+
+    .controlsPanel {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0.5rem 0 0 0;
+    }
+
+    .controlButton {
+        flex: 1;
+        min-width: 120px;
+        padding: 0.7rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .message {
+        top: 25%;
+        min-width: 200px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .startScreen {
+        padding: 1rem;
+        height: 500px;
+    }
+
+    .startButton,
+    .rulesButton {
+        min-width: 200px;
+        padding: 0.8rem 2rem;
+    }
+
+    .modalContent,
+    .resultsContent {
+        padding: 2rem 1.5rem;
+    }
+
+    .resultsActions {
+        flex-direction: column;
+    }
+
+    .playAgainButton,
+    .closeResultsButton {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .gameTitle {
+        font-size: 1.3rem;
+    }
+
+    .statValue {
+        font-size: 1.1rem;
+    }
+
+    .statLabel {
+        font-size: 0.7rem;
+    }
+
+    .gameMain {
+        flex-direction: column;
+        height: calc(100% - 200px);
+    }
+
+    .elementsContainer {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+
+    .floatingElement {
+        min-height: 50px;
+        font-size: 1rem;
+    }
+
+    .codeSlot {
+        min-width: 30px;
+        height: 25px;
+        line-height: 21px;
+        font-size: 0.8rem;
+    }
+
+    .controlsPanel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .controlButton {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .startScreen {
+        height: 450px;
+    }
+
+    .startContent {
+        padding: 0.5rem;
+    }
+
+    .gameSubtitle {
+        font-size: 1rem;
+        margin: 1rem 0 2rem;
+    }
+
+    .startButton,
+    .rulesButton {
+        min-width: 180px;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .modalTitle {
+        font-size: 1.5rem;
+    }
+}
+
+/* Кастомный скроллбар для модальных окон и длинных блоков */
+.modalContent::-webkit-scrollbar,
+.resultsContent::-webkit-scrollbar,
+.codeBlock::-webkit-scrollbar,
+.elementsContainer::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.modalContent::-webkit-scrollbar-track,
+.resultsContent::-webkit-scrollbar-track,
+.codeBlock::-webkit-scrollbar-track,
+.elementsContainer::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 10px;
+    margin: 4px;
+}
+
+.modalContent::-webkit-scrollbar-thumb,
+.resultsContent::-webkit-scrollbar-thumb,
+.codeBlock::-webkit-scrollbar-thumb,
+.elementsContainer::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    border: 2px solid rgba(15, 23, 42, 0.5);
+    transition: all 0.3s ease;
+}
+
+.modalContent::-webkit-scrollbar-thumb:hover,
+.resultsContent::-webkit-scrollbar-thumb:hover,
+.codeBlock::-webkit-scrollbar-thumb:hover,
+.elementsContainer::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a3f9a 100%);
+    transform: scale(1.1);
+}
+
+.modalContent::-webkit-scrollbar-corner,
+.resultsContent::-webkit-scrollbar-corner,
+.codeBlock::-webkit-scrollbar-corner,
+.elementsContainer::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Для Firefox */
+.modalContent,
+.resultsContent,
+.codeBlock,
+.elementsContainer {
+    scrollbar-width: thin;
+    scrollbar-color: #667eea rgba(15, 23, 42, 0.5);
+}
+
+/* Плавная прокрутка */
+.modalContent,
+.resultsContent,
+.codeBlock,
+.elementsContainer {
+    scroll-behavior: smooth;
+}
+
+/* Дополнительные стили для длинных текстов в модальных окнах */
+.modalBody,
+.rulesList,
+.rulesTip {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.rulesList {
+    max-height: 300px;
+}
+
+/* Улучшенный скроллбар для списка правил */
+.rulesList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rulesList::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+/* Улучшенный скроллбар для подсказки */
+.rulesTip::-webkit-scrollbar {
+    width: 6px;
+}
+
+.rulesTip::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+}
+
+/* Адаптивность скроллбара */
+@media (max-width: 768px) {
+    .modalContent::-webkit-scrollbar,
+    .resultsContent::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .codeBlock::-webkit-scrollbar,
+    .elementsContainer::-webkit-scrollbar {
+        width: 5px;
+    }
+}

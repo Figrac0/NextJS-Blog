@@ -16,13 +16,12 @@ function FeaturedPosts({ posts }) {
     const [selectedTech, setSelectedTech] = useState("all");
     const [allTechStack, setAllTechStack] = useState(["all"]);
 
-    // Преобразуем посты в формат для карточек
     const formattedPosts = useMemo(() => {
         if (!posts || posts.length === 0) return [];
 
         return posts.map((post) => ({
             id: post.slug,
-            type: post.type || "article", // 'project', 'tutorial', 'article'
+            type: post.type || "article",
             title: post.title,
             excerpt: post.excerpt,
             date: post.date,
@@ -39,7 +38,6 @@ function FeaturedPosts({ posts }) {
         }));
     }, [posts]);
 
-    // Собираем все уникальные технологии из постов
     useEffect(() => {
         if (formattedPosts.length > 0) {
             const allTech = new Set();
@@ -52,11 +50,9 @@ function FeaturedPosts({ posts }) {
         }
     }, [formattedPosts]);
 
-    // Фильтрация и сортировка контента
     const filteredContent = useMemo(() => {
         let filtered = [...formattedPosts];
 
-        // Фильтр по табу
         if (activeTab !== "all") {
             const typeMap = {
                 repositories: "project",
@@ -68,14 +64,12 @@ function FeaturedPosts({ posts }) {
             );
         }
 
-        // Фильтр по технологиям
         if (selectedTech !== "all") {
             filtered = filtered.filter(
                 (item) => item.tech && item.tech.includes(selectedTech),
             );
         }
 
-        // Сортировка
         if (sortBy === "latest") {
             filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
         } else if (sortBy === "popular") {
@@ -89,7 +83,6 @@ function FeaturedPosts({ posts }) {
         return filtered;
     }, [activeTab, selectedTech, sortBy, formattedPosts]);
 
-    // Статистика
     const stats = useMemo(
         () => ({
             totalProjects: formattedPosts.filter((p) => p.type === "project")
@@ -137,7 +130,6 @@ function FeaturedPosts({ posts }) {
     return (
         <section className={classes.featuredSection} id="featured">
             <div className={classes.container}>
-                {/* Заголовок и описание */}
                 <div className={classes.header}>
                     <div className={classes.titleWrapper}>
                         <h2 className={classes.title}>
@@ -153,7 +145,6 @@ function FeaturedPosts({ posts }) {
                 </div>
 
                 <div className={classes.content}>
-                    {/* Боковая панель с фильтрами */}
                     <aside className={classes.sidebar}>
                         {/* Статистика */}
                         <div className={classes.stats}>
@@ -174,7 +165,6 @@ function FeaturedPosts({ posts }) {
                             />
                         </div>
 
-                        {/* Технологии */}
                         <div className={classes.techFilter}>
                             <h3 className={classes.filterTitle}>
                                 <span className={classes.filterIcon}>🔧</span>
@@ -205,7 +195,6 @@ function FeaturedPosts({ posts }) {
                             </div>
                         </div>
 
-                        {/* Сортировка */}
                         <div className={classes.sortFilter}>
                             <h3 className={classes.filterTitle}>
                                 <span className={classes.filterIcon}>↕️</span>
@@ -224,9 +213,7 @@ function FeaturedPosts({ posts }) {
                         </div>
                     </aside>
 
-                    {/* Основной контент */}
                     <main className={classes.main}>
-                        {/* Табы навигации */}
                         <div className={classes.tabsContainer}>
                             <div className={classes.tabs}>
                                 {TABS.map((tab) => (
@@ -254,7 +241,6 @@ function FeaturedPosts({ posts }) {
                             </div>
                         </div>
 
-                        {/* Сетка контента */}
                         {filteredContent.length > 0 ? (
                             <div className={classes.grid}>
                                 {filteredContent.map((item) => (
