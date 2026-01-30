@@ -10,16 +10,38 @@ const TABS = ["all", "repositories", "tutorials", "insights"];
 const SORT_OPTIONS = ["latest", "popular"];
 
 function FeaturedPosts({ posts }) {
-    const { t } = useLanguage();
+    const { t, locale } = useLanguage(); // Добавляем locale из useLanguage
     const [activeTab, setActiveTab] = useState("all");
     const [sortBy, setSortBy] = useState("latest");
     const [selectedTech, setSelectedTech] = useState("all");
     const [allTechStack, setAllTechStack] = useState(["all"]);
+    const [visibleTech, setVisibleTech] = useState(["all"]);
+    const [rotationIndex, setRotationIndex] = useState(0);
 
+    // В useMemo для formattedPosts:
     const formattedPosts = useMemo(() => {
         if (!posts || posts.length === 0) return [];
 
-        return posts.map((post) => ({
+        // Фильтруем дубликаты переводов
+        const seenSlugs = new Set();
+        const uniquePosts = [];
+
+        posts.forEach((post) => {
+            // Если это русский перевод и есть русская версия - пропускаем
+            if (post.locale === "ru" && post.hasRussianVersion) {
+                return;
+            }
+
+            // Если slug уже видели - пропускаем (предотвращаем дублирование)
+            if (seenSlugs.has(post.slug)) {
+                return;
+            }
+
+            seenSlugs.add(post.slug);
+            uniquePosts.push(post);
+        });
+
+        return uniquePosts.map((post) => ({
             id: post.slug,
             type: post.type || "article",
             title: post.title,
@@ -35,9 +57,12 @@ function FeaturedPosts({ posts }) {
             trending: post.isTrending || false,
             new: post.isNew || false,
             demoUrl: post.demoUrl || null,
+            locale: post.locale || "en",
+            hasRussianVersion: post.hasRussianVersion || false,
         }));
     }, [posts]);
 
+    // Получаем все технологии из постов
     useEffect(() => {
         if (formattedPosts.length > 0) {
             const allTech = new Set();
@@ -46,10 +71,51 @@ function FeaturedPosts({ posts }) {
                     post.tech.forEach((tech) => allTech.add(tech));
                 }
             });
-            setAllTechStack(["all", ...Array.from(allTech)]);
-        }
-    }, [formattedPosts]);
+            const techArray = ["all", ...Array.from(allTech)];
+            setAllTechStack(techArray);
 
+            // Показываем первые 10 технологий (или все, если их меньше)
+            const initialVisibleTech =
+                techArray.length > 10
+                    ? ["all", ...techArray.slice(1, 10)]
+                    : techArray;
+            setVisibleTech(initialVisibleTech);
+        }
+    }, [formattedPosts, locale]); // Добавляем locale в зависимости
+
+    // Ротация технологий каждые 10 секунд
+    useEffect(() => {
+        if (allTechStack.length <= 10) return;
+
+        const interval = setInterval(() => {
+            setRotationIndex((prevIndex) => {
+                const nextIndex =
+                    (prevIndex + 1) % Math.ceil((allTechStack.length - 1) / 9);
+
+                const startPos = nextIndex * 9 + 1;
+                const endPos = Math.min(startPos + 9, allTechStack.length);
+
+                const nextVisibleTech = [
+                    "all",
+                    ...allTechStack.slice(startPos, endPos),
+                ];
+
+                if (nextVisibleTech.length < 10 && allTechStack.length > 10) {
+                    const remaining = 10 - nextVisibleTech.length;
+                    nextVisibleTech.push(
+                        ...allTechStack.slice(1, remaining + 1),
+                    );
+                }
+
+                setVisibleTech(nextVisibleTech);
+                return nextIndex;
+            });
+        }, 10000);
+
+        return () => clearInterval(interval);
+    }, [allTechStack]);
+
+    // Остальной код остается без изменений...
     const filteredContent = useMemo(() => {
         let filtered = [...formattedPosts];
 
@@ -169,9 +235,14 @@ function FeaturedPosts({ posts }) {
                             <h3 className={classes.filterTitle}>
                                 <span className={classes.filterIcon}>🔧</span>
                                 {t("tech")}
+                                {allTechStack.length > 10 && (
+                                    <span className={classes.rotationIndicator}>
+                                        🔄
+                                    </span>
+                                )}
                             </h3>
                             <div className={classes.techList}>
-                                {allTechStack.map((tech) =>
+                                {visibleTech.map((tech) =>
                                     tech === "all" ? (
                                         <button
                                             key={tech}

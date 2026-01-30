@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Fragment } from "react";
 import { useLanguage } from "../../context/language-context";
 import AllPosts from "../../components/posts/all-posts";
-import { getAllPosts } from "../../lib/posts-util";
+import { getUniquePosts } from "../../lib/posts-util"; // Импортируем новую функцию
 
 function AllPostsPage(props) {
     const { t } = useLanguage();
@@ -20,7 +20,8 @@ function AllPostsPage(props) {
 }
 
 export function getStaticProps() {
-    const allPosts = getAllPosts();
+    // Используем getUniquePosts вместо getAllPosts
+    const allPosts = getUniquePosts();
 
     return {
         props: {

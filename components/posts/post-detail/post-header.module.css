@@ -11,7 +11,7 @@
 }
 
 .header::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -247,6 +247,9 @@
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    user-select: none;
+    cursor: default;
+    -ms-user-select: none;
 }
 
 .techBadge:hover {
@@ -271,34 +274,34 @@
     .header {
         padding: 2rem 1.5rem;
     }
-    
+
     .typeContainer {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    
+
     .title {
         font-size: 2.5rem;
     }
-    
+
     .imageWrapper {
         height: 300px;
     }
-    
+
     .metaContainer {
         gap: 1rem;
     }
-    
+
     .statsContainer {
         gap: 1rem;
     }
-    
+
     .statItem {
         min-width: 100px;
         padding: 0.75rem 1rem;
     }
-    
+
     .excerpt {
         font-size: 1.1rem;
         padding: 0 1rem;
@@ -309,31 +312,205 @@
     .header {
         padding: 1.5rem 1rem;
     }
-    
+
     .title {
         font-size: 2rem;
     }
-    
+
     .imageWrapper {
         height: 200px;
     }
-    
+
     .metaContainer {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .statsContainer {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .statItem {
         width: 100%;
         max-width: 200px;
     }
-    
+
     .techStack {
         justify-content: center;
+    }
+}
+
+/* Добавьте эти стили в конец файла post-header.module.css */
+
+/* Контейнер для кнопки */
+.typeButtonContainer {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 2rem;
+}
+
+/* Стили для кнопки */
+.typeButton {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.typeButton::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition:
+        width 0.3s ease,
+        height 0.3s ease;
+}
+
+.typeButton:hover {
+    transform: translateY(-1px);
+}
+
+/* Цвета кнопок */
+.typeButton.project {
+    background: #667eea;
+    color: white;
+}
+
+.typeButton.tutorial {
+    background: #4ecdc4;
+    color: white;
+}
+
+.typeButton.article {
+    background: #ff6b6b;
+    color: white;
+}
+
+/* Всплывающее сообщение - исправленная версия */
+.buttonMessage {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: white;
+    color: #333;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation:
+        slideIn 0.3s ease forwards,
+        slideOut 0.3s ease 2.7s forwards;
+    text-align: center;
+    line-height: 1.4;
+    word-wrap: break-word;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Маленькая стрелочка */
+.buttonMessage::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    transform: rotate(45deg) translateX(-50%);
+}
+
+/* Цветная полоска вверху сообщения */
+.buttonMessage::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 8px 8px 0 0;
+}
+
+.project .buttonMessage::after {
+    background: #667eea;
+}
+
+.tutorial .buttonMessage::after {
+    background: #4ecdc4;
+}
+
+.article .buttonMessage::after {
+    background: #ff6b6b;
+}
+
+/* Анимации */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+    }
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .buttonMessage {
+        max-width: 250px;
+        font-size: 0.85rem;
+        padding: 10px 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .buttonMessage {
+        max-width: 200px;
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        top: calc(100% + 8px);
+    }
+
+    .buttonMessage::before {
+        width: 10px;
+        height: 10px;
+        top: -5px;
     }
 }

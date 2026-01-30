@@ -32,7 +32,16 @@ function AllPostsEnhanced({ posts }) {
     const formattedPosts = useMemo(() => {
         if (!posts || posts.length === 0) return [];
 
-        return posts.map((post) => ({
+        // Фильтруем посты: оставляем только те, у которых locale === "en"
+        const uniquePosts = posts.filter((post) => {
+            // Если у поста есть русская версия, но это русский перевод - не включаем
+            if (post.hasRussianVersion && post.locale === "ru") {
+                return false;
+            }
+            return true;
+        });
+
+        return uniquePosts.map((post) => ({
             id: post.slug,
             type: post.type || "article",
             title: post.title,
@@ -51,6 +60,8 @@ function AllPostsEnhanced({ posts }) {
             content: post.content || "",
             views: post.views || Math.floor(Math.random() * 1000) + 100,
             rating: post.rating || (Math.random() * 2 + 3).toFixed(1),
+            locale: post.locale || "en",
+            hasRussianVersion: post.hasRussianVersion || false,
         }));
     }, [posts]);
 

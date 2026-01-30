@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { useLanguage } from "../../../context/language-context";
 import classes from "./post-header.module.css";
+import { useState } from "react";
 
 function PostHeader(props) {
-    const { t } = useLanguage();
+    const { t, locale } = useLanguage();
     const {
         title,
         image,
@@ -16,7 +17,9 @@ function PostHeader(props) {
         excerpt,
     } = props;
 
-    // Функция для получения метки типа контента
+    const [buttonClicked, setButtonClicked] = useState(false);
+    const [buttonText, setButtonText] = useState("");
+
     const getTypeLabel = () => {
         switch (type) {
             case "project":
@@ -30,7 +33,6 @@ function PostHeader(props) {
         }
     };
 
-    // Функция для получения иконки типа
     const getTypeIcon = () => {
         switch (type) {
             case "project":
@@ -44,7 +46,27 @@ function PostHeader(props) {
         }
     };
 
-    // Форматирование даты
+    const handleTypeButtonClick = () => {
+        if (buttonClicked) return; // Предотвращаем множественные клики
+
+        setButtonClicked(true);
+
+        // Устанавливаем текст в зависимости от языка
+        if (locale === "ru") {
+            setButtonText("Это просто кнопка, и что вы мне сделаете? 😎");
+        } else {
+            setButtonText(
+                "This is just a button, and what are you going to do about it? 😎",
+            );
+        }
+
+        // Сбрасываем через 3 секунды
+        setTimeout(() => {
+            setButtonClicked(false);
+            setButtonText("");
+        }, 3000);
+    };
+
     const formattedDate = date
         ? new Date(date).toLocaleDateString("en-US", {
               year: "numeric",
@@ -53,30 +75,36 @@ function PostHeader(props) {
           })
         : "";
 
-    // Исправляем отображение времени чтения (убираем дублирование "min")
     const formattedReadingTime = readingTime
         ? readingTime.includes("min")
             ? readingTime
-            : `${readingTime} min read`
+            : `${readingTime}`
         : "";
 
     return (
         <header className={classes.header}>
-            {/* Тип и статус */}
-            <div className={classes.typeContainer}>
-                <div className={`${classes.typeBadge} ${classes[type]}`}>
+            {/* Контейнер для кнопки с relative позиционированием */}
+            <div className={classes.typeButtonContainer}>
+                <button
+                    className={`${classes.typeBadge} ${classes[type]} ${classes.typeButton}`}
+                    onClick={handleTypeButtonClick}
+                    aria-label="Interactive type button">
                     <span>{getTypeIcon()}</span>
                     <span>{getTypeLabel()}</span>
-                </div>
+                </button>
+
+                {/* Всплывающее сообщение */}
+                {buttonClicked && (
+                    <div className={classes.buttonMessage}>{buttonText}</div>
+                )}
             </div>
 
-            {/* Заголовок */}
+            {/* Остальной код остается без изменений */}
             <div className={classes.titleContainer}>
                 <h1 className={classes.title}>{title}</h1>
                 {excerpt && <p className={classes.excerpt}>{excerpt}</p>}
             </div>
 
-            {/* Изображение */}
             {image && (
                 <div className={classes.imageContainer}>
                     <div className={classes.imageWrapper}>
@@ -93,7 +121,6 @@ function PostHeader(props) {
                 </div>
             )}
 
-            {/* Мета информация */}
             <div className={classes.metaContainer}>
                 {date && (
                     <div className={classes.metaItem}>
@@ -117,7 +144,6 @@ function PostHeader(props) {
                 )}
             </div>
 
-            {/* Статистика */}
             {stats && (
                 <div className={classes.statsContainer}>
                     {stats.stars !== undefined && (
@@ -144,7 +170,6 @@ function PostHeader(props) {
                 </div>
             )}
 
-            {/* Технологии */}
             {tech && tech.length > 0 && (
                 <div className={classes.techContainer}>
                     <div className={classes.techTitle}>

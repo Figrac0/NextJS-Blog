@@ -1,4 +1,3 @@
-// components/home-page/content-card.js
 import Link from "next/link";
 import Image from "next/image";
 import classes from "./content-card.module.css";
@@ -43,18 +42,20 @@ function ContentCard({ item, t }) {
                 )}
             </div>
 
-            <div className={classes.imageContainer}>
-                <div className={classes.imageWrapper}>
-                    <Image
-                        src={`/images/posts/${item.slug}/${item.image}`}
-                        alt={item.title}
-                        fill
-                        className={classes.image}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div className={classes.imageOverlay}></div>
+            <Link href={`/posts/${item.slug}`} className={classes.imageLink}>
+                <div className={classes.imageContainer}>
+                    <div className={classes.imageWrapper}>
+                        <Image
+                            src={`/images/posts/${item.slug}/${item.image}`}
+                            alt={item.title}
+                            fill
+                            className={classes.image}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <div className={classes.imageOverlay}></div>
+                    </div>
                 </div>
-            </div>
+            </Link>
 
             <div className={classes.content}>
                 <div className={classes.meta}>

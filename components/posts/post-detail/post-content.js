@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "../../../context/language-context";
@@ -7,12 +7,18 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import PostHeader from "./post-header";
 import classes from "./post-content.module.css";
+import LanguageSwitcher from "../../ui/language-switcher";
 
-function PostContent({ post }) {
+function PostContent({ english, russian, hasRussianVersion }) {
     const { t, locale } = useLanguage();
     const [copied, setCopied] = useState(false);
 
-    // Функция копирования кода
+    const currentLocale = locale;
+    const currentPost =
+        currentLocale === "ru" && hasRussianVersion && russian
+            ? russian
+            : english;
+
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text).then(() => {
             setCopied(true);
@@ -20,7 +26,6 @@ function PostContent({ post }) {
         });
     };
 
-    // Функции плавающих кнопок
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -32,7 +37,6 @@ function PostContent({ post }) {
         });
     };
 
-    // Пользовательские рендереры для ReactMarkdown
     const customRenderers = {
         h1: ({ children }) => <h1>{children}</h1>,
         h2: ({ children }) => <h2>{children}</h2>,
@@ -45,8 +49,8 @@ function PostContent({ post }) {
                 return (
                     <div className={classes.imageContainer}>
                         <Image
-                            src={`/images/posts/${post.slug}/${image.properties.src}`}
-                            alt={image.properties.alt || post.title}
+                            src={`/images/posts/${currentPost.slug}/${image.properties.src}`}
+                            alt={image.properties.alt || currentPost.title}
                             width={800}
                             height={400}
                             style={{ width: "100%", height: "auto" }}
@@ -115,7 +119,51 @@ function PostContent({ post }) {
         hr: () => <hr />,
     };
 
-    const imagePath = `/images/posts/${post.slug}/${post.image}`;
+    const imagePath = `/images/posts/${currentPost.slug}/${currentPost.image}`;
+
+    if (!hasRussianVersion && currentLocale === "ru") {
+        return (
+            <div className={classes.container}>
+                <div className={classes.content}>
+                    <div className={classes.noTranslation}>
+                        <div className={classes.noTranslationIcon}>🌐</div>
+                        <h2>Перевод на русский пока недоступен</h2>
+                        <p className={classes.noTranslationText}>
+                            Эта статья доступна только на английском языке.
+                        </p>
+                        <p className={classes.noTranslationInstruction}>
+                            Чтобы прочитать эту статью, переключите язык на
+                            английский в меню навигации.
+                        </p>
+                        <div className={classes.noTranslationSteps}>
+                            <div className={classes.step}>
+                                <span className={classes.stepNumber}>1</span>
+                                <span className={classes.stepText}>
+                                    Нажмите на флаг 🇷🇺 в правом верхнем углу
+                                </span>
+                            </div>
+                            <div className={classes.step}>
+                                <span className={classes.stepNumber}>2</span>
+                                <span className={classes.stepText}>
+                                    Выберите английский язык 🇺🇸
+                                </span>
+                            </div>
+                            <div className={classes.step}>
+                                <span className={classes.stepNumber}>3</span>
+                                <span className={classes.stepText}>
+                                    Страница автоматически перезагрузится
+                                </span>
+                            </div>
+                        </div>
+                        <div className={classes.noTranslationHelp}>
+                            Если у вас возникли проблемы, обновите страницу
+                            после смены языка.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={classes.container}>
@@ -136,34 +184,39 @@ function PostContent({ post }) {
                     </div>
                     <div className={classes.breadcrumbItem}>
                         <span className={classes.breadcrumbCurrent}>
-                            {post.title}
+                            {currentPost.title}
                         </span>
+                        {hasRussianVersion && (
+                            <span className={classes.languageIndicator}>
+                                {currentLocale === "en" ? "🇺🇸" : "🇷🇺"}
+                            </span>
+                        )}
                     </div>
                 </nav>
 
                 {/* Заголовок статьи */}
                 <PostHeader
-                    title={post.title}
+                    title={currentPost.title}
                     image={imagePath}
-                    type={post.type}
-                    date={post.date}
-                    readingTime={post.readingTime}
-                    difficulty={post.difficulty}
-                    stats={post.stats}
-                    tech={post.tech}
-                    excerpt={post.excerpt}
+                    type={currentPost.type}
+                    date={currentPost.date}
+                    readingTime={currentPost.readingTime}
+                    difficulty={currentPost.difficulty}
+                    stats={currentPost.stats}
+                    tech={currentPost.tech}
+                    excerpt={currentPost.excerpt}
                 />
 
                 {/* Основное содержимое */}
                 <div className={classes.articleContent}>
                     <div className={classes.markdownContent}>
                         <ReactMarkdown components={customRenderers}>
-                            {post.content}
+                            {currentPost.content}
                         </ReactMarkdown>
                     </div>
                 </div>
 
-                {/* Панель действий */}
+                {/* Панель действий - оставляем только кнопку назад */}
                 <div className={classes.actionsPanel}>
                     <Link href="/posts" className={classes.backButton}>
                         <span>←</span>
@@ -172,7 +225,7 @@ function PostContent({ post }) {
                 </div>
             </div>
 
-            {/* Плавающие кнопки */}
+            {/* Плавающие кнопки - оставляем только кнопки прокрутки */}
             <div className={classes.floatingActions}>
                 <button
                     className={classes.floatingButton}
@@ -180,6 +233,7 @@ function PostContent({ post }) {
                     aria-label="Scroll to top">
                     ↑
                 </button>
+
                 <button
                     className={classes.floatingButton}
                     onClick={scrollToBottom}
