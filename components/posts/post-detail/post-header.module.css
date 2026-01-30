@@ -108,7 +108,6 @@
     line-height: 1.2;
 }
 
-/* Изображение */
 .imageContainer {
     position: relative;
     width: 100%;
@@ -149,7 +148,6 @@
     pointer-events: none;
 }
 
-/* Мета информация */
 .metaContainer {
     display: flex;
     justify-content: center;
@@ -213,7 +211,6 @@
     letter-spacing: 1px;
 }
 
-/* Технологии */
 .techContainer {
     text-align: center;
     margin-top: 2rem;
@@ -258,7 +255,6 @@
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
 }
 
-/* Выдержка */
 .excerpt {
     font-size: 1.2rem;
     color: rgba(255, 255, 255, 0.7);
@@ -269,7 +265,6 @@
     font-weight: 300;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .header {
         padding: 2rem 1.5rem;

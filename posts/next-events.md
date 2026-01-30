@@ -18,7 +18,7 @@ tech:
     ]
 isFeatured: true
 isTrending: true
-isNew: true
+isNew: false
 stats:
     stars: 42
     forks: 8

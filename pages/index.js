@@ -5,7 +5,7 @@ import { useLanguage } from "../context/language-context";
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
 import QuantumGame from "../components/game/quantum-game";
-import { getUniquePosts } from "../lib/posts-util"; // Импортируем новую функцию
+import { getUniquePosts } from "../lib/posts-util";
 
 function HomePage(props) {
     const { t } = useLanguage();
