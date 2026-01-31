@@ -16,7 +16,7 @@ tech:
         "App Router",
     ]
 isFeatured: true
-isTrending: false
+isTrending: true
 isNew: true
 stats:
     stars: 38

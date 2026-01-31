@@ -16,8 +16,8 @@ tech:
         "App Router",
     ]
 isFeatured: true
-isTrending: false
-isNew: true
+isTrending: true
+isNew: false
 stats:
     stars: 38
     forks: 12

@@ -14,7 +14,7 @@ tech:
         "CI/CD",
         "Microservices",
     ]
-isFeatured: false
+isFeatured: true
 isTrending: false
 isNew: true
 stats:

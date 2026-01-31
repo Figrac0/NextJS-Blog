@@ -578,3 +578,158 @@
         font-size: 0.8rem;
     }
 }
+
+/* Дополнительные кнопки */
+.portfolioButton,
+.githubButton {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    min-width: 160px;
+}
+
+/* Кнопка портфолио с темно-синим к фиолетовому градиентом */
+.portfolioButton {
+    background: linear-gradient(
+        135deg,
+        #1e3c72 0%,
+        /* Темно-синий */ #2a5298 25%,
+        /* Королевский синий */ #4a00e0 50%,
+        /* Фиолетово-синий */ #8e2de2 75%,
+        /* Фиолетовый */ #8e44ad 100% /* Светлый фиолетовый */
+    );
+    color: white;
+    background-size: 300% 300%;
+    animation: gradientShift 8s ease infinite;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+/* Эффект наведения */
+.portfolioButton:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 40px rgba(74, 0, 224, 0.4),
+        0 0 20px rgba(142, 45, 226, 0.3);
+    animation: gradientShift 4s ease infinite;
+}
+
+/* Анимация плавного перехода градиента */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Эффект свечения */
+.portfolioButton::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+        135deg,
+        #1e3c72,
+        #2a5298,
+        #4a00e0,
+        #8e2de2,
+        #8e44ad
+    );
+    background-size: 400% 400%;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50px;
+    animation: gradientShift 6s ease infinite;
+}
+
+.portfolioButton:hover::after {
+    opacity: 0.7;
+}
+
+/* Иконка для кнопки портфолио */
+.portfolioButton::before {
+    content: "🎨";
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 1.2rem;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+.githubButton {
+    background: linear-gradient(135deg, #333 0%, #555 100%);
+    color: white;
+}
+
+.githubButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(85, 85, 85, 0.3);
+    background: linear-gradient(135deg, #555 0%, #333 100%);
+}
+
+/* Иконки для кнопок */
+.portfolioButton::before,
+.githubButton::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.portfolioButton::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'/%3E%3C/svg%3E");
+}
+
+.githubButton::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.026 2.747-1.026.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.577.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z'/%3E%3C/svg%3E");
+}
+
+/* Адаптивность для кнопок */
+@media (max-width: 768px) {
+    .portfolioButton,
+    .githubButton {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+        min-width: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolioButton,
+    .githubButton {
+        width: 100%;
+        max-width: 250px;
+        margin-top: 0.5rem;
+    }
+
+    .portfolioButton::before,
+    .githubButton::before {
+        width: 18px;
+        height: 18px;
+    }
+}

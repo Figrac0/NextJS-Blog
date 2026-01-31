@@ -1,10 +1,17 @@
-// components/home-page/hero.js
 import Image from "next/image";
 import { useLanguage } from "../../context/language-context";
 import classes from "./hero.module.css";
 
 function Hero() {
     const { t } = useLanguage();
+
+    const handlePortfolioClick = () => {
+        window.open("https://figrac0.github.io", "_blank");
+    };
+
+    const handleGitHubClick = () => {
+        window.open("https://github.com/Figrac0", "_blank");
+    };
 
     return (
         <section className={classes.hero}>
@@ -27,6 +34,16 @@ function Hero() {
                                 className={classes.secondaryButton}>
                                 {t("getInTouch")}
                             </a>
+                            <button
+                                className={classes.portfolioButton}
+                                onClick={handlePortfolioClick}>
+                                {t("viewPortfolio")}
+                            </button>
+                            <button
+                                className={classes.githubButton}
+                                onClick={handleGitHubClick}>
+                                {t("viewGitHub")}
+                            </button>
                         </div>
                     </div>
                     <div className={classes.imageContainer}>

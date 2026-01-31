@@ -15,7 +15,7 @@ tech:
         "libuv",
     ]
 isFeatured: false
-isTrending: true
+isTrending: false
 isNew: true
 stats:
     stars: 0

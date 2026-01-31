@@ -562,3 +562,64 @@
         font-size: 0.9rem;
     }
 }
+
+/* Изображения - УВЕЛИЧЕННАЯ СЕКЦИЯ */
+.imageContainer {
+    margin: 1rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Стили для самого изображения */
+.imageContainer img {
+    width: 100%;
+    height: auto;
+    max-height: 550px; /* Максимальная высота */
+    object-fit: contain; /* Сохраняем пропорции, не обрезаем */
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.imageContainer:hover img {
+    transform: scale(1.02);
+}
+
+.imageContainer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 80%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    pointer-events: none;
+}
+
+/* Для демо-скриншотов - можно еще меньше */
+.imageContainer.demographic {
+    max-height: 300px;
+}
+
+.imageContainer.demographic img {
+    max-height: 280px;
+}
+
+/* Для превью/миниатюр */
+.imageContainer.preview {
+    max-height: 250px;
+    margin: 0.5rem 0;
+}
+
+.imageContainer.preview img {
+    max-height: 220px;
+}

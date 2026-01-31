@@ -16,8 +16,6 @@ function AllPostsEnhanced({ posts }) {
     const [animatedParticles, setAnimatedParticles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Опции для сортировки
-    // В all-posts-enhanced.js
     const sortOptions = useMemo(
         () => [
             { value: "newest", label: t("sortOptions.newest") },
@@ -28,13 +26,10 @@ function AllPostsEnhanced({ posts }) {
         [t],
     );
 
-    // Форматирование постов
     const formattedPosts = useMemo(() => {
         if (!posts || posts.length === 0) return [];
 
-        // Фильтруем посты: оставляем только те, у которых locale === "en"
         const uniquePosts = posts.filter((post) => {
-            // Если у поста есть русская версия, но это русский перевод - не включаем
             if (post.hasRussianVersion && post.locale === "ru") {
                 return false;
             }
@@ -65,7 +60,6 @@ function AllPostsEnhanced({ posts }) {
         }));
     }, [posts]);
 
-    // Создание психоделических частиц
     useEffect(() => {
         if (!psychedelicMode) {
             setAnimatedParticles([]);
@@ -105,7 +99,6 @@ function AllPostsEnhanced({ posts }) {
 
         setAnimatedParticles(particles);
 
-        // Анимация частиц
         const interval = setInterval(() => {
             setAnimatedParticles((prev) =>
                 prev.map((p) => ({
@@ -121,11 +114,9 @@ function AllPostsEnhanced({ posts }) {
         return () => clearInterval(interval);
     }, [psychedelicMode]);
 
-    // Фильтрация и сортировка
     const filteredAndSortedPosts = useMemo(() => {
         let filtered = [...formattedPosts];
 
-        // Поиск
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
             filtered = filtered.filter(
@@ -139,7 +130,6 @@ function AllPostsEnhanced({ posts }) {
             );
         }
 
-        // Фильтр по категории
         if (selectedCategory !== "all") {
             const typeMap = {
                 projects: "project",
@@ -151,7 +141,6 @@ function AllPostsEnhanced({ posts }) {
             );
         }
 
-        // Дополнительные фильтры
         if (selectedFilter === "featured") {
             filtered = filtered.filter((post) => post.featured);
         } else if (selectedFilter === "trending") {
@@ -160,7 +149,6 @@ function AllPostsEnhanced({ posts }) {
             filtered = filtered.filter((post) => post.new);
         }
 
-        // Сортировка
         filtered.sort((a, b) => {
             switch (sortOption) {
                 case "newest":
@@ -191,7 +179,6 @@ function AllPostsEnhanced({ posts }) {
         locale,
     ]);
 
-    // Статистика
     const stats = useMemo(
         () => ({
             total: formattedPosts.length,
@@ -210,7 +197,6 @@ function AllPostsEnhanced({ posts }) {
         [formattedPosts],
     );
 
-    // Обработчики
     const handleSearchClear = () => setSearchQuery("");
     const handleResetFilters = () => {
         setSearchQuery("");
@@ -240,7 +226,6 @@ function AllPostsEnhanced({ posts }) {
     return (
         <div
             className={`${classes.container} ${psychedelicMode ? classes.psychedelic : ""}`}>
-            {/* Психоделический фон */}
             {psychedelicMode && (
                 <div className={classes.psychedelicBackground}>
                     {animatedParticles.map((particle) => (
@@ -261,7 +246,6 @@ function AllPostsEnhanced({ posts }) {
                         />
                     ))}
 
-                    {/* Волны */}
                     <div className={classes.wave}></div>
                     <div
                         className={classes.wave}
@@ -282,7 +266,6 @@ function AllPostsEnhanced({ posts }) {
             )}
 
             <div className={classes.content}>
-                {/* Заголовок */}
                 <header className={classes.header}>
                     <div className={classes.titleWrapper}>
                         <h1 className={classes.title}>
@@ -313,7 +296,6 @@ function AllPostsEnhanced({ posts }) {
                     </div>
                 </header>
 
-                {/* Статистика */}
                 <div className={classes.statsContainer}>
                     <div className={classes.statsGrid}>
                         <div className={classes.statCard}>
@@ -363,9 +345,7 @@ function AllPostsEnhanced({ posts }) {
                     </div>
                 </div>
 
-                {/* Панель управления */}
                 <div className={classes.controlPanel}>
-                    {/* Поиск */}
                     <div className={classes.searchContainer}>
                         <div className={classes.searchInputWrapper}>
                             <span className={classes.searchIcon}>🔍</span>
@@ -387,7 +367,6 @@ function AllPostsEnhanced({ posts }) {
                         </div>
                     </div>
 
-                    {/* Фильтры */}
                     <div className={classes.filtersContainer}>
                         <div className={classes.filterGroup}>
                             <span className={classes.filterLabel}>
@@ -435,7 +414,6 @@ function AllPostsEnhanced({ posts }) {
                             </div>
                         </div>
 
-                        {/* Используем CustomSelect вместо стандартного select */}
                         <CustomSelect
                             label={t("sortBy")}
                             value={sortOption}
