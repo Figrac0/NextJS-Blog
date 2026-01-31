@@ -34,14 +34,14 @@ A sophisticated, full-featured Next.js blog and portfolio platform featuring mul
 ---
 
 <p align="center">
-  <img src="https://github.com/Figrac0/NextJS-Blog/blob/main/public/images/posts/portfolio-blog-platform/1.gif" alt="nahhh" width="400"/><br/>
+  <img src="https://github.com/Figrac0/NextJS-Blog/blob/main/public/images/posts/portfolio-blog-platform/2.gif" alt="nahhh" width="800"/><br/>
   
 </p>
 
 ---
 
 <p align="center">
-  <img src="https://github.com/Figrac0/NextJS-Blog/blob/main/public/images/posts/portfolio-blog-platform/1.gif" alt="nahhh" width="400"/><br/>
+  <img src="https://github.com/Figrac0/NextJS-Blog/blob/main/public/images/posts/portfolio-blog-platform/3.gif" alt="nahhh" width="800"/><br/>
   
 </p>
 
