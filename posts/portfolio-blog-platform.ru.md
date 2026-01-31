@@ -25,12 +25,12 @@ stats:
     forks: 12
 readingTime: "18 мин"
 difficulty: "Продвинутый"
-demoUrl: "https://figrac0.github.io"
+demoUrl: "https://next-js-blog-nine.vercel.app/"
 ---
 
 # Современная Платформа Портфолио и Блог – Full-Stack Next.js Приложение
 
-**[🚀 Живое демо: Исследуйте платформу](https://figrac0.github.io)**
+**[🚀 Живое демо: Исследуйте платформу](https://next-js-blog-nine.vercel.app/)**
 
 ---
 
@@ -708,4 +708,4 @@ npm start
 
 **🚀 Готовы исследовать код?**
 
-**[Живое демо](https://figrac0.github.io)** • **[Репозиторий GitHub](https://github.com/Figrac0/figrac0.github.io)**
+**[Живое демо](https://next-js-blog-nine.vercel.app/)** • **[Репозиторий GitHub](https://github.com/Figrac0/NextJS-Blog)**

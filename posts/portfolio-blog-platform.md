@@ -25,12 +25,12 @@ stats:
     forks: 12
 readingTime: "18 min"
 difficulty: "Advanced"
-demoUrl: "https://figrac0.github.io"
+demoUrl: "https://next-js-blog-nine.vercel.app/"
 ---
 
 # Modern Portfolio & Blog Platform – Full-Stack Next.js Application
 
-**[🚀 Live Demo: Explore the Platform](https://figrac0.github.io)**
+**[🚀 Live Demo: Explore the Platform](https://next-js-blog-nine.vercel.app/)**
 
 ---
 
@@ -709,4 +709,4 @@ This platform demonstrates expertise in:
 
 **🚀 Ready to Explore the Code?**
 
-**[Live Demo](https://figrac0.github.io)** • **[GitHub Repository](https://github.com/Figrac0/figrac0.github.io)**
+**[Live Demo](https://next-js-blog-nine.vercel.app/)** • **[GitHub Repository](https://github.com/Figrac0/NextJS-Blog)**
