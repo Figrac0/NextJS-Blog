@@ -3,8 +3,8 @@ import Head from "next/head";
 import { Fragment } from "react";
 import { useLanguage } from "../../context/language-context";
 import AllPosts from "../../components/posts/all-posts";
-import { getUniquePosts } from "../../lib/posts-util"; // Импортируем новую функцию
-import Footer from "../../components/layout/footer";
+import { getUniquePosts } from "../../lib/posts-util";
+import QuantumGame from "../../components/game/quantum-game";
 
 function AllPostsPage(props) {
     const { t } = useLanguage();
@@ -16,13 +16,12 @@ function AllPostsPage(props) {
                 <meta name="description" content={t("allPostsDescription")} />
             </Head>
             <AllPosts posts={props.posts} />
-            <Footer />
+            <QuantumGame />
         </Fragment>
     );
 }
 
 export function getStaticProps() {
-    // Используем getUniquePosts вместо getAllPosts
     const allPosts = getUniquePosts();
 
     return {

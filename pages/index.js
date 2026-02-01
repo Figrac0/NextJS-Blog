@@ -4,7 +4,6 @@ import Head from "next/head";
 import { useLanguage } from "../context/language-context";
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
-import QuantumGame from "../components/game/quantum-game";
 import { getUniquePosts } from "../lib/posts-util";
 import Footer from "../components/layout/footer";
 
@@ -19,14 +18,13 @@ function HomePage(props) {
             </Head>
             <Hero />
             <FeaturedPosts posts={props.posts} />
-            <QuantumGame />
+
             <Footer />
         </Fragment>
     );
 }
 
 export function getStaticProps() {
-    // Используем getUniquePosts вместо getAllPosts
     const allPosts = getUniquePosts();
 
     return {
