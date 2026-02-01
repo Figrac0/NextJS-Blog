@@ -14,8 +14,8 @@ tech:
         "Firebase Hosting",
     ]
 isFeatured: true
-isTrending: false
-isNew: true
+isTrending: true
+isNew: false
 stats:
     stars: 28
     forks: 5
