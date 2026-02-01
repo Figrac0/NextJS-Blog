@@ -1,6 +1,6 @@
 ---
 title: "Docker for Frontend Developers: Beyond 'It Works on My Machine'"
-excerpt: "Transform your frontend development workflow with Docker. Learn how containerization solves real-world problems in modern web development."
+excerpt: "Transform your frontend development workflow with Docker. Learn how containerization solves real-world problems in modern web development, from eliminating 'works on my machine' issues to streamlining CI/CD pipelines. Discover practical patterns for React, Vue, and Next.js applications that ensure consistent environments across every stage."
 date: "2025-06-05"
 slug: "frontend-docker-development"
 image: "docker-frontend.png"

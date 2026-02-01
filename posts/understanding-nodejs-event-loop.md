@@ -1,6 +1,6 @@
 ---
 title: "Understanding Node.js Event Loop: The Heart of Asynchronous Programming"
-excerpt: "Deep dive into Node.js Event Loop architecture. Learn how Node.js handles thousands of concurrent connections with a single thread."
+excerpt: "Deep dive into Node.js Event Loop architecture. Learn how Node.js handles thousands of concurrent connections with a single thread. Explore practical patterns for building scalable, high-performance applications with real-world examples."
 date: "2025-05-10"
 slug: "understanding-nodejs-event-loop"
 image: "nodejs-event-loop.png"
