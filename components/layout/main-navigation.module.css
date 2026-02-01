@@ -1,4 +1,3 @@
-/* components/layout/main-navigation.module.css */
 .header {
     position: sticky;
     top: 0;
@@ -27,17 +26,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logoLink {
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1002; /* Повысим z-index для логотипа */
 }
 
 .logoLink:hover {
     transform: translateY(-1px);
 }
 
+/* Десктопная навигация */
 .nav {
     display: flex;
     align-items: center;
@@ -218,93 +220,241 @@
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Эффект бликов при наведении */
-.item::after {
+/* Бургер-меню для мобильных */
+.burgerButton {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1002;
+    position: relative;
+}
+
+.burgerLines {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #2d3748;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.burgerLines::before,
+.burgerLines::after {
     content: "";
     position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    background: radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        rgba(102, 126, 234, 0.05) 0%,
-        transparent 70%
-    );
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    left: 0;
+    transition: all 0.3s ease;
+}
+
+.burgerLines::before {
+    top: -6px;
+}
+
+.burgerLines::after {
+    bottom: -6px;
+}
+
+.burgerButton.active .burgerLines {
+    background: transparent;
+}
+
+.burgerButton.active .burgerLines::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.burgerButton.active .burgerLines::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+}
+
+/* Мобильное меню */
+.mobileOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 999;
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    border-radius: 12px;
-    z-index: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
 }
 
-.item:hover::after {
+.mobileOverlay.active {
     opacity: 1;
+    visibility: visible;
 }
 
-/* Плавный переход для всего header при скролле */
-.header.scrolled {
-    padding: 0.5rem 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+.mobileMenu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 5rem 2rem 2rem;
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
-/* Мобильная адаптация */
-@media (max-width: 1024px) {
-    .container {
-        padding: 0 1.5rem;
-    }
-
-    .list {
-        gap: 1.8rem;
-    }
+.mobileMenu.active {
+    right: 0;
 }
 
-@media (max-width: 768px) {
-    .container {
-        padding: 0 1rem;
-    }
-
-    .list {
-        gap: 1.2rem;
-    }
-
-    .link {
-        font-size: 0.9rem;
-        padding: 0.4rem 0;
-    }
-
-    .linkText {
-        padding: 0.2rem 0.4rem;
-    }
-
-    .languageItem {
-        margin-left: 0.5rem;
-        padding-left: 1rem;
-    }
-
-    .languageItem::before {
-        height: 16px;
-    }
+.mobileList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-@media (max-width: 640px) {
-    .list {
-        gap: 1rem;
-    }
+.mobileItem {
+    position: relative;
+}
 
-    .link {
-        font-size: 0.85rem;
-    }
+.mobileLink {
+    text-decoration: none;
+    color: #2d3748;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    display: block;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-    .linkText {
-        font-size: 0.85rem;
-    }
+.mobileLink:hover,
+.mobileLink.active {
+    background: linear-gradient(
+        135deg,
+        rgba(102, 126, 234, 0.1) 0%,
+        rgba(118, 75, 162, 0.05) 100%
+    );
+    color: #667eea;
+    transform: translateX(5px);
+}
 
-    .languageItem {
-        padding-left: 0.75rem;
-    }
+.mobileLink::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    border-radius: 0 2px 2px 0;
+}
+
+.mobileLink:hover::before,
+.mobileLink.active::before {
+    transform: scaleY(1);
+}
+
+.mobileLanguage {
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mobileLanguageTitle {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mobileLanguageButtons {
+    display: flex;
+    gap: 1rem;
+}
+
+.mobileLanguageButton {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    background: white;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.mobileLanguageButton:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.mobileLanguageButton.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+}
+
+/* Закрывающий крестик для мобильного меню */
+.closeButton {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.closeButton:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: rotate(90deg);
+}
+
+.closeButton::before,
+.closeButton::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: #2d3748;
+    border-radius: 1px;
+}
+
+.closeButton::before {
+    transform: rotate(45deg);
+}
+
+.closeButton::after {
+    transform: rotate(-45deg);
 }
 
 /* Добавим тонкую градиентную рамку вокруг навигации для большего контраста */
@@ -325,7 +475,101 @@
     );
 }
 
-/* Добавим легкую тень для лого при наведении */
-.logoLink:hover {
-    filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.1));
+/* Плавный переход для всего header при скролле */
+.header.scrolled {
+    padding: 0.5rem 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Медиа-запросы */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .list {
+        gap: 1.8rem;
+    }
+}
+
+@media (max-width: 900px) {
+    /* Прячем десктопную навигацию, показываем бургер */
+    .nav {
+        display: none;
+    }
+
+    .burgerButton {
+        display: block;
+    }
+
+    /* Показываем мобильное меню */
+    .mobileOverlay {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .mobileMenu {
+        width: 280px;
+        padding: 4.5rem 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.75rem;
+    }
+
+    .mobileMenu {
+        width: 100%;
+        padding: 4rem 1rem 1rem;
+    }
+
+    .mobileLink {
+        font-size: 1.1rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .mobileLanguageButtons {
+        flex-direction: column;
+    }
+
+    .closeButton {
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+/* Анимация для появления пунктов меню в мобильной версии */
+.mobileItem {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: slideInItem 0.3s ease forwards;
+}
+
+@keyframes slideInItem {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Задержка для анимации каждого пункта */
+.mobileItem:nth-child(1) {
+    animation-delay: 0.1s;
+}
+.mobileItem:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.mobileItem:nth-child(3) {
+    animation-delay: 0.3s;
+}
+.mobileLanguage {
+    animation-delay: 0.4s;
 }
