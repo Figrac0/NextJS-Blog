@@ -11,7 +11,6 @@ function MainNavigation() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
-    // Определяем активную ссылку на основе URL
     useEffect(() => {
         const path = window.location.pathname;
         if (path === "/") setActiveLink("home");
@@ -19,7 +18,6 @@ function MainNavigation() {
         else if (path === "/contact") setActiveLink("contact");
     }, []);
 
-    // Отслеживаем скролл для изменения стилей header
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
@@ -28,7 +26,6 @@ function MainNavigation() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    // Закрываем мобильное меню при изменении роута
     useEffect(() => {
         const handleRouteChange = () => {
             setIsMobileMenuOpen(false);
@@ -38,7 +35,6 @@ function MainNavigation() {
         return () => window.removeEventListener("popstate", handleRouteChange);
     }, []);
 
-    // Блокируем скролл при открытом мобильном меню
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = "hidden";
@@ -75,7 +71,6 @@ function MainNavigation() {
                 <div className={classes.container}>
                     <Logo />
 
-                    {/* Десктопная навигация */}
                     <nav className={classes.nav}>
                         <ul className={classes.list}>
                             {navLinks.map((link) => (
@@ -111,7 +106,6 @@ function MainNavigation() {
                         </ul>
                     </nav>
 
-                    {/* Бургер-кнопка для мобильных */}
                     <button
                         className={`${classes.burgerButton} ${isMobileMenuOpen ? classes.active : ""}`}
                         onClick={toggleMobileMenu}
@@ -123,7 +117,6 @@ function MainNavigation() {
                 </div>
             </header>
 
-            {/* Мобильное меню */}
             <div
                 className={`${classes.mobileOverlay} ${isMobileMenuOpen ? classes.active : ""}`}
                 onClick={toggleMobileMenu}

@@ -7,7 +7,7 @@ export const LanguageContext = createContext();
 
 export function LanguageProvider({ children }) {
     const [locale, setLocale] = useState(defaultLocale);
-    const [postsCache, setPostsCache] = useState({}); // Кэш постов для разных языков
+    const [postsCache, setPostsCache] = useState({});
 
     useEffect(() => {
         const savedLocale = localStorage.getItem("locale");
@@ -19,7 +19,6 @@ export function LanguageProvider({ children }) {
     useEffect(() => {
         localStorage.setItem("locale", locale);
 
-        // Отправляем событие о смене языка
         window.dispatchEvent(
             new CustomEvent("languageChanged", {
                 detail: { locale },
@@ -32,13 +31,11 @@ export function LanguageProvider({ children }) {
         setLocale(newLocale);
     };
 
-    // Функция для получения поста для конкретного языка
     const getCachedPost = (slug, locale) => {
         const key = `${slug}-${locale}`;
         return postsCache[key];
     };
 
-    // Функция для кэширования поста
     const cachePost = (slug, locale, postData) => {
         const key = `${slug}-${locale}`;
         setPostsCache((prev) => ({

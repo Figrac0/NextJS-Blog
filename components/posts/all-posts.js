@@ -254,7 +254,6 @@ function AllPostsEnhanced({ posts }) {
                         className={classes.wave}
                         style={{ animationDelay: "4s" }}></div>
 
-                    {/* Пульсирующие круги */}
                     <div className={classes.pulseCircle}></div>
                     <div
                         className={classes.pulseCircle}
@@ -424,7 +423,6 @@ function AllPostsEnhanced({ posts }) {
                         />
                     </div>
 
-                    {/* Сброс фильтров */}
                     {(searchQuery ||
                         selectedCategory !== "all" ||
                         selectedFilter !== "all" ||
@@ -439,7 +437,6 @@ function AllPostsEnhanced({ posts }) {
                     )}
                 </div>
 
-                {/* Результаты */}
                 <main className={classes.mainContent}>
                     {filteredAndSortedPosts.length > 0 ? (
                         <>
@@ -462,7 +459,6 @@ function AllPostsEnhanced({ posts }) {
                                         className={classes.postCardWrapper}>
                                         <ContentCard item={post} t={t} />
 
-                                        {/* Дополнительная информация при клике */}
                                         {expandedPostId === post.id && (
                                             <div
                                                 className={

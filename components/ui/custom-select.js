@@ -18,35 +18,28 @@ function CustomSelect({
     const selectRef = useRef(null);
     const dropdownRef = useRef(null);
 
-    // Определяем label выбранной опции
     useEffect(() => {
         if (options && value) {
             const selectedOption = options.find((opt) => opt.value === value);
             if (selectedOption) {
-                // Обрабатываем специальный формат с ( )
                 let labelValue = selectedOption.label;
 
-                // Если это строка с ( ) - это ключ перевода
                 if (
                     typeof labelValue === "string" &&
                     labelValue.includes("(") &&
                     labelValue.includes(")")
                 ) {
-                    // Извлекаем ключ перевода: "sortOptions.newest( )" -> "sortOptions.newest"
                     const translationKey = labelValue.replace(
                         /\s*\(\s*\)/g,
                         "",
                     );
                     labelValue = t(translationKey);
-                }
-                // Если это функция - вызываем её
-                else if (typeof labelValue === "function") {
+                } else if (typeof labelValue === "function") {
                     labelValue = labelValue(t);
                 }
 
                 setSelectedLabel(labelValue);
             } else {
-                // Для placeholder тоже обрабатываем ( ) если есть
                 let processedPlaceholder = placeholder;
                 if (
                     typeof processedPlaceholder === "string" &&
@@ -62,7 +55,6 @@ function CustomSelect({
                 setSelectedLabel(processedPlaceholder);
             }
         } else {
-            // Для placeholder тоже обрабатываем ( ) если есть
             let processedPlaceholder = placeholder;
             if (
                 typeof processedPlaceholder === "string" &&
@@ -79,7 +71,6 @@ function CustomSelect({
         }
     }, [value, options, placeholder, t]);
 
-    // Закрытие при клике вне компонента
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -95,7 +86,6 @@ function CustomSelect({
             document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Закрытие при нажатии Esc
     useEffect(() => {
         const handleEsc = (event) => {
             if (event.key === "Escape") {
@@ -107,7 +97,6 @@ function CustomSelect({
         return () => document.removeEventListener("keydown", handleEsc);
     }, []);
 
-    // Прокрутка к выбранной опции при открытии
     useEffect(() => {
         if (isOpen && dropdownRef.current) {
             const selectedElement = dropdownRef.current.querySelector(
@@ -155,7 +144,6 @@ function CustomSelect({
         onChange(options[newIndex].value);
     };
 
-    // Функция для обработки label с учетом формата ( )
     const processLabel = (label) => {
         if (typeof label === "function") {
             return label(t);
@@ -164,7 +152,6 @@ function CustomSelect({
             label.includes("(") &&
             label.includes(")")
         ) {
-            // Обрабатываем формат "sortOptions.newest( )"
             const translationKey = label.replace(/\s*\(\s*\)/g, "");
             return t(translationKey);
         }
@@ -294,7 +281,6 @@ function CustomSelect({
                 )}
             </div>
 
-            {/* Декоративные элементы */}
             <div className={classes.selectGlow}></div>
             <div className={classes.selectParticles}></div>
         </div>

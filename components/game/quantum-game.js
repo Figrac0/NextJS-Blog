@@ -196,7 +196,6 @@ const QuantumGame = () => {
         });
 
         if (correct === currentChallenge.slots.length) {
-            // Все правильно
             setMessage("🎉 Верно!");
             setGameState((prev) => ({
                 ...prev,
@@ -213,7 +212,6 @@ const QuantumGame = () => {
                             level: prev.level + 1,
                         };
                     } else {
-                        // Если прошли все уровни, завершаем игру
                         clearInterval(gameTimeRef.current);
                         return {
                             ...prev,

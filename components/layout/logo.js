@@ -14,13 +14,12 @@ function Logo() {
     const router = useRouter();
     const logoText = "My Next Blog";
 
-    // Современные градиенты для каждой буквы
     const gradients = [
         "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
         "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-        "linear-gradient(135deg, #fa709a 0%, #fee140 100%)", // x - особый градиент
+        "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
         "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
         "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
         "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)",
@@ -30,7 +29,6 @@ function Logo() {
         "linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)",
     ];
 
-    // Инициализация букв
     useEffect(() => {
         const letterArray = logoText.split("").map((char, index) => ({
             id: index,
@@ -50,7 +48,6 @@ function Logo() {
         }));
         setLetters(letterArray);
 
-        // Запуск авто-анимации через 1 секунду после загрузки
         setTimeout(() => {
             startAutoAnimationCycle();
         }, 1000);
@@ -60,7 +57,6 @@ function Logo() {
         };
     }, []);
 
-    // Очистка всех таймеров
     const cleanupTimers = () => {
         if (autoAnimationRef.current) {
             clearTimeout(autoAnimationRef.current);
@@ -73,7 +69,6 @@ function Logo() {
         }
     };
 
-    // Анимация отдельной буквы
     const animateLetter = (letter, progress) => {
         const t = progress * Math.PI * 2;
         const letterIndex = letter.id;
@@ -159,13 +154,12 @@ function Logo() {
         }
     };
 
-    // Цикл авто-анимации
     const startAutoAnimationCycle = () => {
         if (isHovered || isAnimating) return;
 
         setIsAnimating(true);
         const startTime = Date.now();
-        const duration = 5000; // 5 секунд анимации
+        const duration = 5000;
 
         const animateFrame = () => {
             const elapsed = Date.now() - startTime;
@@ -181,7 +175,6 @@ function Logo() {
             if (progress < 1) {
                 requestAnimationFrame(animateFrame);
             } else {
-                // Анимация завершена
                 finishAutoAnimation();
             }
         };
@@ -189,9 +182,7 @@ function Logo() {
         requestAnimationFrame(animateFrame);
     };
 
-    // Завершение авто-анимации
     const finishAutoAnimation = () => {
-        // Плавно возвращаем буквы в исходное положение
         setLetters((prevLetters) =>
             prevLetters.map((letter) => ({
                 ...letter,
@@ -207,27 +198,22 @@ function Logo() {
 
         setIsAnimating(false);
 
-        // Ждем 10 секунд и запускаем снова
         autoAnimationRef.current = setTimeout(() => {
             startAutoAnimationCycle();
         }, 10000);
     };
 
-    // Эффект взрывной волны при наведении
     const handleHoverStart = () => {
-        // Останавливаем авто-анимацию
         cleanupTimers();
         setIsAnimating(false);
 
         setIsHovered(true);
         setShowPulsar(true);
 
-        // Применяем эффект взрывной волны
         setLetters((prevLetters) =>
             prevLetters.map((letter) => {
                 if (letter.isSpaced) return letter;
 
-                // Буква x становится пульсаром
                 if (letter.id === 4) {
                     return {
                         ...letter,
@@ -240,7 +226,6 @@ function Logo() {
                     };
                 }
 
-                // Остальные буквы отодвигаются
                 const offset = letter.waveOffset;
                 return {
                     ...letter,
@@ -253,12 +238,10 @@ function Logo() {
         );
     };
 
-    // Возврат при уходе мыши
     const handleHoverEnd = () => {
         setIsHovered(false);
         setShowPulsar(false);
 
-        // Плавный возврат
         setLetters((prevLetters) =>
             prevLetters.map((letter) => ({
                 ...letter,
@@ -272,29 +255,23 @@ function Logo() {
             })),
         );
 
-        // Через 1 секунду возобновляем авто-анимацию
         hoverTimeoutRef.current = setTimeout(() => {
             startAutoAnimationCycle();
         }, 1000);
     };
 
-    // Обработка клика
     const handleClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        // Навигация
         router.push("/", undefined, { shallow: true });
 
-        // Быстрый эффект пульсара
         setIsHovered(true);
         setShowPulsar(true);
 
-        // Кратковременный эффект
         setTimeout(() => {
             setIsHovered(false);
             setShowPulsar(false);
-            // Возврат в исходное состояние
             setLetters((prevLetters) =>
                 prevLetters.map((letter) => ({
                     ...letter,
@@ -309,7 +286,6 @@ function Logo() {
         }, 300);
     };
 
-    // Очистка при размонтировании
     useEffect(() => {
         return () => {
             cleanupTimers();
@@ -326,7 +302,6 @@ function Logo() {
                 className={classes.logoContainer}
                 onMouseEnter={handleHoverStart}
                 onMouseLeave={handleHoverEnd}>
-                {/* Световые эффекты */}
                 <div className={classes.lightEffects}>
                     <div className={classes.lightBeam} />
                     <div
@@ -339,7 +314,6 @@ function Logo() {
                     />
                 </div>
 
-                {/* Контейнер букв */}
                 <div className={classes.lettersContainer}>
                     {letters.map((letter) => (
                         <div
@@ -376,7 +350,6 @@ function Logo() {
                     ))}
                 </div>
 
-                {/* Эффекты частиц при наведении */}
                 {isHovered && (
                     <div className={classes.hoverParticles}>
                         {[...Array(8)].map((_, i) => (

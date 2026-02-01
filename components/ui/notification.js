@@ -16,7 +16,6 @@ function Notification({ title, message, status, onClose }) {
         return () => clearTimeout(timer);
     }, [onClose]);
 
-    // Определяем иконку для каждого статуса
     const getIcon = () => {
         switch (status) {
             case "success":

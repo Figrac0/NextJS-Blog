@@ -12,11 +12,9 @@ function PageLoader() {
 
     useEffect(() => {
         const handleStart = (url) => {
-            // Очищаем все таймауты
             clearTimeout(timeoutRef.current);
             clearTimeout(visibleTimeoutRef.current);
 
-            // Проверяем, быстрый ли это переход (внутренние ссылки с prefetch)
             const isQuickTransition =
                 url === router.asPath ||
                 url.includes("#") ||
@@ -24,11 +22,9 @@ function PageLoader() {
 
             setIsQuick(isQuickTransition);
 
-            // Ждем 100мс перед показом - если загрузка быстрая, лоадер не покажется
             timeoutRef.current = setTimeout(() => {
                 setLoading(true);
 
-                // Еще небольшая задержка для плавного появления
                 visibleTimeoutRef.current = setTimeout(() => {
                     setIsVisible(true);
                 }, 50);
@@ -36,26 +32,21 @@ function PageLoader() {
         };
 
         const handleComplete = () => {
-            // Очищаем таймауты
             clearTimeout(timeoutRef.current);
             clearTimeout(visibleTimeoutRef.current);
 
-            // Быстро скрываем лоадер
             setIsVisible(false);
 
-            // Ждем окончания анимации и сбрасываем состояние
             setTimeout(() => {
                 setLoading(false);
                 setIsQuick(false);
             }, 200);
         };
 
-        // События маршрутизации
         router.events.on("routeChangeStart", handleStart);
         router.events.on("routeChangeComplete", handleComplete);
         router.events.on("routeChangeError", handleComplete);
 
-        // Очистка при размонтировании
         return () => {
             clearTimeout(timeoutRef.current);
             clearTimeout(visibleTimeoutRef.current);

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "../../context/language-context";
 import classes from "./footer.module.css";
 
@@ -10,7 +9,6 @@ function Footer() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
 
-    // Создание частиц для фона
     useEffect(() => {
         const newParticles = [];
         for (let i = 0; i < 20; i++) {
@@ -27,7 +25,6 @@ function Footer() {
         setParticles(newParticles);
     }, []);
 
-    // Анимация частиц
     useEffect(() => {
         const interval = setInterval(() => {
             setParticles((prev) =>
@@ -44,7 +41,6 @@ function Footer() {
         return () => clearInterval(interval);
     }, []);
 
-    // Отслеживание мыши
     useEffect(() => {
         const handleMouseMove = (e) => {
             setMousePosition({
@@ -57,7 +53,6 @@ function Footer() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
-    // Социальные ссылки
     const socialLinks = [
         {
             name: "GitHub",
@@ -85,21 +80,18 @@ function Footer() {
         },
     ];
 
-    // Быстрые ссылки
     const quickLinks = [
         { name: t("home"), url: "/" },
         { name: t("posts"), url: "/posts" },
         { name: t("contact"), url: "/contact" },
     ];
 
-    // Статистика (можно заменить на реальные данные)
     const stats = [
         { value: "20+", label: t("projectsCompleted") || "Projects" },
         { value: "100%", label: t("happyClients") || "Satisfaction" },
         { value: "50K+", label: t("codeLines") || "Code Lines" },
     ];
 
-    // Эффект градиента для фона
     const gradientStyle = {
         background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(102, 126, 234, 0.1) 0%, transparent 50%)`,
     };
@@ -110,7 +102,6 @@ function Footer() {
             style={gradientStyle}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}>
-            {/* Анимированный фон с частицами */}
             <div className={classes.particlesContainer}>
                 {particles.map((p) => (
                     <div
@@ -128,7 +119,6 @@ function Footer() {
                 ))}
             </div>
 
-            {/* Волны */}
             <div className={classes.waves}>
                 <div className={classes.wave}></div>
                 <div
@@ -140,7 +130,6 @@ function Footer() {
             </div>
 
             <div className={classes.container}>
-                {/* Верхняя секция */}
                 <div className={classes.topSection}>
                     <div className={classes.titleSection}>
                         <h2 className={classes.title}>{t("footerTitle")}</h2>
@@ -191,9 +180,7 @@ function Footer() {
                     </div>
                 </div>
 
-                {/* Основное содержимое */}
                 <div className={classes.mainContent}>
-                    {/* Социальные ссылки */}
                     <div className={classes.socialSection}>
                         <h3 className={classes.sectionTitle}>
                             <span className={classes.titleLine}></span>
@@ -261,7 +248,6 @@ function Footer() {
                         </div>
                     </div>
 
-                    {/* Быстрые ссылки */}
                     <div className={classes.linksSection}>
                         <h3 className={classes.sectionTitle}>
                             <span className={classes.titleLine}></span>
@@ -284,7 +270,6 @@ function Footer() {
                             ))}
                         </div>
 
-                        {/* Языковой переключатель в футере */}
                         <div className={classes.footerLanguage}>
                             <div className={classes.languageText}>
                                 {locale === "en" ? "🇺🇸 English" : "🇷🇺 Русский"}
@@ -293,7 +278,6 @@ function Footer() {
                     </div>
                 </div>
 
-                {/* Нижняя секция */}
                 <div className={classes.bottomSection}>
                     <div className={classes.logoSection}>
                         <div className={classes.logo}>
@@ -317,7 +301,6 @@ function Footer() {
                         </p>
                     </div>
 
-                    {/* Анимированный элемент скролла вверх */}
                     <button
                         className={classes.scrollTop}
                         onClick={() =>
@@ -346,7 +329,6 @@ function Footer() {
                     </button>
                 </div>
 
-                {/* Декоративные элементы */}
                 <div className={classes.decorations}>
                     <div className={classes.orb}></div>
                     <div

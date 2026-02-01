@@ -4,10 +4,18 @@ import { Fragment } from "react";
 import { useLanguage } from "../../context/language-context";
 import AllPosts from "../../components/posts/all-posts";
 import { getUniquePosts } from "../../lib/posts-util";
-import QuantumGame from "../../components/game/quantum-game";
+import dynamic from "next/dynamic";
 
 function AllPostsPage(props) {
     const { t } = useLanguage();
+
+    const QuantumGame = dynamic(
+        () => import("../../components/game/quantum-game"),
+        {
+            ssr: false,
+            loading: () => <div>Loading game...</div>,
+        },
+    );
 
     return (
         <Fragment>

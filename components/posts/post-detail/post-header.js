@@ -47,11 +47,8 @@ function PostHeader(props) {
     };
 
     const handleTypeButtonClick = () => {
-        if (buttonClicked) return; // Предотвращаем множественные клики
-
         setButtonClicked(true);
 
-        // Устанавливаем текст в зависимости от языка
         if (locale === "ru") {
             setButtonText("Это просто кнопка, и что вы мне сделаете? 😎");
         } else {
@@ -60,7 +57,6 @@ function PostHeader(props) {
             );
         }
 
-        // Сбрасываем через 3 секунды
         setTimeout(() => {
             setButtonClicked(false);
             setButtonText("");
@@ -83,7 +79,6 @@ function PostHeader(props) {
 
     return (
         <header className={classes.header}>
-            {/* Контейнер для кнопки с relative позиционированием */}
             <div className={classes.typeButtonContainer}>
                 <button
                     className={`${classes.typeBadge} ${classes[type]} ${classes.typeButton}`}
@@ -93,13 +88,11 @@ function PostHeader(props) {
                     <span>{getTypeLabel()}</span>
                 </button>
 
-                {/* Всплывающее сообщение */}
                 {buttonClicked && (
                     <div className={classes.buttonMessage}>{buttonText}</div>
                 )}
             </div>
 
-            {/* Остальной код остается без изменений */}
             <div className={classes.titleContainer}>
                 <h1 className={classes.title}>{title}</h1>
                 {excerpt && <p className={classes.excerpt}>{excerpt}</p>}

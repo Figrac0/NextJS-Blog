@@ -1,13 +1,95 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useLanguage } from "../../../context/language-context";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
+import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javascript";
+import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
+import jsx from "react-syntax-highlighter/dist/cjs/languages/prism/jsx";
+import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
+import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
+import css from "react-syntax-highlighter/dist/cjs/languages/prism/css";
+import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
+import python from "react-syntax-highlighter/dist/cjs/languages/prism/python";
+import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
+import sql from "react-syntax-highlighter/dist/cjs/languages/prism/sql";
+import markup from "react-syntax-highlighter/dist/cjs/languages/prism/markup";
+import yaml from "react-syntax-highlighter/dist/cjs/languages/prism/yaml";
+import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
+import java from "react-syntax-highlighter/dist/cjs/languages/prism/java";
+import csharp from "react-syntax-highlighter/dist/cjs/languages/prism/csharp";
+import php from "react-syntax-highlighter/dist/cjs/languages/prism/php";
+import c from "react-syntax-highlighter/dist/cjs/languages/prism/c";
+import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp";
+import rust from "react-syntax-highlighter/dist/cjs/languages/prism/rust";
+import go from "react-syntax-highlighter/dist/cjs/languages/prism/go";
+import swift from "react-syntax-highlighter/dist/cjs/languages/prism/swift";
+import kotlin from "react-syntax-highlighter/dist/cjs/languages/prism/kotlin";
+import graphql from "react-syntax-highlighter/dist/cjs/languages/prism/graphql";
+import powershell from "react-syntax-highlighter/dist/cjs/languages/prism/powershell";
+import shell from "react-syntax-highlighter/dist/cjs/languages/prism/shell-session";
+import diff from "react-syntax-highlighter/dist/cjs/languages/prism/diff";
+import nginx from "react-syntax-highlighter/dist/cjs/languages/prism/nginx";
+import ini from "react-syntax-highlighter/dist/cjs/languages/prism/ini";
+import toml from "react-syntax-highlighter/dist/cjs/languages/prism/toml";
+import makefile from "react-syntax-highlighter/dist/cjs/languages/prism/makefile";
+import docker from "react-syntax-highlighter/dist/cjs/languages/prism/docker";
+
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("js", javascript);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("ts", typescript);
+SyntaxHighlighter.registerLanguage("jsx", jsx);
+SyntaxHighlighter.registerLanguage("tsx", tsx);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("scss", scss);
+SyntaxHighlighter.registerLanguage("sass", scss);
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("py", python);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("sh", bash);
+SyntaxHighlighter.registerLanguage("shell", bash);
+SyntaxHighlighter.registerLanguage("sql", sql);
+SyntaxHighlighter.registerLanguage("html", markup);
+SyntaxHighlighter.registerLanguage("xml", markup);
+SyntaxHighlighter.registerLanguage("yaml", yaml);
+SyntaxHighlighter.registerLanguage("yml", yaml);
+SyntaxHighlighter.registerLanguage("docker", docker);
+SyntaxHighlighter.registerLanguage("dockerfile", docker);
+SyntaxHighlighter.registerLanguage("markdown", markdown);
+SyntaxHighlighter.registerLanguage("md", markdown);
+SyntaxHighlighter.registerLanguage("java", java);
+SyntaxHighlighter.registerLanguage("csharp", csharp);
+SyntaxHighlighter.registerLanguage("cs", csharp);
+SyntaxHighlighter.registerLanguage("php", php);
+SyntaxHighlighter.registerLanguage("c", c);
+SyntaxHighlighter.registerLanguage("cpp", cpp);
+SyntaxHighlighter.registerLanguage("rust", rust);
+SyntaxHighlighter.registerLanguage("rs", rust);
+SyntaxHighlighter.registerLanguage("go", go);
+SyntaxHighlighter.registerLanguage("swift", swift);
+SyntaxHighlighter.registerLanguage("kotlin", kotlin);
+SyntaxHighlighter.registerLanguage("kt", kotlin);
+SyntaxHighlighter.registerLanguage("graphql", graphql);
+SyntaxHighlighter.registerLanguage("gql", graphql);
+SyntaxHighlighter.registerLanguage("powershell", powershell);
+SyntaxHighlighter.registerLanguage("ps", powershell);
+SyntaxHighlighter.registerLanguage("shell-session", shell);
+SyntaxHighlighter.registerLanguage("console", shell);
+SyntaxHighlighter.registerLanguage("diff", diff);
+SyntaxHighlighter.registerLanguage("nginx", nginx);
+SyntaxHighlighter.registerLanguage("conf", nginx);
+SyntaxHighlighter.registerLanguage("ini", ini);
+SyntaxHighlighter.registerLanguage("toml", toml);
+SyntaxHighlighter.registerLanguage("makefile", makefile);
+SyntaxHighlighter.registerLanguage("mk", makefile);
+
+import { useLanguage } from "../../../context/language-context";
 import PostHeader from "./post-header";
 import classes from "./post-content.module.css";
-import LanguageSwitcher from "../../ui/language-switcher";
 
 function PostContent({ english, russian, hasRussianVersion }) {
     const { t, locale } = useLanguage();
@@ -168,7 +250,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
     return (
         <div className={classes.container}>
             <div className={classes.content}>
-                {/* Хлебные крошки */}
                 <nav className={classes.breadcrumb}>
                     <div className={classes.breadcrumbItem}>
                         <Link href="/" className={classes.breadcrumbLink}>
@@ -194,7 +275,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
                     </div>
                 </nav>
 
-                {/* Заголовок статьи */}
                 <PostHeader
                     title={currentPost.title}
                     image={imagePath}
@@ -207,7 +287,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
                     excerpt={currentPost.excerpt}
                 />
 
-                {/* Основное содержимое */}
                 <div className={classes.articleContent}>
                     <div className={classes.markdownContent}>
                         <ReactMarkdown components={customRenderers}>
@@ -216,7 +295,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
                     </div>
                 </div>
 
-                {/* Панель действий - оставляем только кнопку назад */}
                 <div className={classes.actionsPanel}>
                     <Link href="/posts" className={classes.backButton}>
                         <span>←</span>
@@ -225,7 +303,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
                 </div>
             </div>
 
-            {/* Плавающие кнопки - оставляем только кнопки прокрутки */}
             <div className={classes.floatingActions}>
                 <button
                     className={classes.floatingButton}

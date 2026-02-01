@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useLanguage } from "../../context/language-context";
 import classes from "./hero.module.css";
+import Link from "next/link";
 
 function Hero() {
     const { t } = useLanguage();
@@ -29,11 +30,11 @@ function Hero() {
                                 className={classes.primaryButton}>
                                 {t("viewWork")}
                             </a>
-                            <a
+                            <Link
                                 href="/contact"
                                 className={classes.secondaryButton}>
                                 {t("getInTouch")}
-                            </a>
+                            </Link>
                             <button
                                 className={classes.portfolioButton}
                                 onClick={handlePortfolioClick}>
@@ -55,6 +56,7 @@ function Hero() {
                                 height={400}
                                 className={classes.image}
                                 priority
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                             />
                             <div className={classes.floatingTech}>
                                 <span className={classes.techBadge}>React</span>

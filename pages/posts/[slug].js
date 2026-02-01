@@ -24,7 +24,6 @@ export function getStaticProps(context) {
     const { params } = context;
     const { slug } = params;
 
-    // Получаем данные для обоих языков
     const postData = getPostWithAllLanguages(slug);
 
     return {
@@ -44,7 +43,6 @@ export function getStaticPaths() {
         fileName.replace(/\.md$/, "").replace(/\.(en|ru)$/, ""),
     );
 
-    // Удаляем дубликаты
     const uniqueSlugs = [...new Set(slugs)];
 
     return {
