@@ -3,7 +3,7 @@ title: "Express Shop – Node.js E-Commerce (MVC, MongoDB, Stripe, PDF Invoices)
 excerpt: "Production-like server-rendered e-commerce app on Express with MVC, MongoDB sessions, CSRF protection, Stripe Checkout payments, and on-demand PDF invoices."
 date: "2026-02-25"
 slug: "express-shop-nodejs"
-image: "Express-Shop-preview.png"
+image: "express-shop-preview.png"
 type: "project"
 tech:
     [
