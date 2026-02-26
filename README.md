@@ -2,7 +2,7 @@
 
 ## 📋 Project Overview
 
-A sophisticated, full-featured Next.js blog and portfolio platform featuring multilingual support, interactive components, real-time filtering systems, and an educational JavaScript game. This project demonstrates advanced React patterns, state management, and modern web development practices.
+A sophisticated, full-featured Next.js blog and portfolio platform featuring multilingual support, interactive components, real-time filtering systems, and an educational JavaScript game. This project demonstrates advanced React patterns, state management, and modern web development practices. 
 
 ---
 
