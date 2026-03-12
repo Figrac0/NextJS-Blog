@@ -4,25 +4,20 @@
 
 A sophisticated, full-featured Next.js blog and portfolio platform featuring multilingual support, interactive components, real-time filtering systems, and an educational JavaScript game. This project demonstrates advanced React patterns, state management, and modern web development practices. 
 
+
 ---
 
-## 🎯 Live Demonstration
-
 <div align="center">
-
-<h3>Project Overview & Live Demo</h3>
-
-<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0;">
-
-<a href="https://next-js-blog-n4n1yu6l9-figracos-projects.vercel.app/" target="_blank" style="text-decoration: none;">
-  <div style="background: linear-gradient(135deg, #2563eb, #7c3aed); padding: 15px 30px; border-radius: 12px; color: white; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); transition: all 0.3s ease; border: 2px solid white;">
-    View Live Application
-  </div>
-</a>
-
+  <a href="https://next-js-blog-nine.vercel.app/" target="_blank">
+    <img
+      src="https://github.com/Figrac0/Figrac0/blob/main/href.svg"
+      alt="Quick Access - Visit Site"
+      width="50%"
+    />
+  </a>
 </div>
 
-</div>
+---
 
 ## 📸 Project Preview
 
