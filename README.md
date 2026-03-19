@@ -21,9 +21,11 @@ A sophisticated, full-featured Next.js blog and portfolio platform featuring mul
 
 ## 📸 Project Preview
 <p align="center">
+  
 | 1 | 2 |
 | :---: | :---: |
 | <img src="https://github.com/Figrac0/NextJS-Blog/blob/main/public/images/posts/portfolio-blog-platform/11.png" width="400"/> | <img src="https://github.com/Figrac0/NextJS-Blog/blob/main/public/images/posts/portfolio-blog-platform/12.png" width="400"/> |
+
 </p>
 
 <p align="center">
