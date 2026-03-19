@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useLanguage } from "../context/language-context";
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
-import { getUniquePosts } from "../lib/posts-util";
+import { getLocalizedPreviewPosts } from "../lib/posts-util";
 import Footer from "../components/layout/footer";
 
 function HomePage(props) {
@@ -25,7 +25,7 @@ function HomePage(props) {
 }
 
 export function getStaticProps() {
-    const allPosts = getUniquePosts();
+    const allPosts = getLocalizedPreviewPosts();
 
     return {
         props: {

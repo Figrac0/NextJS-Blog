@@ -1,6 +1,6 @@
 ---
 title: "Express Shop – Node.js E-Commerce (MVC, MongoDB, Stripe, PDF Invoices)"
-excerpt: "Production-like server-rendered e-commerce app on Express with MVC, MongoDB sessions, CSRF protection, Stripe Checkout payments, and on-demand PDF invoices."
+excerpt: "Production-подобное server-rendered e-commerce приложение на Express с MVC, MongoDB-сессиями, CSRF-защитой, платежами через Stripe Checkout и PDF-счётами по запросу."
 date: "2026-02-25"
 slug: "express-shop-nodejs"
 image: "express-shop-preview.png"
@@ -9,18 +9,14 @@ tech:
     [
         "Node.js",
         "Express",
-        "EJS",
         "MongoDB",
         "Mongoose",
         "express-session",
-        "connect-mongodb-session",
         "csurf",
         "Stripe Checkout",
         "pdfkit",
         "multer",
         "bcryptjs",
-        "express-validator",
-        "nodemailer",
         "SendGrid",
     ]
 isFeatured: true
@@ -34,8 +30,8 @@ githubUrl: "https://github.com/Figrac0/Express_Shop"
 
 # Express Shop – Node.js E-Commerce (MVC, MongoDB, Stripe, PDF Invoices)
 
-Живое демо: https://express-shop-gray.vercel.app/  
-GitHub репозиторий: https://github.com/Figrac0/Express_Shop
+Живое демо: [https://express-shop-gray.vercel.app/](https://express-shop-gray.vercel.app/)  
+GitHub репозиторий: [https://github.com/Figrac0/Express_Shop](https://github.com/Figrac0/Express_Shop)
 
 ## Предварительный просмотр проекта
 

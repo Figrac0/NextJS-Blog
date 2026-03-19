@@ -18,10 +18,6 @@ function ContentCard({ item, t }) {
 
     return (
         <article className={classes.card}>
-            <div className={`${classes.typeBadge} ${classes[item.type]}`}>
-                {getTypeLabel()}
-            </div>
-
             <div className={classes.statusBadges}>
                 {item.featured && (
                     <span
@@ -44,6 +40,10 @@ function ContentCard({ item, t }) {
 
             <Link href={`/posts/${item.slug}`} className={classes.imageLink}>
                 <div className={classes.imageContainer}>
+                    <div className={`${classes.typeBadge} ${classes[item.type]}`}>
+                        {getTypeLabel()}
+                    </div>
+
                     <div className={classes.imageWrapper}>
                         <Image
                             src={`/images/posts/${item.slug}/${item.image}`}
@@ -84,7 +84,6 @@ function ContentCard({ item, t }) {
 
                 <p className={classes.excerpt}>{item.excerpt}</p>
 
-                {/* Технологии */}
                 {item.tech && item.tech.length > 0 && (
                     <div className={classes.techStack}>
                         {item.tech.map((tech) => (
@@ -96,31 +95,6 @@ function ContentCard({ item, t }) {
                 )}
 
                 <div className={classes.footer}>
-                    {item.stats ? (
-                        <div className={classes.stats}>
-                            <span className={classes.stat}>
-                                <span className={classes.statIcon}>⭐</span>
-                                <span className={classes.statValue}>
-                                    {item.stats.stars}
-                                </span>
-                                <span className={classes.statLabel}>
-                                    {t("stars")}
-                                </span>
-                            </span>
-                            <span className={classes.stat}>
-                                <span className={classes.statIcon}>🔀</span>
-                                <span className={classes.statValue}>
-                                    {item.stats.forks}
-                                </span>
-                                <span className={classes.statLabel}>
-                                    {t("forks")}
-                                </span>
-                            </span>
-                        </div>
-                    ) : (
-                        <div className={classes.statsPlaceholder}></div>
-                    )}
-
                     <div className={classes.actions}>
                         {item.demoUrl && (
                             <a

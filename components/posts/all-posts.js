@@ -1,8 +1,11 @@
-// components/posts/all-posts-enhanced.js
 import { useState, useMemo, useEffect } from "react";
 import { useLanguage } from "../../context/language-context";
 import ContentCard from "../home-page/content-card";
 import CustomSelect from "../ui/custom-select";
+import {
+    parseReadingTimeToMinutes,
+    formatTotalReadingTime,
+} from "../../lib/reading-time";
 import classes from "./all-posts.module.css";
 
 function AllPostsEnhanced({ posts }) {
@@ -27,7 +30,9 @@ function AllPostsEnhanced({ posts }) {
     );
 
     const formattedPosts = useMemo(() => {
-        if (!posts || posts.length === 0) return [];
+        if (!posts || posts.length === 0) {
+            return [];
+        }
 
         const uniquePosts = posts.filter((post) => {
             if (post.hasRussianVersion && post.locale === "ru") {
@@ -36,29 +41,37 @@ function AllPostsEnhanced({ posts }) {
             return true;
         });
 
-        return uniquePosts.map((post) => ({
-            id: post.slug,
-            type: post.type || "article",
-            title: post.title,
-            excerpt: post.excerpt,
-            date: post.date,
-            slug: post.slug,
-            image: post.image,
-            tech: post.tech || [],
-            stats: post.stats || null,
-            readingTime: post.readingTime || null,
-            difficulty: post.difficulty || null,
-            featured: post.isFeatured || false,
-            trending: post.isTrending || false,
-            new: post.isNew || false,
-            demoUrl: post.demoUrl || null,
-            content: post.content || "",
-            views: post.views || Math.floor(Math.random() * 1000) + 100,
-            rating: post.rating || (Math.random() * 2 + 3).toFixed(1),
-            locale: post.locale || "en",
-            hasRussianVersion: post.hasRussianVersion || false,
-        }));
-    }, [posts]);
+        return uniquePosts.map((post) => {
+            const localizedPreview =
+                locale === "ru" && post.previewTranslations?.ru
+                    ? post.previewTranslations.ru
+                    : post.previewTranslations?.en;
+
+            return {
+                id: post.slug,
+                type: post.type || "article",
+                title: localizedPreview?.title ?? post.title,
+                excerpt: localizedPreview?.excerpt ?? post.excerpt,
+                date: post.date,
+                slug: post.slug,
+                image: post.image,
+                tech: post.tech || [],
+                readingTime:
+                    localizedPreview?.readingTime ?? post.readingTime ?? null,
+                difficulty:
+                    localizedPreview?.difficulty ?? post.difficulty ?? null,
+                featured: post.isFeatured || false,
+                trending: post.isTrending || false,
+                new: post.isNew || false,
+                demoUrl: post.demoUrl || null,
+                content: post.content || "",
+                views: post.views || Math.floor(Math.random() * 1000) + 100,
+                rating: post.rating || (Math.random() * 2 + 3).toFixed(1),
+                locale: post.locale || "en",
+                hasRussianVersion: post.hasRussianVersion || false,
+            };
+        });
+    }, [posts, locale]);
 
     useEffect(() => {
         if (!psychedelicMode) {
@@ -101,12 +114,12 @@ function AllPostsEnhanced({ posts }) {
 
         const interval = setInterval(() => {
             setAnimatedParticles((prev) =>
-                prev.map((p) => ({
-                    ...p,
-                    x: (p.x + p.speedX + 100) % 100,
-                    y: (p.y + p.speedY + 100) % 100,
-                    rotation: p.rotation + p.rotationSpeed,
-                    pulsePhase: p.pulsePhase + p.pulseSpeed,
+                prev.map((particle) => ({
+                    ...particle,
+                    x: (particle.x + particle.speedX + 100) % 100,
+                    y: (particle.y + particle.speedY + 100) % 100,
+                    rotation: particle.rotation + particle.rotationSpeed,
+                    pulsePhase: particle.pulsePhase + particle.pulseSpeed,
                 })),
             );
         }, 50);
@@ -136,6 +149,7 @@ function AllPostsEnhanced({ posts }) {
                 tutorials: "tutorial",
                 articles: "article",
             };
+
             filtered = filtered.filter(
                 (post) => post.type === typeMap[selectedCategory],
             );
@@ -156,8 +170,19 @@ function AllPostsEnhanced({ posts }) {
                 case "oldest":
                     return new Date(a.date) - new Date(b.date);
                 case "popular":
-                    const aScore = (a.stats?.stars || 0) + (a.views || 0) / 100;
-                    const bScore = (b.stats?.stars || 0) + (b.views || 0) / 100;
+                    const aScore =
+                        (a.views || 0) / 100 +
+                        (a.featured ? 50 : 0) +
+                        (a.trending ? 30 : 0) +
+                        (a.new ? 20 : 0) +
+                        (a.demoUrl ? 10 : 0);
+                    const bScore =
+                        (b.views || 0) / 100 +
+                        (b.featured ? 50 : 0) +
+                        (b.trending ? 30 : 0) +
+                        (b.new ? 20 : 0) +
+                        (b.demoUrl ? 10 : 0);
+
                     return bScore - aScore;
                 case "alphabetical":
                     return a.title.localeCompare(
@@ -182,15 +207,21 @@ function AllPostsEnhanced({ posts }) {
     const stats = useMemo(
         () => ({
             total: formattedPosts.length,
-            projects: formattedPosts.filter((p) => p.type === "project").length,
-            tutorials: formattedPosts.filter((p) => p.type === "tutorial")
+            projects: formattedPosts.filter((post) => post.type === "project")
                 .length,
-            articles: formattedPosts.filter((p) => p.type === "article").length,
-            totalStars: formattedPosts
-                .filter((p) => p.stats)
-                .reduce((sum, p) => sum + (p.stats.stars || 0), 0),
+            tutorials: formattedPosts.filter((post) => post.type === "tutorial")
+                .length,
+            articles: formattedPosts.filter((post) => post.type === "article")
+                .length,
+            totalStudyTime: formattedPosts
+                .filter((post) => post.type === "project")
+                .reduce(
+                    (sum, post) =>
+                        sum + parseReadingTimeToMinutes(post.readingTime),
+                    0,
+                ),
             totalViews: formattedPosts.reduce(
-                (sum, p) => sum + (p.views || 0),
+                (sum, post) => sum + (post.views || 0),
                 0,
             ),
         }),
@@ -198,16 +229,13 @@ function AllPostsEnhanced({ posts }) {
     );
 
     const handleSearchClear = () => setSearchQuery("");
+
     const handleResetFilters = () => {
         setSearchQuery("");
         setSelectedCategory("all");
         setSelectedFilter("all");
         setSortOption("newest");
         setExpandedPostId(null);
-    };
-
-    const handlePostClick = (postId) => {
-        setExpandedPostId(expandedPostId === postId ? null : postId);
     };
 
     const togglePsychedelicMode = () => {
@@ -331,13 +359,16 @@ function AllPostsEnhanced({ posts }) {
                             </div>
                         </div>
                         <div className={classes.statCard}>
-                            <div className={classes.statIcon}>⭐</div>
+                            <div className={classes.statIcon}>⌛</div>
                             <div className={classes.statContent}>
                                 <div className={classes.statValue}>
-                                    {stats.totalStars}
+                                    {formatTotalReadingTime(
+                                        stats.totalStudyTime,
+                                        locale,
+                                    )}
                                 </div>
                                 <div className={classes.statLabel}>
-                                    {t("githubStars")}
+                                    {t("studyTime")}
                                 </div>
                             </div>
                         </div>
@@ -353,7 +384,9 @@ function AllPostsEnhanced({ posts }) {
                                 className={classes.searchInput}
                                 placeholder={t("searchPosts")}
                                 value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                                onChange={(event) =>
+                                    setSearchQuery(event.target.value)
+                                }
                             />
                             {searchQuery && (
                                 <button
@@ -404,9 +437,6 @@ function AllPostsEnhanced({ posts }) {
                                                 setSelectedFilter(filter)
                                             }>
                                             {t(`filters.${filter}`)}
-                                            {filter === "featured"}
-                                            {filter === "trending"}
-                                            {filter === "new"}
                                         </button>
                                     ),
                                 )}
@@ -567,13 +597,14 @@ function AllPostsEnhanced({ posts }) {
                     )}
                 </main>
 
-                {/* Информация о технологиях */}
                 <aside className={classes.techSidebar}>
                     <h3 className={classes.sidebarTitle}>🧩 {t("tech")}</h3>
                     <div className={classes.allTech}>
                         {Array.from(
                             new Set(
-                                formattedPosts.flatMap((p) => p.tech || []),
+                                formattedPosts.flatMap(
+                                    (post) => post.tech || [],
+                                ),
                             ),
                         )
                             .sort()

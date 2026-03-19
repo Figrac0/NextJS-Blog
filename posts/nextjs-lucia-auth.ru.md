@@ -18,9 +18,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: true
-stats:
-    stars: 38
-    forks: 12
 readingTime: "12 мин"
 difficulty: "Средний"
 githubUrl: "https://github.com/Figrac0/Next_User_Authentication-LuciaAdapter"

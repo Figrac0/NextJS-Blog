@@ -19,10 +19,7 @@ tech:
     ]
 isFeatured: true
 isTrending: true
-isNew: false
-stats:
-    stars: 42
-    forks: 12
+isNew: true
 readingTime: "18 мин"
 difficulty: "Продвинутый"
 demoUrl: "https://next-js-blog-nine.vercel.app/"
@@ -241,9 +238,6 @@ tech: ["React", "TypeScript", "Next.js", "Zod"]
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-  stars: 56
-  forks: 12
 readingTime: "15 мин"
 difficulty: "Средний"
 demoUrl: "https://demo.example.com"

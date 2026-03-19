@@ -1,4 +1,7 @@
+﻿const isDevCommand = process.argv.includes("dev");
+
 module.exports = {
+    distDir: isDevCommand ? ".next-dev" : ".next",
     env: {
         mongodb_username: "",
         mongodb_password: "",

@@ -16,9 +16,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 28
-    forks: 5
 readingTime: "12 min"
 difficulty: "Intermediate"
 demoUrl: "https://adminpanel-a2867.web.app/schedule"

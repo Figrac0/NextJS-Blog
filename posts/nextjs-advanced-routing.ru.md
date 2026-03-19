@@ -19,9 +19,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 52
-    forks: 18
 readingTime: "18 мин"
 difficulty: "Продвинутый"
 demoUrl: "https://next-news-routing-rendering-jts9.vercel.app"

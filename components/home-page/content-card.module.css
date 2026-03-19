@@ -20,8 +20,8 @@
 
 .typeBadge {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    bottom: 1rem;
+    right: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 50px;
     font-size: 0.8rem;
@@ -216,44 +216,13 @@
 
 .footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: flex-end;
     margin-top: auto;
     padding-top: 1.5rem;
     border-top: 2px solid rgba(255, 255, 255, 0.1);
     gap: 1rem;
     flex-wrap: wrap;
-}
-
-.stats {
-    display: flex;
-    gap: 1.5rem;
-    flex-shrink: 0;
-}
-
-.stat {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.statIcon {
-    font-size: 1.1rem;
-}
-
-.statValue {
-    font-weight: 700;
-    color: white;
-}
-
-.statLabel {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.statsPlaceholder {
-    flex: 1;
-    min-width: 0;
 }
 
 .actions {
@@ -396,7 +365,7 @@
     }
 
     .typeBadge {
-        top: 0.5rem;
+        bottom: 0.5rem;
         left: 0.5rem;
         font-size: 0.65rem;
         padding: 0.3rem 0.6rem;

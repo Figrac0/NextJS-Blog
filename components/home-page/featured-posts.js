@@ -1,38 +1,41 @@
-// components/home-page/featured-posts.js
 import { useState, useMemo, useEffect } from "react";
 import { useLanguage } from "../../context/language-context";
 import ContentCard from "./content-card";
 import TechBadge from "./tech-badge";
 import StatsCard from "./stats-card";
+import {
+    parseReadingTimeToMinutes,
+    formatTotalReadingTime,
+} from "../../lib/reading-time";
 import classes from "./featured-posts.module.css";
 
 const TABS = ["all", "repositories", "tutorials", "insights"];
 const SORT_OPTIONS = ["latest", "popular"];
+const POSTS_PER_PAGE = 4;
 
 function FeaturedPosts({ posts }) {
-    const { t, locale } = useLanguage(); // Добавляем locale из useLanguage
+    const { t, locale } = useLanguage();
     const [activeTab, setActiveTab] = useState("all");
     const [sortBy, setSortBy] = useState("latest");
     const [selectedTech, setSelectedTech] = useState("all");
     const [allTechStack, setAllTechStack] = useState(["all"]);
     const [visibleTech, setVisibleTech] = useState(["all"]);
     const [rotationIndex, setRotationIndex] = useState(0);
+    const [visiblePostsCount, setVisiblePostsCount] = useState(POSTS_PER_PAGE);
 
-    // В useMemo для formattedPosts:
     const formattedPosts = useMemo(() => {
-        if (!posts || posts.length === 0) return [];
+        if (!posts || posts.length === 0) {
+            return [];
+        }
 
-        // Фильтруем дубликаты переводов
         const seenSlugs = new Set();
         const uniquePosts = [];
 
         posts.forEach((post) => {
-            // Если это русский перевод и есть русская версия - пропускаем
             if (post.locale === "ru" && post.hasRussianVersion) {
                 return;
             }
 
-            // Если slug уже видели - пропускаем (предотвращаем дублирование)
             if (seenSlugs.has(post.slug)) {
                 return;
             }
@@ -41,51 +44,63 @@ function FeaturedPosts({ posts }) {
             uniquePosts.push(post);
         });
 
-        return uniquePosts.map((post) => ({
-            id: post.slug,
-            type: post.type || "article",
-            title: post.title,
-            excerpt: post.excerpt,
-            date: post.date,
-            slug: post.slug,
-            image: post.image,
-            tech: post.tech || [],
-            stats: post.stats || null,
-            readingTime: post.readingTime || null,
-            difficulty: post.difficulty || null,
-            featured: post.isFeatured || false,
-            trending: post.isTrending || false,
-            new: post.isNew || false,
-            demoUrl: post.demoUrl || null,
-            locale: post.locale || "en",
-            hasRussianVersion: post.hasRussianVersion || false,
-        }));
-    }, [posts]);
+        return uniquePosts.map((post) => {
+            const localizedPreview =
+                locale === "ru" && post.previewTranslations?.ru
+                    ? post.previewTranslations.ru
+                    : post.previewTranslations?.en;
 
-    // Получаем все технологии из постов
+            return {
+                id: post.slug,
+                type: post.type || "article",
+                title: localizedPreview?.title ?? post.title,
+                excerpt: localizedPreview?.excerpt ?? post.excerpt,
+                date: post.date,
+                slug: post.slug,
+                image: post.image,
+                tech: post.tech || [],
+                readingTime:
+                    localizedPreview?.readingTime ?? post.readingTime ?? null,
+                difficulty:
+                    localizedPreview?.difficulty ?? post.difficulty ?? null,
+                featured: post.isFeatured || false,
+                trending: post.isTrending || false,
+                new: post.isNew || false,
+                demoUrl: post.demoUrl || null,
+                locale: post.locale || "en",
+                hasRussianVersion: post.hasRussianVersion || false,
+            };
+        });
+    }, [posts, locale]);
+
     useEffect(() => {
-        if (formattedPosts.length > 0) {
-            const allTech = new Set();
-            formattedPosts.forEach((post) => {
-                if (post.tech && Array.isArray(post.tech)) {
-                    post.tech.forEach((tech) => allTech.add(tech));
-                }
-            });
-            const techArray = ["all", ...Array.from(allTech)];
-            setAllTechStack(techArray);
-
-            // Показываем первые 10 технологий (или все, если их меньше)
-            const initialVisibleTech =
-                techArray.length > 10
-                    ? ["all", ...techArray.slice(1, 10)]
-                    : techArray;
-            setVisibleTech(initialVisibleTech);
+        if (formattedPosts.length === 0) {
+            return;
         }
-    }, [formattedPosts, locale]); // Добавляем locale в зависимости
 
-    // Ротация технологий каждые 10 секунд
+        const allTech = new Set();
+
+        formattedPosts.forEach((post) => {
+            if (post.tech && Array.isArray(post.tech)) {
+                post.tech.forEach((tech) => allTech.add(tech));
+            }
+        });
+
+        const techArray = ["all", ...Array.from(allTech)];
+        setAllTechStack(techArray);
+
+        const initialVisibleTech =
+            techArray.length > 10
+                ? ["all", ...techArray.slice(1, 10)]
+                : techArray;
+
+        setVisibleTech(initialVisibleTech);
+    }, [formattedPosts]);
+
     useEffect(() => {
-        if (allTechStack.length <= 10) return;
+        if (allTechStack.length <= 10) {
+            return;
+        }
 
         const interval = setInterval(() => {
             setRotationIndex((prevIndex) => {
@@ -115,7 +130,6 @@ function FeaturedPosts({ posts }) {
         return () => clearInterval(interval);
     }, [allTechStack]);
 
-    // Остальной код остается без изменений...
     const filteredContent = useMemo(() => {
         let filtered = [...formattedPosts];
 
@@ -125,6 +139,7 @@ function FeaturedPosts({ posts }) {
                 tutorials: "tutorial",
                 insights: "article",
             };
+
             filtered = filtered.filter(
                 (item) => item.type === typeMap[activeTab],
             );
@@ -140,8 +155,17 @@ function FeaturedPosts({ posts }) {
             filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
         } else if (sortBy === "popular") {
             filtered.sort((a, b) => {
-                const aScore = (a.stats?.stars || 0) + (a.featured ? 50 : 0);
-                const bScore = (b.stats?.stars || 0) + (b.featured ? 50 : 0);
+                const aScore =
+                    (a.featured ? 50 : 0) +
+                    (a.trending ? 30 : 0) +
+                    (a.new ? 20 : 0) +
+                    (a.demoUrl ? 10 : 0);
+                const bScore =
+                    (b.featured ? 50 : 0) +
+                    (b.trending ? 30 : 0) +
+                    (b.new ? 20 : 0) +
+                    (b.demoUrl ? 10 : 0);
+
                 return bScore - aScore;
             });
         }
@@ -149,16 +173,33 @@ function FeaturedPosts({ posts }) {
         return filtered;
     }, [activeTab, selectedTech, sortBy, formattedPosts]);
 
+    useEffect(() => {
+        setVisiblePostsCount(POSTS_PER_PAGE);
+    }, [activeTab, selectedTech, sortBy]);
+
+    const visiblePosts = useMemo(
+        () => filteredContent.slice(0, visiblePostsCount),
+        [filteredContent, visiblePostsCount],
+    );
+
+    const hasMorePosts = filteredContent.length > visiblePostsCount;
+
     const stats = useMemo(
         () => ({
-            totalProjects: formattedPosts.filter((p) => p.type === "project")
+            totalProjects: formattedPosts.filter(
+                (post) => post.type === "project",
+            ).length,
+            tutorials: formattedPosts.filter((post) => post.type === "tutorial")
                 .length,
-            tutorials: formattedPosts.filter((p) => p.type === "tutorial")
+            articles: formattedPosts.filter((post) => post.type === "article")
                 .length,
-            articles: formattedPosts.filter((p) => p.type === "article").length,
-            totalStars: formattedPosts
-                .filter((p) => p.stats)
-                .reduce((sum, p) => sum + (p.stats.stars || 0), 0),
+            totalStudyTime: formattedPosts
+                .filter((post) => post.type === "project")
+                .reduce(
+                    (sum, post) =>
+                        sum + parseReadingTimeToMinutes(post.readingTime),
+                    0,
+                ),
         }),
         [formattedPosts],
     );
@@ -212,7 +253,6 @@ function FeaturedPosts({ posts }) {
 
                 <div className={classes.content}>
                     <aside className={classes.sidebar}>
-                        {/* Статистика */}
                         <div className={classes.stats}>
                             <StatsCard
                                 label={t("totalProjects")}
@@ -225,9 +265,12 @@ function FeaturedPosts({ posts }) {
                                 icon="📝"
                             />
                             <StatsCard
-                                label={t("githubStars")}
-                                value={stats.totalStars}
-                                icon="⭐"
+                                label={t("studyTime")}
+                                value={formatTotalReadingTime(
+                                    stats.totalStudyTime,
+                                    locale,
+                                )}
+                                icon="🕐"
                             />
                         </div>
 
@@ -268,7 +311,7 @@ function FeaturedPosts({ posts }) {
 
                         <div className={classes.sortFilter}>
                             <h3 className={classes.filterTitle}>
-                                <span className={classes.filterIcon}>↕️</span>
+                                <span className={classes.filterIcon}>↕</span>
                                 {t("sortBy")}
                             </h3>
                             <div className={classes.sortOptions}>
@@ -313,15 +356,33 @@ function FeaturedPosts({ posts }) {
                         </div>
 
                         {filteredContent.length > 0 ? (
-                            <div className={classes.grid}>
-                                {filteredContent.map((item) => (
-                                    <ContentCard
-                                        key={item.id}
-                                        item={item}
-                                        t={t}
-                                    />
-                                ))}
-                            </div>
+                            <>
+                                <div className={classes.grid}>
+                                    {visiblePosts.map((item) => (
+                                        <ContentCard
+                                            key={item.id}
+                                            item={item}
+                                            t={t}
+                                        />
+                                    ))}
+                                </div>
+
+                                {hasMorePosts && (
+                                    <div className={classes.loadMoreContainer}>
+                                        <button
+                                            className={classes.loadMoreButton}
+                                            onClick={() =>
+                                                setVisiblePostsCount(
+                                                    (prevCount) =>
+                                                        prevCount +
+                                                        POSTS_PER_PAGE,
+                                                )
+                                            }>
+                                            {t("showMore")}
+                                        </button>
+                                    </div>
+                                )}
+                            </>
                         ) : (
                             <div className={classes.emptyState}>
                                 <div className={classes.emptyIcon}>📭</div>

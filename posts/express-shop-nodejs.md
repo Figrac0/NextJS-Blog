@@ -9,18 +9,14 @@ tech:
     [
         "Node.js",
         "Express",
-        "EJS",
         "MongoDB",
         "Mongoose",
         "express-session",
-        "connect-mongodb-session",
         "csurf",
         "Stripe Checkout",
         "pdfkit",
         "multer",
         "bcryptjs",
-        "express-validator",
-        "nodemailer",
         "SendGrid",
     ]
 isFeatured: true
@@ -34,8 +30,8 @@ githubUrl: "https://github.com/Figrac0/Express_Shop"
 
 # Express Shop – Node.js E-Commerce (MVC, MongoDB, Stripe, PDF Invoices)
 
-Live demo: https://express-shop-gray.vercel.app/  
-GitHub repository: https://github.com/Figrac0/Express_Shop
+Live demo: [https://express-shop-gray.vercel.app/](https://express-shop-gray.vercel.app/)  
+GitHub repository: [https://github.com/Figrac0/Express_Shop](https://github.com/Figrac0/Express_Shop)
 
 ## Project Preview
 

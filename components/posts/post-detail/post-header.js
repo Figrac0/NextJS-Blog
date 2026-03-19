@@ -5,17 +5,8 @@ import { useState } from "react";
 
 function PostHeader(props) {
     const { t, locale } = useLanguage();
-    const {
-        title,
-        image,
-        type,
-        date,
-        readingTime,
-        difficulty,
-        stats,
-        tech,
-        excerpt,
-    } = props;
+    const { title, image, type, date, readingTime, difficulty, tech, excerpt } =
+        props;
 
     const [buttonClicked, setButtonClicked] = useState(false);
     const [buttonText, setButtonText] = useState("");
@@ -136,32 +127,6 @@ function PostHeader(props) {
                     </div>
                 )}
             </div>
-
-            {stats && (
-                <div className={classes.statsContainer}>
-                    {stats.stars !== undefined && (
-                        <div className={classes.statItem}>
-                            <div className={classes.statValue}>
-                                {stats.stars}
-                            </div>
-                            <div className={classes.statLabel}>
-                                {t("stars")}
-                            </div>
-                        </div>
-                    )}
-
-                    {stats.forks !== undefined && (
-                        <div className={classes.statItem}>
-                            <div className={classes.statValue}>
-                                {stats.forks}
-                            </div>
-                            <div className={classes.statLabel}>
-                                {t("forks")}
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
 
             {tech && tech.length > 0 && (
                 <div className={classes.techContainer}>

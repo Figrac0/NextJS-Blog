@@ -20,9 +20,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 28
-    forks: 5
 readingTime: "12 мин"
 difficulty: "Средний"
 demoUrl: "https://r-next-onwards-foodies.vercel.app/"

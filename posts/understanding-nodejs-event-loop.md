@@ -17,9 +17,6 @@ tech:
 isFeatured: false
 isTrending: false
 isNew: true
-stats:
-    stars: 0
-    forks: 0
 readingTime: "18 min"
 difficulty: "Intermediate"
 ---

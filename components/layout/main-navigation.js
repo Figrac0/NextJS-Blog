@@ -1,46 +1,32 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useLanguage } from "../../context/language-context";
 import Logo from "./logo";
 import LanguageSwitcher from "../ui/language-switcher";
 import classes from "./main-navigation.module.css";
 
 function MainNavigation() {
+    const router = useRouter();
     const { t, locale, toggleLanguage } = useLanguage();
-    const [activeLink, setActiveLink] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-
-    useEffect(() => {
-        const path = window.location.pathname;
-        if (path === "/") setActiveLink("home");
-        else if (path.startsWith("/posts")) setActiveLink("posts");
-        else if (path === "/contact") setActiveLink("contact");
-    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 20);
         };
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     useEffect(() => {
-        const handleRouteChange = () => {
-            setIsMobileMenuOpen(false);
-        };
-
-        window.addEventListener("popstate", handleRouteChange);
-        return () => window.removeEventListener("popstate", handleRouteChange);
-    }, []);
+        setIsMobileMenuOpen(false);
+    }, [router.asPath]);
 
     useEffect(() => {
-        if (isMobileMenuOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "unset";
-        }
+        document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
 
         return () => {
             document.body.style.overflow = "unset";
@@ -50,18 +36,22 @@ function MainNavigation() {
     const navLinks = [
         { key: "home", href: "/", label: t("home") },
         { key: "posts", href: "/posts", label: t("posts") },
+        { key: "about", href: "/about", label: t("about") },
         { key: "contact", href: "/contact", label: t("contact") },
     ];
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
+    const isActiveLink = (href) => {
+        const currentPath = router.asPath.split("?")[0];
+
+        if (href === "/") {
+            return currentPath === "/";
+        }
+
+        return currentPath === href || currentPath.startsWith(`${href}/`);
     };
 
-    const handleNavClick = (key) => {
-        setActiveLink(key);
-        if (isMobileMenuOpen) {
-            setIsMobileMenuOpen(false);
-        }
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen((prevState) => !prevState);
     };
 
     return (
@@ -76,15 +66,10 @@ function MainNavigation() {
                             {navLinks.map((link) => (
                                 <li
                                     key={link.key}
-                                    className={`${classes.item} ${activeLink === link.key ? classes.active : ""}`}
-                                    onMouseEnter={() => setActiveLink(link.key)}
-                                    onMouseLeave={() => setActiveLink("")}>
+                                    className={`${classes.item} ${isActiveLink(link.href) ? classes.active : ""}`}>
                                     <Link
                                         href={link.href}
-                                        className={classes.link}
-                                        onClick={() =>
-                                            handleNavClick(link.key)
-                                        }>
+                                        className={classes.link}>
                                         <span className={classes.linkText}>
                                             {link.label}
                                         </span>
@@ -135,8 +120,7 @@ function MainNavigation() {
                         <li key={link.key} className={classes.mobileItem}>
                             <Link
                                 href={link.href}
-                                className={`${classes.mobileLink} ${activeLink === link.key ? classes.active : ""}`}
-                                onClick={() => handleNavClick(link.key)}>
+                                className={`${classes.mobileLink} ${isActiveLink(link.href) ? classes.active : ""}`}>
                                 {link.label}
                             </Link>
                         </li>

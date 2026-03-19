@@ -17,9 +17,6 @@ tech:
 isFeatured: false
 isTrending: true
 isNew: true
-stats:
-    stars: 67
-    forks: 24
 readingTime: "15 мин"
 difficulty: "Средний"
 demoUrl: "https://react-motion-animation-lib.vercel.app"

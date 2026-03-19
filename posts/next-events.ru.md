@@ -19,9 +19,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 42
-    forks: 8
 readingTime: "15 мин"
 difficulty: "Средний"
 demoUrl: "https://event-flow-api-psi.vercel.app/"

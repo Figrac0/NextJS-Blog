@@ -210,14 +210,24 @@
 
 /* Активный пункт меню */
 .item.active .linkText {
-    color: #667eea;
+    color: #5b6fe0;
     font-weight: 700;
-    background: rgba(102, 126, 234, 0.08);
+    background: rgba(102, 126, 234, 0.06);
 }
 
 .item.active .linkLine {
-    width: 100%;
+    width: 58%;
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    opacity: 0.9;
+}
+
+.item.active .linkCircle {
+    transform: translateX(-50%) scale(0.85);
+    opacity: 0.9;
+}
+
+.item.active .link::before {
+    transform: translate(-50%, -50%) scale(1);
 }
 
 /* Бургер-меню для мобильных */
@@ -570,6 +580,9 @@
 .mobileItem:nth-child(3) {
     animation-delay: 0.3s;
 }
-.mobileLanguage {
+.mobileItem:nth-child(4) {
     animation-delay: 0.4s;
+}
+.mobileLanguage {
+    animation-delay: 0.5s;
 }

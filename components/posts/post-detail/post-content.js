@@ -143,7 +143,7 @@ function PostContent({ english, russian, hasRussianVersion }) {
             return <p>{children}</p>;
         },
 
-        code({ node, inline, className, children, ...props }) {
+        code({ inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             const language = match ? match[1] : "";
             const codeText = String(children).replace(/\n$/, "");
@@ -158,7 +158,13 @@ function PostContent({ english, russian, hasRussianVersion }) {
                             <button
                                 className={classes.copyButton}
                                 onClick={() => copyToClipboard(codeText)}>
-                                {copied ? "✓ Copied!" : "Copy"}
+                                {copied
+                                    ? locale === "ru"
+                                        ? "✓ Скопировано!"
+                                        : "✓ Copied!"
+                                    : locale === "ru"
+                                      ? "Копировать"
+                                      : "Copy"}
                             </button>
                         </div>
                         <SyntaxHighlighter
@@ -182,7 +188,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
         ul: ({ children }) => <ul>{children}</ul>,
         ol: ({ children }) => <ol>{children}</ol>,
         li: ({ children }) => <li>{children}</li>,
-
         blockquote: ({ children }) => <blockquote>{children}</blockquote>,
 
         a: ({ href, children }) => (
@@ -197,7 +202,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
         tr: ({ children }) => <tr>{children}</tr>,
         th: ({ children }) => <th>{children}</th>,
         td: ({ children }) => <td>{children}</td>,
-
         hr: () => <hr />,
     };
 
@@ -282,7 +286,6 @@ function PostContent({ english, russian, hasRussianVersion }) {
                     date={currentPost.date}
                     readingTime={currentPost.readingTime}
                     difficulty={currentPost.difficulty}
-                    stats={currentPost.stats}
                     tech={currentPost.tech}
                     excerpt={currentPost.excerpt}
                 />

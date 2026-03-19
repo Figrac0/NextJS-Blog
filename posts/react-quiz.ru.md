@@ -16,9 +16,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 18
-    forks: 5
 readingTime: "10 min"
 difficulty: "Intermediate"
 demoUrl: "https://r-quiz-beryl.vercel.app/"

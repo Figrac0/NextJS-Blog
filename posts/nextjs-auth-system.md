@@ -18,10 +18,7 @@ tech:
     ]
 isFeatured: true
 isTrending: true
-isNew: false
-stats:
-    stars: 35
-    forks: 12
+isNew: true
 readingTime: "18 min"
 difficulty: "Advanced"
 demoUrl: "https://next-auth-route-guard-73o9.vercel.app/"

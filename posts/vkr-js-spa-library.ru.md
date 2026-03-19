@@ -18,9 +18,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 12
-    forks: 4
 readingTime: "25 мин"
 difficulty: "Продвинутый"
 demoUrl: "https://github.com/Figrac0/VKR_LIB"

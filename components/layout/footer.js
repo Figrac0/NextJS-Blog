@@ -84,6 +84,7 @@ function Footer() {
         { name: t("home"), url: "/" },
         { name: t("posts"), url: "/posts" },
         { name: t("contact"), url: "/contact" },
+        { name: t("about"), url: "/about" },
     ];
 
     const stats = [

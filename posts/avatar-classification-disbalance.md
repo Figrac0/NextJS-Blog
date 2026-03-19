@@ -20,9 +20,6 @@ tech:
 isFeatured: true
 isTrending: true
 isNew: false
-stats:
-    stars: 15
-    forks: 3
 readingTime: "20 min"
 difficulty: "Advanced"
 demoUrl: "https://colab.research.google.com/drive/1IFYsefy8tPpA2mwUu8kQXbjaFZy3h8-M?usp=sharing"
