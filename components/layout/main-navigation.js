@@ -1,7 +1,8 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useLanguage } from "../../context/language-context";
+import { locales } from "../../lib/locales";
 import Logo from "./logo";
 import LanguageSwitcher from "../ui/language-switcher";
 import classes from "./main-navigation.module.css";
@@ -144,13 +145,13 @@ function MainNavigation() {
                             type="button"
                             className={`${classes.mobileLanguageButton} ${locale === "en" ? classes.active : ""}`}
                             onClick={() => handleMobileLanguageChange("en")}>
-                            рџ‡єрџ‡ё English
+                            {locales.en.flag} {locales.en.name}
                         </button>
                         <button
                             type="button"
                             className={`${classes.mobileLanguageButton} ${locale === "ru" ? classes.active : ""}`}
                             onClick={() => handleMobileLanguageChange("ru")}>
-                            рџ‡·рџ‡є Р СѓСЃСЃРєРёР№
+                            {locales.ru.flag} {locales.ru.name}
                         </button>
                     </div>
                 </div>
