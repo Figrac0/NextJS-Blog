@@ -2,7 +2,10 @@ import Head from "next/head";
 import { Fragment } from "react";
 
 import PostContent from "../../components/posts/post-detail/post-content";
-import { getPostWithAllLanguages, getPostsFiles } from "../../lib/posts-util";
+import {
+    getPostWithAllLanguages,
+    getUniquePostsFiles,
+} from "../../lib/posts-util";
 
 function PostDetailPage(props) {
     return (
@@ -37,13 +40,7 @@ export function getStaticProps(context) {
 }
 
 export function getStaticPaths() {
-    const postFilenames = getPostsFiles();
-
-    const slugs = postFilenames.map((fileName) =>
-        fileName.replace(/\.md$/, "").replace(/\.(en|ru)$/, ""),
-    );
-
-    const uniqueSlugs = [...new Set(slugs)];
+    const uniqueSlugs = getUniquePostsFiles();
 
     return {
         paths: uniqueSlugs.map((slug) => ({ params: { slug } })),

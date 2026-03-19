@@ -1,4 +1,4 @@
-.page {
+﻿.page {
     --about-bg: #f4ede1;
     --about-bg-strong: #eadbc7;
     --about-card: rgba(255, 249, 239, 0.86);
@@ -1027,6 +1027,10 @@
     line-height: 1.7;
 }
 
+.challengeSection {
+    margin-top: 1.4rem;
+}
+
 @keyframes experienceCardIn {
     from {
         opacity: 0;
@@ -1079,6 +1083,10 @@
             "education education"
             "blogstack blogstack";
     }
+
+    .inlineExperienceGrid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 980px) {
@@ -1094,9 +1102,6 @@
         width: min(100%, 22rem);
     }
 
-    .inlineExperienceGrid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 
     .certificatesHeader {
         align-items: flex-start;
@@ -1136,6 +1141,8 @@
         width: min(82vw, 18rem);
     }
 }
+
+
 
 
 

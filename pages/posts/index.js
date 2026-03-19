@@ -1,21 +1,13 @@
-// pages/posts/index.js
+﻿// pages/posts/index.js
 import Head from "next/head";
 import { Fragment } from "react";
 import { useLanguage } from "../../context/language-context";
 import AllPosts from "../../components/posts/all-posts";
+import JavaScriptChallengeSection from "../../components/game/javascript-challenge-section";
 import { getLocalizedPreviewPosts } from "../../lib/posts-util";
-import dynamic from "next/dynamic";
 
 function AllPostsPage(props) {
     const { t } = useLanguage();
-
-    const QuantumGame = dynamic(
-        () => import("../../components/game/quantum-game"),
-        {
-            ssr: false,
-            loading: () => <div>Loading game...</div>,
-        },
-    );
 
     return (
         <Fragment>
@@ -24,7 +16,7 @@ function AllPostsPage(props) {
                 <meta name="description" content={t("allPostsDescription")} />
             </Head>
             <AllPosts posts={props.posts} />
-            <QuantumGame />
+            <JavaScriptChallengeSection />
         </Fragment>
     );
 }

@@ -1,6 +1,7 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import JavaScriptChallengeSection from "../game/javascript-challenge-section";
 import { useLanguage } from "../../context/language-context";
 import classes from "./about-content.module.css";
 
@@ -1378,9 +1379,14 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                         emptyText={content.emptyCertificates}
                     />
                 </section>
+
+                <JavaScriptChallengeSection className={classes.challengeSection} />
             </div>
         </section>
     );
 }
 
 export default AboutContent;
+
+
+
