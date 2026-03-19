@@ -1,4 +1,4 @@
-// context/language-context.js
+﻿// context/language-context.js
 import { createContext, useState, useContext, useEffect } from "react";
 import { defaultLocale, locales } from "../lib/locales";
 import { translations } from "../lib/translations";
@@ -25,6 +25,12 @@ export function LanguageProvider({ children }) {
             }),
         );
     }, [locale]);
+
+    const setLanguage = (nextLocale) => {
+        if (locales[nextLocale] && nextLocale !== locale) {
+            setLocale(nextLocale);
+        }
+    };
 
     const toggleLanguage = () => {
         const newLocale = locale === "en" ? "ru" : "en";
@@ -71,6 +77,7 @@ export function LanguageProvider({ children }) {
         <LanguageContext.Provider
             value={{
                 locale,
+                setLanguage,
                 toggleLanguage,
                 t,
                 getCachedPost,

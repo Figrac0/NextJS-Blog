@@ -520,6 +520,16 @@
     }
 }
 
+@media (max-width: 900px) {
+    .mobileMenu {
+        height: 100dvh;
+        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+    }
+
+    .mobileLanguage {
+        margin-top: 2rem;
+    }
+}
 @media (max-width: 768px) {
     .container {
         padding: 0 1rem;
@@ -586,3 +596,5 @@
 .mobileLanguage {
     animation-delay: 0.5s;
 }
+
+

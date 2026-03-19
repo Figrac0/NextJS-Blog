@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useLanguage } from "../../context/language-context";
@@ -8,7 +8,7 @@ import classes from "./main-navigation.module.css";
 
 function MainNavigation() {
     const router = useRouter();
-    const { t, locale, toggleLanguage } = useLanguage();
+    const { t, locale, setLanguage } = useLanguage();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -54,6 +54,12 @@ function MainNavigation() {
         setIsMobileMenuOpen((prevState) => !prevState);
     };
 
+    const handleMobileLanguageChange = (targetLocale) => {
+        if (locale !== targetLocale) {
+            setLanguage(targetLocale);
+        }
+    };
+
     return (
         <>
             <header
@@ -92,6 +98,7 @@ function MainNavigation() {
                     </nav>
 
                     <button
+                        type="button"
                         className={`${classes.burgerButton} ${isMobileMenuOpen ? classes.active : ""}`}
                         onClick={toggleMobileMenu}
                         aria-label={
@@ -110,6 +117,7 @@ function MainNavigation() {
             <div
                 className={`${classes.mobileMenu} ${isMobileMenuOpen ? classes.active : ""}`}>
                 <button
+                    type="button"
                     className={classes.closeButton}
                     onClick={toggleMobileMenu}
                     aria-label="Close menu"
@@ -133,22 +141,16 @@ function MainNavigation() {
                     </div>
                     <div className={classes.mobileLanguageButtons}>
                         <button
+                            type="button"
                             className={`${classes.mobileLanguageButton} ${locale === "en" ? classes.active : ""}`}
-                            onClick={() => {
-                                if (locale !== "en") {
-                                    toggleLanguage();
-                                }
-                            }}>
-                            🇺🇸 English
+                            onClick={() => handleMobileLanguageChange("en")}>
+                            рџ‡єрџ‡ё English
                         </button>
                         <button
+                            type="button"
                             className={`${classes.mobileLanguageButton} ${locale === "ru" ? classes.active : ""}`}
-                            onClick={() => {
-                                if (locale !== "ru") {
-                                    toggleLanguage();
-                                }
-                            }}>
-                            🇷🇺 Русский
+                            onClick={() => handleMobileLanguageChange("ru")}>
+                            рџ‡·рџ‡є Р СѓСЃСЃРєРёР№
                         </button>
                     </div>
                 </div>
