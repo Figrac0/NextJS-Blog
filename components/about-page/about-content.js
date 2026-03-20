@@ -22,7 +22,7 @@ const ABOUT_CONTENT = {
         metrics: {
             posts: "Portfolio items",
             projects: "Projects",
-            studyTime: "Study time",
+            studyTime: "Review time",
             technologies: "Technologies",
             experienceYears: "Years of experience",
             certificates: "Certificates",
@@ -202,7 +202,7 @@ const ABOUT_CONTENT = {
             },
         ],
         blogStackEyebrow: "Portfolio tags",
-        blogStackTitle: "Technologies in the blog",
+        blogStackTitle: "",
         blogStackText:
             "The tags below are pulled directly from projects and materials that are already published in the blog.",
         blogStackExpand: "Show all tags",
@@ -223,7 +223,7 @@ const ABOUT_CONTENT = {
         metrics: {
             posts: "Материалов",
             projects: "Проектов",
-            studyTime: "Время изучения",
+            studyTime: "На обзор",
             technologies: "Технологий",
             experienceYears: "Лет опыта",
             certificates: "Сертификатов",
@@ -406,7 +406,7 @@ const ABOUT_CONTENT = {
             },
         ],
         blogStackEyebrow: "Теги портфолио",
-        blogStackTitle: "Технологии в блоге",
+        blogStackTitle: "",
         blogStackText:
             "Эти теги подтягиваются прямо из проектов и материалов, которые уже опубликованы в блоге.",
         blogStackExpand: "Показать все теги",
@@ -1284,9 +1284,11 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                         <span className={classes.eyebrow}>
                             {content.blogStackEyebrow}
                         </span>
-                        <h2 className={classes.cardTitle}>
-                            {content.blogStackTitle}
-                        </h2>
+                        {content.blogStackTitle ? (
+                            <h2 className={classes.cardTitle}>
+                                {content.blogStackTitle}
+                            </h2>
+                        ) : null}
                         <p className={classes.cardText}>
                             {content.blogStackText}
                         </p>
@@ -1380,13 +1382,12 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                     />
                 </section>
 
-                <JavaScriptChallengeSection className={classes.challengeSection} />
+                <JavaScriptChallengeSection
+                    className={classes.challengeSection}
+                />
             </div>
         </section>
     );
 }
 
 export default AboutContent;
-
-
-

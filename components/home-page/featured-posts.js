@@ -15,6 +15,8 @@ const POSTS_PER_PAGE = 4;
 
 function FeaturedPosts({ posts }) {
     const { t, locale } = useLanguage();
+    const studyTimeLabel =
+        locale === "ru" ? "На обзор проектов" : "Review time";
     const [activeTab, setActiveTab] = useState("all");
     const [sortBy, setSortBy] = useState("latest");
     const [selectedTech, setSelectedTech] = useState("all");
@@ -265,7 +267,7 @@ function FeaturedPosts({ posts }) {
                                 icon="📝"
                             />
                             <StatsCard
-                                label={t("studyTime")}
+                                label={studyTimeLabel}
                                 value={formatTotalReadingTime(
                                     stats.totalStudyTime,
                                     locale,

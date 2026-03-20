@@ -280,7 +280,8 @@
 .cardTitle {
     margin-top: 0.95rem;
     font-size: clamp(1.35rem, 2vw, 1.95rem);
-    line-height: 1.02;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
 }
 
 .heroTitle {
@@ -296,24 +297,65 @@
 }
 
 .cardText,
-.statusLine,
 .heroLead,
+.sectionText {
+    margin: 0;
+    min-width: 0;
+    color: rgba(20, 33, 48, 0.68);
+    font-size: clamp(1.01rem, 0.96rem + 0.24vw, 1.14rem);
+    font-weight: 500;
+    line-height: 1.78;
+    letter-spacing: -0.018em;
+    text-wrap: pretty;
+}
+
+.statusLine,
 .contactValue,
 .educationSchool,
 .inlineExperienceText,
-.inlineExperienceMeta,
-.inlineExperienceSummary,
-.sectionText {
+.inlineExperienceMeta {
     margin: 0;
     min-width: 0;
     color: var(--about-muted);
     line-height: 1.68;
 }
 
+.roleTitle + .cardText,
+.cardTitle + .cardText,
+.heroTitle + .heroLead,
+.sectionTitle + .sectionText {
+    margin-top: 0.82rem;
+}
+
 .statusLine {
     margin-top: 0.8rem;
     color: rgba(20, 33, 48, 0.72);
     font-size: 0.96rem;
+}
+
+.identityCard .cardText,
+.contactsCard .cardText {
+    color: var(--about-muted);
+}
+
+.cardText,
+.heroLead {
+    max-width: 36ch;
+}
+
+.impactCard .cardText,
+.certificatesSection .sectionText {
+    max-width: 70ch;
+}
+
+.educationCard .cardText,
+.blogStackCard .cardText {
+    width: 100%;
+    max-width: none;
+}
+
+.blogStackCard .eyebrow + .cardText {
+    margin-top: 0.95rem;
 }
 
 .photoCard .heroLead {
@@ -357,8 +399,9 @@
 
 .metricLabel {
     color: var(--about-muted);
-    font-size: 0.92rem;
-    line-height: 1.42;
+    font-size: 0.89rem;
+    line-height: 1.34;
+    text-wrap: balance;
 }
 
 .photoLayout {
@@ -557,6 +600,7 @@
 
 .inlineExperienceGrid {
     display: grid;
+    align-items: start;
     gap: 1rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }

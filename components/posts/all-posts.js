@@ -10,6 +10,8 @@ import classes from "./all-posts.module.css";
 
 function AllPostsEnhanced({ posts }) {
     const { t, locale } = useLanguage();
+    const studyTimeLabel =
+        locale === "ru" ? "На обзор всех проектов" : "Review time";
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("all");
     const [selectedFilter, setSelectedFilter] = useState("all");
@@ -368,7 +370,7 @@ function AllPostsEnhanced({ posts }) {
                                     )}
                                 </div>
                                 <div className={classes.statLabel}>
-                                    {t("studyTime")}
+                                    {studyTimeLabel}
                                 </div>
                             </div>
                         </div>
