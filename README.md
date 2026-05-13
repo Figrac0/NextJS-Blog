@@ -1,10 +1,7 @@
 ---
+## 📋 Project Overview
 
-## 📋 Project Overview 
-
-A sophisticated, full-featured Next.js blog and portfolio platform featuring multilingual support, interactive components, real-time filtering systems, and an educational JavaScript game. This project demonstrates advanced React patterns, state management, and modern web development practices. 
-
-
+A sophisticated, full-featured Next.js blog and portfolio platform featuring multilingual support, interactive components, real-time filtering systems, and an educational JavaScript game. This project demonstrates advanced React patterns, state management, and modern web development practices.
 ---
 
 <div align="center">
@@ -20,6 +17,7 @@ A sophisticated, full-featured Next.js blog and portfolio platform featuring mul
 ---
 
 ## 📸 Project Preview
+
 <p align="center">
   
 | 1 | 2 |
@@ -58,38 +56,46 @@ A sophisticated, full-featured Next.js blog and portfolio platform featuring mul
 ```javascript
 // Multi-dimensional filtering with memoization
 const filteredContent = useMemo(() => {
-  let filtered = [...formattedPosts];
-  
-  // 1. Category-based filtering
-  if (activeTab !== "all") {
-    const typeMap = { repositories: "project", tutorials: "tutorial", insights: "article" };
-    filtered = filtered.filter(item => item.type === typeMap[activeTab]);
-  }
-  
-  // 2. Technology stack filtering
-  if (selectedTech !== "all") {
-    filtered = filtered.filter(item => 
-      item.tech && item.tech.includes(selectedTech)
-    );
-  }
-  
-  // 3. Content status filtering (featured/trending/new)
-  if (selectedFilter !== "all") {
-    // Custom scoring algorithm for content ranking
-    const scoreMap = {
-      featured: (post) => post.featured ? 50 : 0,
-      trending: (post) => post.trending ? 30 : 0,
-      new: (post) => post.new ? 20 : 0
-    };
-    filtered = filtered.sort((a, b) => 
-      (b.stats?.stars || 0) + scoreMap[selectedFilter](b) - 
-      (a.stats?.stars || 0) + scoreMap[selectedFilter](a)
-    );
-  }
+    let filtered = [...formattedPosts];
 
-  return filtered;
+    // 1. Category-based filtering
+    if (activeTab !== "all") {
+        const typeMap = {
+            repositories: "project",
+            tutorials: "tutorial",
+            insights: "article",
+        };
+        filtered = filtered.filter((item) => item.type === typeMap[activeTab]);
+    }
+
+    // 2. Technology stack filtering
+    if (selectedTech !== "all") {
+        filtered = filtered.filter(
+            (item) => item.tech && item.tech.includes(selectedTech),
+        );
+    }
+
+    // 3. Content status filtering (featured/trending/new)
+    if (selectedFilter !== "all") {
+        // Custom scoring algorithm for content ranking
+        const scoreMap = {
+            featured: (post) => (post.featured ? 50 : 0),
+            trending: (post) => (post.trending ? 30 : 0),
+            new: (post) => (post.new ? 20 : 0),
+        };
+        filtered = filtered.sort(
+            (a, b) =>
+                (b.stats?.stars || 0) +
+                scoreMap[selectedFilter](b) -
+                (a.stats?.stars || 0) +
+                scoreMap[selectedFilter](a),
+        );
+    }
+
+    return filtered;
 }, [activeTab, selectedTech, selectedFilter, formattedPosts]);
 ```
+
 ### **Dynamic Technology Rotation**
 
 - **Auto-rotation**: Technologies rotate every 10 seconds when more than 10 exist
@@ -105,23 +111,24 @@ const filteredContent = useMemo(() => {
 ```javascript
 // Context-based language management with fallback system
 const LanguageContext = React.createContext({
-  locale: 'en',
-  t: (key) => translations[locale][key] || key,
-  switchLanguage: (lang) => {}
+    locale: "en",
+    t: (key) => translations[locale][key] || key,
+    switchLanguage: (lang) => {},
 });
 
 // Smart translation with function support
 const t = (key) => {
-  const translation = translations[locale][key];
-  
-  // Handle display functions for dynamic text generation
-  if (typeof translation === 'function') {
-    return translation(key);
-  }
-  
-  return translation || key;
+    const translation = translations[locale][key];
+
+    // Handle display functions for dynamic text generation
+    if (typeof translation === "function") {
+        return translation(key);
+    }
+
+    return translation || key;
 };
 ```
+
 Content Localization Strategy
 Dual-version posts: Each post can have English (.md) and Russian (.ru.md) versions
 
@@ -130,38 +137,43 @@ Smart detection: Automatically shows available translation or English fallback
 SEO-friendly: Proper lang attributes and hreflang meta tags
 
 3. Project & Content Management
-Content Types & Structure
-javascript
-const contentTypes = {
-  project: {
-    icon: '💻',
-    label: 'Project',
-    stats: ['stars', 'forks', 'demo'],
-    filters: ['featured', 'trending', 'new']
-  },
-  tutorial: {
-    icon: '🎓',
-    label: 'Tutorial',
-    stats: ['readingTime', 'difficulty'],
-    filters: ['featured', 'step-by-step']
-  },
-  article: {
-    icon: '📝',
-    label: 'Article',
-    stats: ['readingTime', 'views'],
-    filters: ['featured', 'insight']
-  }
-```
+   Content Types & Structure
+   javascript
+   const contentTypes = {
+   project: {
+   icon: '💻',
+   label: 'Project',
+   stats: ['stars', 'forks', 'demo'],
+   filters: ['featured', 'trending', 'new']
+   },
+   tutorial: {
+   icon: '🎓',
+   label: 'Tutorial',
+   stats: ['readingTime', 'difficulty'],
+   filters: ['featured', 'step-by-step']
+   },
+   article: {
+   icon: '📝',
+   label: 'Article',
+   stats: ['readingTime', 'views'],
+   filters: ['featured', 'insight']
+   }
+
+````
+
 
 ### Markdown Processing Pipeline
 
+
 ```text
+
 1. File Discovery → 2. Gray-matter Parsing → 3. Frontmatter Extraction
    ↓
 4. Content Processing → 5. Syntax Highlighting → 6. Component Injection
    ↓
 7. Caching & Delivery → 8. Client-side Hydration
-```
+
+````
 
 ---
 
@@ -179,16 +191,16 @@ const contentTypes = {
 ```javascript
 // Challenge validation algorithm
 const validateSolution = () => {
-  const slotEvaluations = currentChallenge.slots.map(slot => ({
-    expected: slot.correct,
-    actual: droppedElements[slot.id],
-    correct: droppedElements[slot.id] === slot.correct
-  }));
-  
-  const correctCount = slotEvaluations.filter(e => e.correct).length;
-  const accuracy = (correctCount / slotEvaluations.length) * 100;
-  
-  return { accuracy, slotEvaluations, isPerfect: accuracy === 100 };
+    const slotEvaluations = currentChallenge.slots.map((slot) => ({
+        expected: slot.correct,
+        actual: droppedElements[slot.id],
+        correct: droppedElements[slot.id] === slot.correct,
+    }));
+
+    const correctCount = slotEvaluations.filter((e) => e.correct).length;
+    const accuracy = (correctCount / slotEvaluations.length) * 100;
+
+    return { accuracy, slotEvaluations, isPerfect: accuracy === 100 };
 };
 ```
 
@@ -237,18 +249,19 @@ React State  Schema Check   Duplicate Check   Status Updates
 ```javascript
 // Example: Optimized post filtering with multiple memoization layers
 const [filteredPosts, stats, techList] = useMemo(() => {
-  // Level 1: Filter posts based on active criteria
-  const filtered = applyFilters(rawPosts, activeFilters);
-  
-  // Level 2: Calculate derived statistics
-  const calculatedStats = calculateStats(filtered);
-  
-  // Level 3: Extract unique technologies
-  const uniqueTech = extractUniqueTech(filtered);
-  
-  return [filtered, calculatedStats, uniqueTech];
+    // Level 1: Filter posts based on active criteria
+    const filtered = applyFilters(rawPosts, activeFilters);
+
+    // Level 2: Calculate derived statistics
+    const calculatedStats = calculateStats(filtered);
+
+    // Level 3: Extract unique technologies
+    const uniqueTech = extractUniqueTech(filtered);
+
+    return [filtered, calculatedStats, uniqueTech];
 }, [rawPosts, activeFilters]); // Only recalculates when dependencies change
 ```
+
 Security Features
 Input Sanitization: All user inputs are validated and sanitized
 
@@ -259,8 +272,10 @@ API Security: Environment variables for database connections
 File Security: Restricted file access patterns
 
 ## 📊 Content Management System
+
 ### Post Structure
-```text 
+
+```text
 ---
 title: "Advanced React Patterns"
 date: "2024-01-15"
@@ -281,9 +296,10 @@ new: false
 ## Content in markdown format
 
 With **code examples**:
+
 ```javascript
 const optimizedComponent = React.memo(({ data }) => {
-  // Component implementation
+    // Component implementation
 });
 ```
 
@@ -344,6 +360,7 @@ MONGODB_URI=mongodb+srv://...
 NEXT_PUBLIC_SITE_URL=https://figrac0.github.io
 NODE_ENV=production
 ```
+
 ---
 
 ## 📈 Performance Metrics
@@ -463,11 +480,3 @@ This project demonstrates:
 3. Commit changes (`git commit -m 'Add AmazingFeature'`)
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-
-
-
-
-
-
-
