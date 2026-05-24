@@ -18,7 +18,7 @@ tech:
     ]
 isFeatured: true
 isTrending: true
-isNew: true
+isNew: false
 readingTime: "18 мин"
 difficulty: "Продвинутый"
 demoUrl: "https://next-auth-route-guard-73o9.vercel.app/"

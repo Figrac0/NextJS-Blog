@@ -17,7 +17,7 @@ tech:
     ]
 isFeatured: true
 isTrending: true
-isNew: true
+isNew: false
 readingTime: "12 мин"
 difficulty: "Средний"
 githubUrl: "https://github.com/Figrac0/Next_User_Authentication-LuciaAdapter"
