@@ -1,15 +1,66 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "../../context/language-context";
 import classes from "./footer.module.css";
 
 function Footer() {
     const { t, locale } = useLanguage();
+    const footerRef = useRef(null);
     const [particles, setParticles] = useState([]);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
+    const [isFooterVisible, setIsFooterVisible] = useState(false);
+    const [isDesktopViewport, setIsDesktopViewport] = useState(false);
 
     useEffect(() => {
+        if (typeof window === "undefined") {
+            return undefined;
+        }
+
+        const mediaQuery = window.matchMedia(
+            "(min-width: 768px) and (pointer: fine)",
+        );
+
+        const sync = (event) => {
+            setIsDesktopViewport(event.matches);
+        };
+
+        sync(mediaQuery);
+        mediaQuery.addEventListener("change", sync);
+
+        return () => mediaQuery.removeEventListener("change", sync);
+    }, []);
+
+    useEffect(() => {
+        if (
+            typeof IntersectionObserver === "undefined" ||
+            !footerRef.current
+        ) {
+            setIsFooterVisible(true);
+            return undefined;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                if (entry) {
+                    setIsFooterVisible(entry.isIntersecting);
+                }
+            },
+            { rootMargin: "200px 0px" },
+        );
+
+        observer.observe(footerRef.current);
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        if (!isDesktopViewport) {
+            setParticles([]);
+            return;
+        }
+
         const newParticles = [];
         for (let i = 0; i < 20; i++) {
             newParticles.push({
@@ -23,10 +74,16 @@ function Footer() {
             });
         }
         setParticles(newParticles);
-    }, []);
+    }, [isDesktopViewport]);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        if (!isDesktopViewport || !isFooterVisible || particles.length === 0) {
+            return undefined;
+        }
+
+        let intervalId = null;
+
+        const tick = () => {
             setParticles((prev) =>
                 prev.map((p) => ({
                     ...p,
@@ -36,12 +93,49 @@ function Footer() {
                         100,
                 })),
             );
-        }, 50);
+        };
 
-        return () => clearInterval(interval);
-    }, []);
+        const start = () => {
+            if (intervalId === null) {
+                intervalId = setInterval(tick, 50);
+            }
+        };
+
+        const stop = () => {
+            if (intervalId !== null) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        };
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === "hidden") {
+                stop();
+            } else {
+                start();
+            }
+        };
+
+        if (document.visibilityState !== "hidden") {
+            start();
+        }
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            stop();
+            document.removeEventListener(
+                "visibilitychange",
+                handleVisibilityChange,
+            );
+        };
+    }, [isDesktopViewport, isFooterVisible, particles.length]);
 
     useEffect(() => {
+        if (!isDesktopViewport) {
+            return undefined;
+        }
+
         const handleMouseMove = (e) => {
             setMousePosition({
                 x: (e.clientX / window.innerWidth) * 100,
@@ -51,7 +145,7 @@ function Footer() {
 
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, []);
+    }, [isDesktopViewport]);
 
     const socialLinks = [
         {
@@ -99,6 +193,7 @@ function Footer() {
 
     return (
         <footer
+            ref={footerRef}
             className={classes.footer}
             style={gradientStyle}
             onMouseEnter={() => setIsHovering(true)}

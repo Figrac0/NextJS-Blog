@@ -101,10 +101,12 @@ function FeaturedPosts({ posts }) {
 
     useEffect(() => {
         if (allTechStack.length <= 10) {
-            return;
+            return undefined;
         }
 
-        const interval = setInterval(() => {
+        let intervalId = null;
+
+        const tick = () => {
             setRotationIndex((prevIndex) => {
                 const nextIndex =
                     (prevIndex + 1) % Math.ceil((allTechStack.length - 1) / 9);
@@ -127,9 +129,42 @@ function FeaturedPosts({ posts }) {
                 setVisibleTech(nextVisibleTech);
                 return nextIndex;
             });
-        }, 10000);
+        };
 
-        return () => clearInterval(interval);
+        const start = () => {
+            if (intervalId === null) {
+                intervalId = setInterval(tick, 10000);
+            }
+        };
+
+        const stop = () => {
+            if (intervalId !== null) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        };
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === "hidden") {
+                stop();
+            } else {
+                start();
+            }
+        };
+
+        if (document.visibilityState !== "hidden") {
+            start();
+        }
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            stop();
+            document.removeEventListener(
+                "visibilitychange",
+                handleVisibilityChange,
+            );
+        };
     }, [allTechStack]);
 
     const filteredContent = useMemo(() => {

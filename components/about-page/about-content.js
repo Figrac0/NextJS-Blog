@@ -2,7 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import JavaScriptChallengeSection from "../game/javascript-challenge-section";
 import { useLanguage } from "../../context/language-context";
 import classes from "./about-content.module.css";
 
@@ -839,6 +838,7 @@ function wrapCarouselOffset(offset, segmentWidth) {
     return normalizedOffset;
 }
 function CertificateCarousel({ certificates, status, emptyText }) {
+    const viewportRef = useRef(null);
     const trackRef = useRef(null);
     const segmentRef = useRef(null);
     const frameRef = useRef(0);
@@ -853,6 +853,12 @@ function CertificateCarousel({ certificates, status, emptyText }) {
         if (!certificates.length) {
             return undefined;
         }
+
+        let isVisible = true;
+        let isTabActive =
+            typeof document === "undefined" ||
+            document.visibilityState !== "hidden";
+        let previousTime = performance.now();
 
         const applyTransform = () => {
             if (!trackRef.current) {
@@ -877,8 +883,6 @@ function CertificateCarousel({ certificates, status, emptyText }) {
 
         measure();
         window.addEventListener("resize", measure);
-
-        let previousTime = performance.now();
 
         const animate = (time) => {
             const delta = clamp((time - previousTime) / 16.67, 0.5, 2);
@@ -907,11 +911,68 @@ function CertificateCarousel({ certificates, status, emptyText }) {
             frameRef.current = window.requestAnimationFrame(animate);
         };
 
-        frameRef.current = window.requestAnimationFrame(animate);
+        const startAnimation = () => {
+            if (frameRef.current) {
+                return;
+            }
+            previousTime = performance.now();
+            frameRef.current = window.requestAnimationFrame(animate);
+        };
+
+        const stopAnimation = () => {
+            if (frameRef.current) {
+                window.cancelAnimationFrame(frameRef.current);
+                frameRef.current = 0;
+            }
+        };
+
+        const syncRunningState = () => {
+            if (isVisible && isTabActive) {
+                startAnimation();
+            } else {
+                stopAnimation();
+            }
+        };
+
+        const handleVisibilityChange = () => {
+            isTabActive = document.visibilityState !== "hidden";
+            syncRunningState();
+        };
+
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        let observer = null;
+        if (
+            typeof IntersectionObserver !== "undefined" &&
+            viewportRef.current
+        ) {
+            observer = new IntersectionObserver(
+                (entries) => {
+                    const entry = entries[0];
+                    if (entry) {
+                        isVisible = entry.isIntersecting;
+                        syncRunningState();
+                    }
+                },
+                { rootMargin: "200px 0px" },
+            );
+            observer.observe(viewportRef.current);
+        } else {
+            startAnimation();
+        }
+
+        syncRunningState();
 
         return () => {
-            window.cancelAnimationFrame(frameRef.current);
+            stopAnimation();
             window.removeEventListener("resize", measure);
+            document.removeEventListener(
+                "visibilitychange",
+                handleVisibilityChange,
+            );
+            if (observer) {
+                observer.disconnect();
+            }
         };
     }, [certificates.length]);
 
@@ -973,6 +1034,7 @@ function CertificateCarousel({ certificates, status, emptyText }) {
         <div className={classes.carouselShell}>
             <div
                 className={classes.carouselViewport}
+                ref={viewportRef}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={finishDrag}
@@ -1766,10 +1828,6 @@ function AboutContent({
                         emptyText={content.emptyCertificates}
                     />
                 </section>
-
-                <JavaScriptChallengeSection
-                    className={classes.challengeSection}
-                />
             </div>
         </section>
     );

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import classes from "./content-card.module.css";
@@ -51,6 +52,8 @@ function ContentCard({ item, t }) {
                             fill
                             className={classes.image}
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            loading="lazy"
+                            quality={70}
                         />
                         <div className={classes.imageOverlay}></div>
                     </div>
@@ -119,4 +122,4 @@ function ContentCard({ item, t }) {
     );
 }
 
-export default ContentCard;
+export default memo(ContentCard);

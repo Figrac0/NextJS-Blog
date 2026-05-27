@@ -565,6 +565,10 @@
         padding: 0.2rem 0.5rem;
     }
 
+    .techBadge:nth-child(n + 7) {
+        display: none;
+    }
+
     .scrollIndicator {
         bottom: 30px;
     }

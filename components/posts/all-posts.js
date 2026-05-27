@@ -8,6 +8,16 @@ import {
 } from "../../lib/reading-time";
 import classes from "./all-posts.module.css";
 
+function hashStringToUnitFloat(input) {
+    const source = String(input ?? "");
+    let hash = 0;
+    for (let index = 0; index < source.length; index += 1) {
+        hash = (hash << 5) - hash + source.charCodeAt(index);
+        hash |= 0;
+    }
+    return (Math.abs(hash) % 1000) / 1000;
+}
+
 function AllPostsEnhanced({ posts }) {
     const { t, locale } = useLanguage();
     const studyTimeLabel =
@@ -67,8 +77,14 @@ function AllPostsEnhanced({ posts }) {
                 new: post.isNew || false,
                 demoUrl: post.demoUrl || null,
                 content: post.content || "",
-                views: post.views || Math.floor(Math.random() * 1000) + 100,
-                rating: post.rating || (Math.random() * 2 + 3).toFixed(1),
+                views:
+                    post.views ||
+                    Math.floor(hashStringToUnitFloat(post.slug) * 1000) + 100,
+                rating:
+                    post.rating ||
+                    (hashStringToUnitFloat(`${post.slug}-r`) * 2 + 3).toFixed(
+                        1,
+                    ),
                 locale: post.locale || "en",
                 hasRussianVersion: post.hasRussianVersion || false,
             };
