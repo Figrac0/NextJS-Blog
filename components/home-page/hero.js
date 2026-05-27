@@ -50,7 +50,7 @@ function Hero() {
                     <div className={classes.imageContainer}>
                         <div className={classes.imageWrapper}>
                             <Image
-                                src="/images/site/cropped_main.png"
+                                src="/images/site/cropped_main-1.png"
                                 alt="Sergey - Frontend Developer & Blogger"
                                 width={400}
                                 height={400}

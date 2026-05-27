@@ -18,7 +18,7 @@ function createCertificateTitle(fileName) {
         .trim();
 }
 
-function AboutPage({ stats, techStack, certificates }) {
+function AboutPage({ stats, techStack, techStackMap, certificates }) {
     const { locale } = useLanguage();
 
     const meta =
@@ -43,6 +43,7 @@ function AboutPage({ stats, techStack, certificates }) {
             <AboutContent
                 stats={stats}
                 techStack={techStack}
+                techStackMap={techStackMap}
                 certificates={certificates}
             />
             <Footer />
@@ -55,6 +56,13 @@ export function getStaticProps() {
     const techStack = Array.from(
         new Set(posts.flatMap((post) => post.tech || [])),
     ).sort((first, second) => first.localeCompare(second, "en"));
+
+    const techStackMap = techStack.reduce((accumulator, tag) => {
+        accumulator[tag] = posts
+            .filter((post) => Array.isArray(post.tech) && post.tech.includes(tag))
+            .map((post) => post.slug);
+        return accumulator;
+    }, {});
 
     const projectPosts = posts.filter((post) => post.type === "project");
     const articlePosts = posts.filter((post) => post.type === "article");
@@ -96,6 +104,7 @@ export function getStaticProps() {
                 totalTechnologies: techStack.length,
             },
             techStack,
+            techStackMap,
             certificates,
         },
     };

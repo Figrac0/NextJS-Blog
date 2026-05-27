@@ -1,13 +1,14 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import JavaScriptChallengeSection from "../game/javascript-challenge-section";
 import { useLanguage } from "../../context/language-context";
 import classes from "./about-content.module.css";
 
 const RESUME_LINK =
-    "https://drive.google.com/file/d/15rhQVGy25rH0c80GoduCizC92pt_nEAV/view?usp=drive_link";
-const PORTRAIT_SRC = "/images/site/cropped_main.png";
+    "https://drive.google.com/file/d/1HyEo9yoa8h43tjocp0scDrHFzToI3IDJ/view?usp=drive_link";
+const PORTRAIT_SRC = "/images/site/cropped_main-1.png";
 const AUTO_SCROLL_SPEED = 0.22;
 const THROW_FRICTION = 0.92;
 const MAX_THROW_SPEED = 7;
@@ -84,26 +85,67 @@ const ABOUT_CONTENT = {
         liveSince: "Started",
         liveDuration: "In role",
         liveBadge: "Active now",
+        openBadge: "Open to offers",
+        placeholderPeriodLine:
+            "Status: open to offers · Start: as soon as we agree on the offer",
+        experienceExpand: "Show all experience",
+        experienceCollapse: "Show less",
         actionPortfolio: "Open projects",
         actionContact: "Contact me",
         actionResume: "Full resume",
         experience: [
             {
-                id: "tvs",
+                id: "t-guide",
                 role: "Frontend Developer",
-                company: "TVS.ru",
+                company: "T-Bank · T-Guide",
                 location: "Russia · Remote",
-                startDate: "2025-01-15T09:00:00+04:00",
-                duration: "1 year 2 months",
+                period: {
+                    start: "2026-02-01T09:00:00+04:00",
+                    end: "2026-05-31T18:00:00+04:00",
+                },
+                isLive: false,
+                summary:
+                    "Mobile-first audio-guide and custom-route platform built inside the frontend team on React, TypeScript, and Vite. Worked on Leaflet maps with real-time in-tour navigation, a drag-to-snap mobile sheet, performance work, and admin tooling for tour content.",
+                achievements: [
+                    "Developed a mobile-first platform for audio guides and user-built routes as part of the frontend team, designing the client-side logic on React, TypeScript, and Vite.",
+                    "Implemented an interactive Leaflet map with geolocation, dynamic markers, and route building, supporting user routes of up to 10 stops with real-time navigation.",
+                    "Built a drag-to-snap mobile sheet, lazy loading, and session-level caching, reducing duplicate API calls and improving mobile UI responsiveness by more than 35%.",
+                    "Integrated JWT authentication with a refresh-token flow and the admin interfaces for managing tours and content, improving session stability and interaction speed by roughly 25%.",
+                ],
+            },
+            {
+                id: "allapteki",
+                role: "Frontend Engineer",
+                company: "InformBureau · AllApteki",
+                location: "Russia · Remote",
+                startDate: "2026-01-15T09:00:00+04:00",
                 isLive: true,
                 summary:
-                    "B2B e-commerce platform for antenna equipment. I work on the store architecture, product categories, filtering, checkout flows, delivery settings, and the UI stability needed by both customers and administrators.",
+                    "Large pharmacy aggregator on Next.js maintained in a team led by a senior frontend developer. The platform serves up to 70k requests per day and 2M+ per month, with a catalog of more than 80,000 medications.",
                 achievements: [
-                    "Designed and implemented a scalable frontend architecture for the store, improving stability and usability.",
-                    "Built product filtering and category logic for easier navigation and faster search.",
-                    "Implemented checkout flows with cart management and flexible delivery configuration.",
-                    "Set up clear UI presentation for products, categories, and order data across the store.",
-                    "Maintained reliable synchronization between client-side modules and store services.",
+                    "Develop a large pharmacy-information aggregator on Next.js in a team led by a senior frontend developer, supporting stable operation at up to 70k daily and 2M+ monthly requests.",
+                    "Migrate the client side onto a new technology stack with integration of multiple REST APIs and asynchronous data handling across a catalog of more than 80,000 medications.",
+                    "Develop search, filtering, and product presentation across the pharmacy catalog, improving interaction speed and overall page performance.",
+                    "Optimise data structures and client-side business logic, making it easier to ship new functionality and increasing the long-term stability of the interfaces.",
+                ],
+            },
+            {
+                id: "tvs",
+                role: "Frontend Engineer",
+                company: "TVS.ru",
+                location: "Russia · Remote",
+                period: {
+                    start: "2024-06-01T09:00:00+04:00",
+                    end: "2025-02-28T18:00:00+04:00",
+                },
+                isLive: false,
+                summary:
+                    "B2B e-commerce platform for antenna and telecommunications equipment. Designed and grew the storefront architecture, catalog filtering, checkout, and delivery-configuration UI for both customers and administrators.",
+                achievements: [
+                    "Designed and grew a B2B e-commerce platform for antenna and telecommunications equipment, keeping the platform scalable and easy to extend.",
+                    "Built the catalog filtering and structure system, improving search speed and user interaction with the interface by more than 30%.",
+                    "Implemented order checkout, cart management, and delivery configuration, increasing the reliability of user flows and cutting checkout errors by 25%.",
+                    "Optimised UI for product, category, and customer-data presentation with responsive, cross-browser behaviour and stable synchronisation with REST APIs and platform services.",
                 ],
             },
             {
@@ -111,17 +153,18 @@ const ABOUT_CONTENT = {
                 role: "Frontend Software Engineer",
                 company: "Freelance",
                 location: "Russia · Remote",
-                startDate: "2024-01-12T09:00:00+04:00",
-                duration: "2 years 2 months",
-                isLive: true,
+                period: {
+                    start: "2023-10-01T09:00:00+04:00",
+                    end: "2025-08-31T18:00:00+04:00",
+                },
+                isLive: false,
                 summary:
-                    "JavaScript library for SPA applications with an admin panel and modular UI architecture. The platform includes a core, state management, routing, reusable modules, and service connectors for external APIs.",
+                    "Production-ready Telegram bot on TypeScript with anonymous chats, real-time user interaction, Telegram Stars and Tribute payments, and a full VPS deployment pipeline backed by Docker, PostgreSQL, Redis, and Prisma ORM.",
                 achievements: [
-                    "Designed the architecture for SPA and admin-panel solutions with reusable modules, routing, and state management.",
-                    "Created UI components that connect to APIs and services for dynamic data loading.",
-                    "Implemented an admin panel with login, page editing, media handling, metadata, backups, and restore flows.",
-                    "Built modular service integration for asynchronous loading and synchronization.",
-                    "Standardized interfaces and architecture for long-term maintenance and future growth.",
+                    "Built a production-ready Telegram bot in TypeScript with anonymous chats, real-time user interaction, and Telegram Stars and Tribute payment integration, enabling platform monetisation.",
+                    "Designed the backend infrastructure on Docker, PostgreSQL, Redis, and Prisma ORM, providing stable runtime services, queues, and persistent user storage in production.",
+                    "Implemented a production deployment pipeline for the VPS with webhook infrastructure, HTTPS via Caddy, automated backup flows, and monitoring endpoints.",
+                    "Optimised Telegram runtime services and user-session handling for scalable performance of active chats and async queues under high load.",
                 ],
             },
             {
@@ -133,14 +176,29 @@ const ABOUT_CONTENT = {
                     start: "2023-01-09T09:00:00+04:00",
                     end: "2023-09-30T18:00:00+04:00",
                 },
-                duration: "9 months",
                 isLive: false,
                 summary:
-                    "Built user interfaces for automation systems and industrial controllers: monitoring panels, sensor data views, control elements, and equipment parameter configuration screens.",
+                    "Built user interfaces for industrial controllers and automation systems: monitoring panels, sensor visualisations, control elements, and equipment configuration screens, deployed on production equipment.",
                 achievements: [
-                    "Created interfaces for industrial sensor visualization and equipment settings.",
-                    "Participated in UI integration with existing automated systems and controller logic.",
-                    "Tested, debugged, and optimized interfaces to improve reliability and data accuracy.",
+                    "Developed interfaces for industrial controllers and automation systems.",
+                    "Delivered more than 8 operator interfaces, all deployed on production equipment.",
+                    "Integrated the UI with industrial systems and controllers for live data exchange.",
+                    "Performed testing, debugging, and optimisation of industrial-system interfaces.",
+                ],
+            },
+            {
+                id: "future",
+                role: "Frontend Engineer",
+                company: "Your company?",
+                location: "Remote · On-site · Hybrid — open",
+                isPlaceholder: true,
+                summary:
+                    "Possibly your company. The rest of this card will be filled in once we start working together — promises to ship calmly, write readable code, and not break production on a Friday evening.",
+                achievements: [
+                    "Show up on time, ship features, and write code you will not have to rewrite a month later.",
+                    "Take tasks end to end — scoping, architecture, implementation, review, and deploy.",
+                    "Care about UX, accessibility, and performance, not only the status of the Jira ticket.",
+                    "Be the person on the team who actually reads pull requests instead of stamping them.",
                 ],
             },
         ],
@@ -150,38 +208,73 @@ const ABOUT_CONTENT = {
             "My core stack is JavaScript / TypeScript, React, and Next.js, plus the tools needed to build reliable product interfaces from data flow to deployment.",
         skillGroups: [
             {
-                title: "Languages",
-                items: ["JavaScript", "TypeScript"],
-            },
-            {
                 title: "Frontend",
                 items: [
-                    "React",
+                    "JavaScript",
+                    "TypeScript",
+                    "React.js",
                     "Next.js",
-                    "Redux Toolkit",
+                    "Angular",
+                    "Redux",
                     "RTK Query",
+                    "React Router",
                     "React Hook Form",
-                    "HTML / CSS",
+                    "HTML5",
+                    "CSS3",
+                    "SCSS",
+                    "TailwindCSS",
                 ],
             },
             {
-                title: "Backend and data",
+                title: "Backend & APIs",
+                items: ["Node.js", "REST API", "WebSockets", "Prisma ORM"],
+            },
+            {
+                title: "Databases",
+                items: ["MongoDB", "MySQL", "PostgreSQL"],
+            },
+            {
+                title: "Infrastructure & Tools",
+                items: ["Docker", "Git", "Vite", "Webpack", "CI/CD", "Jest"],
+            },
+            {
+                title: "Architecture & Engineering",
                 items: [
-                    "Node.js",
-                    "REST API",
-                    "WebSockets",
-                    "MongoDB",
-                    "MySQL",
+                    "SPA / SSR Architecture",
+                    "Frontend System Design",
+                    "State Management",
+                    "Performance Optimization",
+                    "Scalable UI Architecture",
                 ],
             },
             {
-                title: "Engineering focus",
+                title: "Spoken languages",
+                items: ["Russian — Native", "English — Intermediate"],
+            },
+            {
+                title: "Laboratory",
                 items: [
-                    "SPA / SSR architecture",
-                    "Reusable UI",
-                    "Performance",
-                    "Testing",
-                    "CI/CD",
+                    "PyTorch",
+                    "CNN Architectures",
+                    "Computer Vision",
+                    "Dataset Analysis",
+                    "Domain Shift Analysis",
+                    "Model Evaluation",
+                    "Classification Metrics",
+                    "Data Visualization",
+                ],
+            },
+            {
+                title: "Interests",
+                items: [
+                    "Frontend Architecture",
+                    "High-Load Web Applications",
+                    "UI/UX Systems",
+                    "Machine Learning",
+                    "Computer Vision",
+                    "Product Development",
+                    "Telegram Platforms",
+                    "System Design",
                 ],
             },
         ],
@@ -286,44 +379,86 @@ const ABOUT_CONTENT = {
         liveSince: "Старт",
         liveDuration: "В роли",
         liveBadge: "Сейчас в работе",
+        openBadge: "Открыт к офферам",
+        placeholderPeriodLine:
+            "Статус: открыт к офферам · Старт — как только договоримся об оффере",
+        experienceExpand: "Показать весь опыт",
+        experienceCollapse: "Свернуть",
         actionPortfolio: "Посмотреть проекты",
         actionContact: "Связаться",
         actionResume: "Полное резюме",
         experience: [
             {
-                id: "tvs",
+                id: "t-guide",
                 role: "Frontend Developer",
-                company: "TVS.ru",
-                location: "Россия · Удаленно",
-                startDate: "2025-01-15T09:00:00+04:00",
-                duration: "1 год 2 месяца",
+                company: "Т-Банк · T-Guide",
+                location: "Россия · Удалённо",
+                period: {
+                    start: "2026-02-01T09:00:00+04:00",
+                    end: "2026-05-31T18:00:00+04:00",
+                },
+                isLive: false,
+                summary:
+                    "Mobile-first платформа для аудиогидов и пользовательских маршрутов в составе frontend-команды. Работал над клиентской логикой на React, TypeScript и Vite: карты Leaflet, навигация в реальном времени, drag-to-snap мобильная шторка и интеграция с административными интерфейсами.",
+                achievements: [
+                    "Разрабатывал mobile-first платформу для аудиогидов и пользовательских маршрутов в составе frontend-команды, проектируя клиентскую логику на React, TypeScript и Vite.",
+                    "Реализовал интерактивную карту на Leaflet с геолокацией, динамическими маркерами и построением маршрутов, обеспечив поддержку пользовательских маршрутов до 10 точек с навигацией в реальном времени.",
+                    "Разработал drag-to-snap интерфейс мобильной шторки, внедрил lazy loading и session-level кеширование, сократив количество повторных API-запросов и повысив отзывчивость интерфейсов на мобильных устройствах более чем на 35%.",
+                    "Интегрировал JWT authentication, refresh-token flow и административные интерфейсы для управления экскурсиями и контентом, повысив стабильность пользовательской сессии и скорость взаимодействия с платформой примерно на 25%.",
+                ],
+            },
+            {
+                id: "allapteki",
+                role: "Frontend Engineer",
+                company: "ИнформБюро · AllApteki",
+                location: "Россия · Удалённо",
+                startDate: "2026-01-15T09:00:00+04:00",
                 isLive: true,
                 summary:
-                    "B2B-платформа интернет-магазина для продажи антенного оборудования. Проектирую frontend-архитектуру магазина, структуру категорий, фильтрацию, оформление заказов и настройку доставки так, чтобы и клиенты, и администраторы работали со стабильным и понятным интерфейсом.",
+                    "Крупный агрегатор аптечной информации на Next.js в команде под руководством senior frontend developer. Платформа обслуживает до 70 тыс. запросов в день и более 2 млн в месяц при каталоге более чем из 80 000 препаратов.",
                 achievements: [
-                    "Спроектировал и реализовал масштабируемую frontend-архитектуру интернет-магазина, обеспечив стабильность интерфейсов и удобство использования.",
-                    "Создал систему фильтрации товаров, обеспечив удобный поиск и сортировку по категориям и атрибутам.",
-                    "Реализовал систему оформления заказов с корзиной, выбором товаров и гибкой настройкой параметров доставки.",
-                    "Настроил UI для корректного отображения товаров, категорий и информации о заказах на клиентской стороне.",
-                    "Обеспечил синхронизацию данных между компонентами клиентской части и сервисами магазина.",
+                    "Развиваю крупный агрегатор аптечной информации на Next.js в команде под руководством senior frontend developer, обеспечивая стабильную работу платформы с нагрузкой до 70 тыс. запросов в день и более 2 млн запросов в месяц.",
+                    "Выполняю миграцию клиентской части на новый технологический стек с интеграцией множества REST API и асинхронной обработкой данных для каталога более чем из 80 000 препаратов.",
+                    "Разрабатываю систему поиска, фильтрации и отображения аптечных товаров, улучшая скорость взаимодействия пользователей с интерфейсом и оптимизируя производительность страниц.",
+                    "Оптимизирую структуру данных и клиентскую бизнес-логику платформы, упрощая внедрение нового функционала и повышая стабильность работы интерфейсов.",
+                ],
+            },
+            {
+                id: "tvs",
+                role: "Frontend Engineer",
+                company: "TVS.ru",
+                location: "Россия · Удалённо",
+                period: {
+                    start: "2024-06-01T09:00:00+04:00",
+                    end: "2025-02-28T18:00:00+04:00",
+                },
+                isLive: false,
+                summary:
+                    "B2B-платформа интернет-магазина для продажи антенного и телекоммуникационного оборудования. Проектировал frontend-архитектуру магазина, структуру каталога, систему фильтрации, оформление заказов и адаптивные UI-интерфейсы для клиентов и администраторов.",
+                achievements: [
+                    "Спроектировал и развивал платформу B2B интернет-магазина для продажи антенного и телекоммуникационного оборудования, обеспечивая масштабируемость платформы и упрощение внедрения нового функционала.",
+                    "Разработал систему фильтрации и структурирования каталога товаров, улучшив скорость поиска и взаимодействия пользователей с интерфейсом более чем на 30%.",
+                    "Реализовал систему оформления заказов, управления корзиной и настройки параметров доставки, повысив стабильность пользовательских сценариев и сократив количество ошибок при оформлении заказов на 25%.",
+                    "Оптимизировал UI-интерфейсы отображения товаров, категорий и клиентских данных, обеспечив адаптивность, кроссбраузерность и стабильную синхронизацию с REST API и сервисами платформы.",
                 ],
             },
             {
                 id: "freelance",
                 role: "Frontend Software Engineer",
                 company: "Freelance",
-                location: "Россия · Удаленно",
-                startDate: "2024-01-12T09:00:00+04:00",
-                duration: "2 года 2 месяца",
-                isLive: true,
+                location: "Россия · Удалённо",
+                period: {
+                    start: "2023-10-01T09:00:00+04:00",
+                    end: "2025-08-31T18:00:00+04:00",
+                },
+                isLive: false,
                 summary:
-                    "JavaScript-библиотека для SPA-приложений с административной панелью и модульной структурой компонентов. Внутри: ядро, управление состоянием, роутинг, UI-модули и сервисные коннекторы для интеграции с разными API.",
+                    "Production-ready Telegram-бот на TypeScript с анонимными чатами, real-time взаимодействием пользователей, интеграцией Telegram Stars и Tribute и полноценным deployment pipeline на VPS — Docker, PostgreSQL, Redis и Prisma ORM.",
                 achievements: [
-                    "Спроектировал и реализовал архитектуру библиотеки для SPA и административных панелей с ядром, управлением состоянием, роутингом и модульными UI-компонентами.",
-                    "Разработал набор UI-компонентов, которые удобно подключаются к API и сервисам для динамического получения данных.",
-                    "Реализовал административную панель с логином, управлением страницами, редактированием текста и изображений, метаданными, резервными копиями и восстановлением данных.",
-                    "Создал модульное подключение сервисов и API к компонентам, обеспечив асинхронную загрузку и синхронизацию данных.",
-                    "Стандартизировал архитектуру и интерфейсы для долгосрочной поддержки и дальнейшего расширения функциональности.",
+                    "Разработал production-ready Telegram-бота на TypeScript с системой анонимных чатов, real-time взаимодействием пользователей и интеграцией платёжных сервисов Telegram Stars и Tribute, обеспечив монетизацию платформы.",
+                    "Спроектировал backend-инфраструктуру на Docker, PostgreSQL, Redis и Prisma ORM, обеспечив стабильную работу runtime-сервисов, очередей и хранения пользовательских данных в production-среде.",
+                    "Реализовал production deployment pipeline для VPS-сервера с webhook-инфраструктурой, HTTPS через Caddy, автоматическими backup-сценариями и monitoring endpoints.",
+                    "Оптимизировал архитектуру Telegram runtime-сервисов и обработку пользовательских сессий, обеспечив масштабируемую работу активных чатов и асинхронных очередей при высокой нагрузке.",
                 ],
             },
             {
@@ -335,14 +470,29 @@ const ABOUT_CONTENT = {
                     start: "2023-01-09T09:00:00+04:00",
                     end: "2023-09-30T18:00:00+04:00",
                 },
-                duration: "9 месяцев",
                 isLive: false,
                 summary:
-                    "Разрабатывал интерфейсы для систем автоматизации и управления промышленными контроллерами: панели мониторинга, визуализацию сигналов, элементы управления и экраны настройки оборудования.",
+                    "Разрабатывал интерфейсы для промышленных контроллеров и систем автоматизации: панели мониторинга, визуализацию сигналов, элементы управления и экраны настройки оборудования, введённые в эксплуатацию на производственном оборудовании.",
                 achievements: [
-                    "Создал интерфейсы для визуализации данных с промышленных датчиков и настройки параметров оборудования.",
-                    "Участвовал в интеграции интерфейсов с существующими автоматизированными системами и контроллерами.",
-                    "Проводил тестирование, отладку и оптимизацию интерфейсов, повышая надёжность и точность отображения данных.",
+                    "Разрабатывал интерфейсы для промышленных контроллеров и систем автоматизации.",
+                    "Реализовал более 8 операторских интерфейсов, введённых в эксплуатацию на производственном оборудовании.",
+                    "Интегрировал UI с промышленными системами и контроллерами для обмена данными.",
+                    "Проводил тестирование, отладку и оптимизацию интерфейсов промышленных систем.",
+                ],
+            },
+            {
+                id: "future",
+                role: "Frontend Engineer",
+                company: "Ваша компания?",
+                location: "Удалённо · Офис · Гибрид — открыт",
+                isPlaceholder: true,
+                summary:
+                    "Возможно, ваша компания. Остальное содержимое этой карточки появится, когда мы начнём работать вместе — обещания делать релизы спокойно, писать читаемый код и не ронять продакшен в пятницу вечером.",
+                achievements: [
+                    "Буду приходить вовремя, делать фичи и писать код, который не придётся переписывать через месяц.",
+                    "Буду тянуть задачи от и до — оценка, архитектура, реализация, ревью и деплой.",
+                    "Буду внимательно относиться к UX, доступности и производительности, а не только к статусу задачи в Jira.",
+                    "Буду тем человеком в команде, который реально читает pull request'ы, а не штампует их.",
                 ],
             },
         ],
@@ -352,38 +502,73 @@ const ABOUT_CONTENT = {
             "Мой основной стек - JavaScript / TypeScript, React и Next.js, плюс всё, что нужно для надёжных продуктовых интерфейсов: от данных и форм до интеграций и деплоя.",
         skillGroups: [
             {
-                title: "Языки",
-                items: ["JavaScript", "TypeScript"],
-            },
-            {
                 title: "Frontend",
                 items: [
-                    "React",
+                    "JavaScript",
+                    "TypeScript",
+                    "React.js",
                     "Next.js",
-                    "Redux Toolkit",
+                    "Angular",
+                    "Redux",
                     "RTK Query",
+                    "React Router",
                     "React Hook Form",
-                    "HTML / CSS",
+                    "HTML5",
+                    "CSS3",
+                    "SCSS",
+                    "TailwindCSS",
                 ],
             },
             {
-                title: "Backend и данные",
-                items: [
-                    "Node.js",
-                    "REST API",
-                    "WebSockets",
-                    "MongoDB",
-                    "MySQL",
-                ],
+                title: "Backend и API",
+                items: ["Node.js", "REST API", "WebSockets", "Prisma ORM"],
             },
             {
-                title: "Инженерный фокус",
+                title: "Базы данных",
+                items: ["MongoDB", "MySQL", "PostgreSQL"],
+            },
+            {
+                title: "Инструменты и инфраструктура",
+                items: ["Docker", "Git", "Vite", "Webpack", "CI/CD", "Jest"],
+            },
+            {
+                title: "Архитектура и инженерия",
                 items: [
                     "SPA / SSR-архитектура",
-                    "Переиспользуемый UI",
-                    "Производительность",
-                    "Тестирование",
-                    "CI/CD",
+                    "Frontend System Design",
+                    "Управление состоянием",
+                    "Оптимизация производительности",
+                    "Масштабируемая UI-архитектура",
+                ],
+            },
+            {
+                title: "Языки",
+                items: ["Русский — Родной", "Английский — Intermediate"],
+            },
+            {
+                title: "Лаборатория",
+                items: [
+                    "PyTorch",
+                    "CNN-архитектуры",
+                    "Computer Vision",
+                    "Анализ датасетов",
+                    "Domain Shift Analysis",
+                    "Оценка моделей",
+                    "Метрики классификации",
+                    "Визуализация данных",
+                ],
+            },
+            {
+                title: "Интересы",
+                items: [
+                    "Frontend-архитектура",
+                    "High-load веб-приложения",
+                    "UI/UX системы",
+                    "Machine Learning",
+                    "Computer Vision",
+                    "Product Development",
+                    "Telegram-платформы",
+                    "System Design",
                 ],
             },
         ],
@@ -832,13 +1017,25 @@ function CertificateCarousel({ certificates, status, emptyText }) {
         </div>
     );
 }
-function AboutContent({ stats, techStack = [], certificates = [] }) {
+function AboutContent({
+    stats,
+    techStack = [],
+    techStackMap = {},
+    certificates = [],
+}) {
     const { locale } = useLanguage();
+    const router = useRouter();
     const [isBlogExpanded, setIsBlogExpanded] = useState(false);
     const [blogPreviewHeight, setBlogPreviewHeight] = useState(null);
     const [blogFullHeight, setBlogFullHeight] = useState(null);
     const [isBlogExpandable, setIsBlogExpandable] = useState(false);
     const blogStackRef = useRef(null);
+    const [isExperienceExpanded, setIsExperienceExpanded] = useState(false);
+    const [experiencePreviewHeight, setExperiencePreviewHeight] =
+        useState(null);
+    const [experienceFullHeight, setExperienceFullHeight] = useState(null);
+    const [isExperienceExpandable, setIsExperienceExpandable] = useState(false);
+    const experienceGridRef = useRef(null);
     const content = ABOUT_CONTENT[locale] ?? ABOUT_CONTENT.en;
     const visibleTechStack = techStack;
 
@@ -901,6 +1098,67 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
         };
     }, [visibleTechStack, locale]);
 
+    useEffect(() => {
+        const measure = () => {
+            const grid = experienceGridRef.current;
+
+            if (!grid) {
+                return;
+            }
+
+            const items = Array.from(grid.children);
+
+            if (!items.length) {
+                setExperiencePreviewHeight(null);
+                setExperienceFullHeight(null);
+                setIsExperienceExpandable(false);
+                return;
+            }
+
+            const fullHeight = grid.scrollHeight;
+            const isNarrowViewport = window.matchMedia(
+                "(max-width: 1199px)",
+            ).matches;
+
+            if (!isNarrowViewport) {
+                setExperiencePreviewHeight(fullHeight);
+                setExperienceFullHeight(fullHeight);
+                setIsExperienceExpandable(false);
+                return;
+            }
+
+            if (items.length <= 2) {
+                setExperiencePreviewHeight(fullHeight);
+                setExperienceFullHeight(fullHeight);
+                setIsExperienceExpandable(false);
+                return;
+            }
+
+            const secondItem = items[1];
+            const previewHeight =
+                secondItem.offsetTop + secondItem.offsetHeight;
+
+            if (previewHeight >= fullHeight - 8) {
+                setExperiencePreviewHeight(fullHeight);
+                setExperienceFullHeight(fullHeight);
+                setIsExperienceExpandable(false);
+                return;
+            }
+
+            setExperiencePreviewHeight(previewHeight);
+            setExperienceFullHeight(fullHeight);
+            setIsExperienceExpandable(true);
+        };
+
+        const frameId = window.requestAnimationFrame(measure);
+        window.addEventListener("resize", measure);
+
+        return () => {
+            window.cancelAnimationFrame(frameId);
+            window.removeEventListener("resize", measure);
+        };
+    }, [locale, content.experience.length]);
+
     const metrics = [
         {
             label: content.metrics.posts,
@@ -929,6 +1187,14 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
     ];
 
     const experienceEntries = content.experience.map((entry, index) => {
+        if (entry.isPlaceholder) {
+            return {
+                ...entry,
+                indexLabel: String(index + 1).padStart(2, "0"),
+                periodLine: content.placeholderPeriodLine,
+            };
+        }
+
         const startValue = entry.period?.start ?? entry.startDate;
         const endValue = entry.period?.end ?? null;
         const duration =
@@ -1092,6 +1358,41 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                                     </div>
                                 </section>
                             ))}
+
+                            <div
+                                aria-hidden="true"
+                                className={`${classes.skillFiller} ${classes.skillFillerPulse}`}>
+                                <div className={classes.skillFillerPulseDots}>
+                                    <span />
+                                    <span />
+                                    <span />
+                                </div>
+                            </div>
+
+                            <div
+                                aria-hidden="true"
+                                className={`${classes.skillFiller} ${classes.skillFillerOrb}`}>
+                                <div className={classes.skillFillerOrbInner} />
+                            </div>
+
+                            <div
+                                aria-hidden="true"
+                                className={`${classes.skillFiller} ${classes.skillFillerWave}`}>
+                                <div className={classes.skillFillerWaveBar} />
+                            </div>
+
+                            <div
+                                aria-hidden="true"
+                                className={`${classes.skillFiller} ${classes.skillFillerOrbit}`}>
+                                <div className={classes.skillFillerOrbitInner}>
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                    <span />
+                                </div>
+                            </div>
                         </div>
                     </article>
 
@@ -1126,13 +1427,28 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                                 ) : null}
                             </div>
 
-                            <div className={classes.inlineExperienceGrid}>
-                                {experienceEntries.map((entry) => (
-                                    <article
-                                        key={entry.id}
-                                        className={
-                                            classes.inlineExperienceCard
-                                        }>
+                            <div
+                                className={classes.experienceAccordion}
+                                style={
+                                    experienceFullHeight
+                                        ? {
+                                              maxHeight: isExperienceExpanded
+                                                  ? `${experienceFullHeight}px`
+                                                  : `${experiencePreviewHeight ?? experienceFullHeight}px`,
+                                          }
+                                        : undefined
+                                }>
+                                <div
+                                    className={classes.inlineExperienceGrid}
+                                    ref={experienceGridRef}>
+                                    {experienceEntries.map((entry) => (
+                                        <article
+                                            key={entry.id}
+                                            className={`${classes.inlineExperienceCard} ${
+                                                entry.isPlaceholder
+                                                    ? classes.inlineExperienceCardPlaceholder
+                                                    : ""
+                                            }`}>
                                         <div
                                             className={
                                                 classes.inlineExperienceTop
@@ -1153,6 +1469,14 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                                                             classes.livePill
                                                         }>
                                                         {content.liveBadge}
+                                                    </span>
+                                                ) : null}
+                                                {entry.isPlaceholder ? (
+                                                    <span
+                                                        className={
+                                                            classes.openPill
+                                                        }>
+                                                        {content.openBadge}
                                                     </span>
                                                 ) : null}
                                             </div>
@@ -1219,8 +1543,41 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                                             )}
                                         </ul>
                                     </article>
-                                ))}
+                                    ))}
+                                </div>
+                                {isExperienceExpandable &&
+                                !isExperienceExpanded ? (
+                                    <div
+                                        className={classes.experienceFade}
+                                    />
+                                ) : null}
                             </div>
+
+                            {isExperienceExpandable ? (
+                                <button
+                                    type="button"
+                                    className={classes.experienceToggle}
+                                    onClick={() =>
+                                        setIsExperienceExpanded(
+                                            (currentValue) => !currentValue,
+                                        )
+                                    }
+                                    aria-expanded={isExperienceExpanded}>
+                                    <span>
+                                        {isExperienceExpanded
+                                            ? content.experienceCollapse
+                                            : content.experienceExpand}
+                                    </span>
+                                    <span
+                                        className={`${classes.experienceToggleIcon} ${
+                                            isExperienceExpanded
+                                                ? classes.experienceToggleIconExpanded
+                                                : ""
+                                        }`}>
+                                        ↓
+                                    </span>
+                                </button>
+                            ) : null}
                         </div>
 
                         <div className={classes.actionRow}>
@@ -1307,13 +1664,41 @@ function AboutContent({ stats, techStack = [], certificates = [] }) {
                             <div
                                 className={classes.portfolioStackCloud}
                                 ref={blogStackRef}>
-                                {visibleTechStack.map((item) => (
-                                    <span
-                                        key={item}
-                                        className={classes.portfolioStackPill}>
-                                        {item}
-                                    </span>
-                                ))}
+                                {visibleTechStack.map((item) => {
+                                    const matchingSlugs =
+                                        techStackMap[item] ?? [];
+                                    const hasMatchingPost =
+                                        matchingSlugs.length > 0;
+
+                                    return (
+                                        <button
+                                            key={item}
+                                            type="button"
+                                            className={
+                                                classes.portfolioStackPill
+                                            }
+                                            disabled={!hasMatchingPost}
+                                            onClick={() => {
+                                                if (!hasMatchingPost) {
+                                                    return;
+                                                }
+
+                                                const targetSlug =
+                                                    matchingSlugs[
+                                                        Math.floor(
+                                                            Math.random() *
+                                                                matchingSlugs.length,
+                                                        )
+                                                    ];
+
+                                                router.push(
+                                                    `/posts/${targetSlug}`,
+                                                );
+                                            }}>
+                                            {item}
+                                        </button>
+                                    );
+                                })}
                             </div>
                             {isBlogExpandable && !isBlogExpanded ? (
                                 <div className={classes.portfolioStackFade} />
