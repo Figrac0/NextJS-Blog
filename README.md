@@ -138,7 +138,8 @@ SEO-friendly: Proper lang attributes and hreflang meta tags
 
 3. Project & Content Management
    Content Types & Structure
-   javascript
+
+```javascript
    const contentTypes = {
    project: {
    icon: '💻',
@@ -158,12 +159,9 @@ SEO-friendly: Proper lang attributes and hreflang meta tags
    stats: ['readingTime', 'views'],
    filters: ['featured', 'insight']
    }
-
-````
-
+```
 
 ### Markdown Processing Pipeline
-
 
 ```text
 
@@ -173,7 +171,7 @@ SEO-friendly: Proper lang attributes and hreflang meta tags
    ↓
 7. Caching & Delivery → 8. Client-side Hydration
 
-````
+```
 
 ---
 
