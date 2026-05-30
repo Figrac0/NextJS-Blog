@@ -488,7 +488,9 @@ function AllPostsEnhanced({ posts }) {
                 <main className={classes.mainContent}>
                     {filteredAndSortedPosts.length > 0 ? (
                         <>
-                            <div className={classes.resultsInfo}>
+                            <div
+                                id="results-info"
+                                className={classes.resultsInfo}>
                                 <span className={classes.resultsCount}>
                                     {filteredAndSortedPosts.length}{" "}
                                     {t("totalPosts")}
@@ -615,7 +617,9 @@ function AllPostsEnhanced({ posts }) {
                     )}
                 </main>
 
-                <aside className={classes.techSidebar}>
+                <aside
+                    id="tech-sidebar"
+                    className={classes.techSidebar}>
                     <h3 className={classes.sidebarTitle}>🧩 {t("tech")}</h3>
                     <div className={classes.allTech}>
                         {Array.from(
