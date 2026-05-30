@@ -115,10 +115,10 @@ function Hero() {
                     <div className={classes.imageContainer}>
                         <div className={classes.imageWrapper}>
                             <Image
-                                src="/images/site/hero-blur-bg.png"
+                                src="/images/site/hero-blur-bg.jpg"
                                 alt="Sergey - Frontend Developer & Blogger"
-                                width={1448}
-                                height={1086}
+                                width={1280}
+                                height={854}
                                 className={classes.image}
                                 priority
                                 quality={90}
