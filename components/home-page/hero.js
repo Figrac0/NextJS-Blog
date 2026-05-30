@@ -115,13 +115,14 @@ function Hero() {
                     <div className={classes.imageContainer}>
                         <div className={classes.imageWrapper}>
                             <Image
-                                src="/images/site/hero-main.png"
+                                src="/images/site/hero-blur-bg.png"
                                 alt="Sergey - Frontend Developer & Blogger"
-                                width={400}
-                                height={400}
+                                width={1448}
+                                height={1086}
                                 className={classes.image}
                                 priority
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                                quality={90}
+                                sizes="(max-width: 480px) 250px, (max-width: 768px) 300px, (max-width: 1200px) 350px, 400px"
                             />
                             <div className={classes.floatingTech}>
                                 <span className={classes.techBadge}>React</span>
