@@ -158,12 +158,12 @@ const ABOUT_CONTENT = {
                 },
                 isLive: false,
                 summary:
-                    "Production-ready Telegram bot on TypeScript with anonymous chats, real-time user interaction, Telegram Stars and Tribute payments, and a full VPS deployment pipeline backed by Docker, PostgreSQL, Redis, and Prisma ORM.",
+                    "Production-ready platform on TypeScript and Node.js: 1000+ concurrent users, real-time, subscriptions and payments. A 6-service Docker backend on PostgreSQL 16, Redis 7, Prisma ORM and Caddy, deployed to a VPS with auto-HTTPS and monitoring.",
                 achievements: [
-                    "Built a production-ready Telegram bot in TypeScript with anonymous chats, real-time user interaction, and Telegram Stars and Tribute payment integration, enabling platform monetisation.",
-                    "Designed the backend infrastructure on Docker, PostgreSQL, Redis, and Prisma ORM, providing stable runtime services, queues, and persistent user storage in production.",
-                    "Implemented a production deployment pipeline for the VPS with webhook infrastructure, HTTPS via Caddy, automated backup flows, and monitoring endpoints.",
-                    "Optimised Telegram runtime services and user-session handling for scalable performance of active chats and async queues under high load.",
+                    "Built a production-ready platform on TypeScript and Node.js: 1000+ concurrent users, real-time, subscriptions and payment integration.",
+                    "Designed a 6-service Docker backend on PostgreSQL 16, Redis 7, Prisma ORM and Caddy — 14 normalised tables, audit logging, 20-connection pool and 30 req/sec throttling.",
+                    "Shipped VPS deployment with auto-HTTPS, webhooks, S3-compatible backups every 12 hours and service monitoring.",
+                    "Cut operation latency from 1000 ms to under 100 ms at under 213 MB RAM and below 1% CPU, with layered anti-abuse defences.",
                 ],
             },
             {
@@ -452,12 +452,12 @@ const ABOUT_CONTENT = {
                 },
                 isLive: false,
                 summary:
-                    "Production-ready Telegram-бот на TypeScript с анонимными чатами, real-time взаимодействием пользователей, интеграцией Telegram Stars и Tribute и полноценным deployment pipeline на VPS — Docker, PostgreSQL, Redis и Prisma ORM.",
+                    "Production-ready платформа на TypeScript и Node.js: 1000+ одновременных пользователей, real-time, подписки и платежи. Backend из 6 Docker-сервисов на PostgreSQL 16, Redis 7, Prisma ORM и Caddy, развёрнутый на VPS с auto-HTTPS и мониторингом.",
                 achievements: [
-                    "Разработал production-ready Telegram-бота на TypeScript с системой анонимных чатов, real-time взаимодействием пользователей и интеграцией платёжных сервисов Telegram Stars и Tribute, обеспечив монетизацию платформы.",
-                    "Спроектировал backend-инфраструктуру на Docker, PostgreSQL, Redis и Prisma ORM, обеспечив стабильную работу runtime-сервисов, очередей и хранения пользовательских данных в production-среде.",
-                    "Реализовал production deployment pipeline для VPS-сервера с webhook-инфраструктурой, HTTPS через Caddy, автоматическими backup-сценариями и monitoring endpoints.",
-                    "Оптимизировал архитектуру Telegram runtime-сервисов и обработку пользовательских сессий, обеспечив масштабируемую работу активных чатов и асинхронных очередей при высокой нагрузке.",
+                    "Разработал production-ready платформу на TypeScript и Node.js: 1000+ одновременных пользователей, real-time, подписки и платёжная интеграция.",
+                    "Спроектировал backend из 6 Docker-сервисов на PostgreSQL 16, Redis 7, Prisma ORM и Caddy — 14 нормализованных таблиц, audit-log, connection pool на 20 и throttling 30 req/sec.",
+                    "Развернул VPS-deployment с auto-HTTPS, webhook'ами, бэкапами в S3-хранилище каждые 12 ч и мониторингом сервисов.",
+                    "Снизил latency операций с 1000 мс до <100 мс при потреблении <213 MB RAM и CPU <1%, добавил многоуровневую защиту от злоупотреблений.",
                 ],
             },
             {
