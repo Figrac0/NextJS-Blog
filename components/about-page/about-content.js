@@ -158,12 +158,14 @@ const ABOUT_CONTENT = {
                 },
                 isLive: false,
                 summary:
-                    "Production-ready Telegram bot on TypeScript with anonymous chats, real-time user interaction, Telegram Stars and Tribute payments, and a full VPS deployment pipeline backed by Docker, PostgreSQL, Redis, and Prisma ORM.",
+                    "Production-ready platform on TypeScript and Node.js supporting 1000+ concurrent users with real-time interaction, subscriptions and payment integration. A 6-service Docker backend on PostgreSQL 16, Redis 7, Prisma ORM and Caddy, deployed to a VPS with auto-HTTPS, 12-hour S3-compatible backups and service monitoring.",
                 achievements: [
-                    "Built a production-ready Telegram bot in TypeScript with anonymous chats, real-time user interaction, and Telegram Stars and Tribute payment integration, enabling platform monetisation.",
-                    "Designed the backend infrastructure on Docker, PostgreSQL, Redis, and Prisma ORM, providing stable runtime services, queues, and persistent user storage in production.",
-                    "Implemented a production deployment pipeline for the VPS with webhook infrastructure, HTTPS via Caddy, automated backup flows, and monitoring endpoints.",
-                    "Optimised Telegram runtime services and user-session handling for scalable performance of active chats and async queues under high load.",
+                    "Built a production-ready platform in TypeScript and Node.js supporting 1000+ concurrent users with real-time interaction, a subscription system and payment integration for product monetisation.",
+                    "Designed a backend infrastructure of 6 Docker services on PostgreSQL 16, Redis 7, Prisma ORM and Caddy, with 14 normalised tables, audit-logged operations, connection pooling at 20 connections and API throttling up to 30 req/sec.",
+                    "Implemented production deployment to a VPS with automatic HTTPS, webhook infrastructure, scheduled backups every 12 hours to S3-compatible storage, service monitoring and automatic log rotation.",
+                    "Optimised platform performance, cutting user-operation latency from 1000 ms to under 100 ms, layered anti-abuse defences and kept the system stable at under 213 MB RAM and CPU usage below 1%.",
+                    "Designed frontend architecture and modular UI systems for admin panels, e-commerce stores and service platforms.",
+                    "Integrated REST APIs, authentication systems, asynchronous data handling and client-side caching for high-load web applications.",
                 ],
             },
             {
@@ -452,12 +454,14 @@ const ABOUT_CONTENT = {
                 },
                 isLive: false,
                 summary:
-                    "Production-ready Telegram-бот на TypeScript с анонимными чатами, real-time взаимодействием пользователей, интеграцией Telegram Stars и Tribute и полноценным deployment pipeline на VPS — Docker, PostgreSQL, Redis и Prisma ORM.",
+                    "Production-ready платформа на TypeScript и Node.js с поддержкой 1000+ одновременных пользователей, real-time-взаимодействием, подписками и платёжной интеграцией. Backend из 6 Docker-сервисов на PostgreSQL 16, Redis 7, Prisma ORM и Caddy, развёрнутый на VPS с auto-HTTPS, бэкапами каждые 12 часов в S3-совместимое хранилище и мониторингом.",
                 achievements: [
-                    "Разработал production-ready Telegram-бота на TypeScript с системой анонимных чатов, real-time взаимодействием пользователей и интеграцией платёжных сервисов Telegram Stars и Tribute, обеспечив монетизацию платформы.",
-                    "Спроектировал backend-инфраструктуру на Docker, PostgreSQL, Redis и Prisma ORM, обеспечив стабильную работу runtime-сервисов, очередей и хранения пользовательских данных в production-среде.",
-                    "Реализовал production deployment pipeline для VPS-сервера с webhook-инфраструктурой, HTTPS через Caddy, автоматическими backup-сценариями и monitoring endpoints.",
-                    "Оптимизировал архитектуру Telegram runtime-сервисов и обработку пользовательских сессий, обеспечив масштабируемую работу активных чатов и асинхронных очередей при высокой нагрузке.",
+                    "Разработал production-ready платформу на TypeScript и Node.js с поддержкой 1000+ одновременных пользователей, real-time взаимодействием, системой подписок и интеграцией платёжных сервисов для монетизации продукта.",
+                    "Спроектировал backend-инфраструктуру из 6 Docker-сервисов на PostgreSQL 16, Redis 7, Prisma ORM и Caddy, реализовал 14 нормализованных таблиц, audit-log операций, connection pooling на 20 соединений и API throttling до 30 req/sec.",
+                    "Реализовал production deployment на VPS с автоматическим HTTPS, webhook-инфраструктурой, системой резервного копирования данных каждые 12 часов в S3-совместимое хранилище, мониторингом сервисов и автоматической ротацией логов.",
+                    "Оптимизировал производительность платформы, сократив latency пользовательских операций с 1000 мс до менее 100 мс, реализовал многоуровневую защиту от злоупотреблений и обеспечил стабильную работу системы при потреблении менее 213 MB RAM и загрузке CPU менее 1%.",
+                    "Проектировал frontend-архитектуру и модульные UI-системы для административных панелей, интернет-магазинов и сервисных платформ.",
+                    "Интегрировал REST API, системы авторизации, асинхронную обработку данных и клиентское кеширование для high-load web-приложений.",
                 ],
             },
             {
