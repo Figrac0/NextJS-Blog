@@ -1188,9 +1188,55 @@
 
 .certificatesHeader {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
+}
+
+.certificatesDriveButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.05rem;
+    min-height: 40px;
+    border-radius: 999px;
+    color: var(--about-accent);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.92),
+        rgba(245, 235, 221, 0.94)
+    );
+    border: 1px solid rgba(20, 85, 108, 0.18);
+    box-shadow:
+        0 10px 22px rgba(20, 33, 48, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+}
+
+.certificatesDriveButton:hover {
+    transform: translateY(-2px);
+    border-color: rgba(20, 85, 108, 0.34);
+    box-shadow:
+        0 14px 28px rgba(20, 33, 48, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.certificatesDriveButton:focus-visible {
+    outline: 2px solid rgba(11, 113, 137, 0.5);
+    outline-offset: 3px;
+}
+
+.certificatesDriveButton svg {
+    flex: none;
 }
 
 .carouselShell {
@@ -1496,7 +1542,8 @@
     .portfolioStackAccordion,
     .experienceAccordion,
     .experienceToggle,
-    .experienceToggleIcon {
+    .experienceToggleIcon,
+    .certificatesDriveButton {
         transition: none;
     }
 

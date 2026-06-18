@@ -7,6 +7,8 @@ import classes from "./about-content.module.css";
 
 const RESUME_LINK =
     "https://drive.google.com/file/d/1HyEo9yoa8h43tjocp0scDrHFzToI3IDJ/view?usp=drive_link";
+const CERTIFICATES_DRIVE_LINK =
+    "https://drive.google.com/drive/folders/12AZUSukBg7dCDkb2xQZO00uyy5pCTgIK?usp=drive_link";
 const PORTRAIT_SRC = "/images/site/cropped_main-1.png";
 const AUTO_SCROLL_SPEED = 0.22;
 const THROW_FRICTION = 0.92;
@@ -302,6 +304,7 @@ const ABOUT_CONTENT = {
         certificatesEyebrow: "Certificates",
         certificatesTitle: "",
         certificatesText: "",
+        viewAllCertificates: "View all",
         carouselStatus: "Certificate carousel",
         emptyCertificates:
             "Certificates will appear here automatically once images are available in public/about/certificates.",
@@ -598,6 +601,7 @@ const ABOUT_CONTENT = {
         certificatesEyebrow: "Сертификаты",
         certificatesTitle: "",
         certificatesText: "",
+        viewAllCertificates: "Посмотреть",
         carouselStatus: "Карусель сертификатов",
         emptyCertificates:
             "Сертификаты появятся здесь автоматически, как только изображения будут лежать в public/about/certificates.",
@@ -1798,28 +1802,33 @@ function AboutContent({
                 <section
                     className={`${classes.card} ${classes.certificatesSection}`}>
                     <div className={classes.certificatesHeader}>
-                        <div>
-                            <span className={classes.eyebrow}>
-                                {content.certificatesEyebrow}
-                            </span>
-                            {content.certificatesTitle ? (
-                                <h2 className={classes.sectionTitle}>
-                                    {content.certificatesTitle}
-                                </h2>
-                            ) : null}
-                            {content.certificatesText ? (
-                                <p className={classes.sectionText}>
-                                    {content.certificatesText}
-                                </p>
-                            ) : null}
-                        </div>
-
                         <span className={classes.carouselCount}>
                             {formatCertificateCount(
                                 certificates.length,
                                 locale,
                             )}
                         </span>
+
+                        <a
+                            href={CERTIFICATES_DRIVE_LINK}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={classes.certificatesDriveButton}>
+                            <span>{content.viewAllCertificates}</span>
+                            <svg
+                                aria-hidden="true"
+                                viewBox="0 0 24 24"
+                                width="16"
+                                height="16"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M7 17 17 7" />
+                                <path d="M9 7h8v8" />
+                            </svg>
+                        </a>
                     </div>
 
                     <CertificateCarousel
